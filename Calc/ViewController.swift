@@ -12,6 +12,9 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var display: UILabel!
     
+    var outputControllerMSegued = "OutputControllerMSegued"
+    var outputcontroller: OutputController? = nil
+    
     
     private var userIsInTheMiddleOfTyping = false
     
@@ -60,6 +63,14 @@ class ViewController: UIViewController {
             brain.performOperation(symbol: mathematicalSymbol) //i've change it 2
         }
         displayValue = brain.result
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == outputControllerMSegued {
+            outputcontroller = segue.destination as? OutputController
+        }
     }
     
 }
