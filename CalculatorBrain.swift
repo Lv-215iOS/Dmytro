@@ -35,7 +35,7 @@ class CalculatorBrain
     
     func setOperand(operand: Double) { //getAlllabel
         accumulator = operand
-        internalProgram.append(operand as AnyObject)
+        internalProgram.append(operand as AnyObject)    //??
     }
     
     private var  operations: Dictionary<String,Operation> = [
@@ -61,7 +61,7 @@ class CalculatorBrain
     }
     
     func performOperation(symbol: String) {
-        internalProgram.append(symbol as AnyObject)
+        internalProgram.append(symbol as AnyObject)     //??
         if let operation = operations[symbol]{
             switch operation {
             case .Constant(let value) :
@@ -116,7 +116,7 @@ class CalculatorBrain
     func clear() {
         accumulator = 0.0
         pending = nil
-        internalProgram.removeAll()
+        internalProgram.removeAll()     //??
     }
     
     var result: Double {

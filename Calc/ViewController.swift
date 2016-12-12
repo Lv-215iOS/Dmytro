@@ -12,33 +12,47 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var display: UILabel!
     
-    var outputControllerMSegued = "OutputControllerMSegued"
-    var outputcontroller: OutputController? = nil
+//    var outputControllerMSegued = "OutputControllerMSegued"
+//    var outputcontroller: OutputController? = nil
     
     
     private var userIsInTheMiddleOfTyping = false
+    private var dot = false
     
     @IBAction private func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
+        if digit == "." && dot == true {
+            return
+        }
+        
         if userIsInTheMiddleOfTyping {
             let textCurrentlyInDisplay = display.text!
             display.text = textCurrentlyInDisplay + digit
         } else {
             display.text = digit
         }
+        if digit == "." {
+            dot = true
+        }
         userIsInTheMiddleOfTyping = true
     }
     
     private var displayValue: Double {
         get {
-            return Double(display.text!)!
+            return Double(display.text!)!   //1?
         }
         set {
-            display.text = String(newValue)
+//            let z: = newValue - Int(newValue)
+            if round(newValue) == newValue {
+                display.text = String(Int(newValue))
+            } else {
+               display.text = String(newValue)
+            }
+            
         }
     }
     
-    var savedProgram: CalculatorBrain.PropertyList?
+    var savedProgram: CalculatorBrain.PropertyList?     //PropertyList = AnyObject
     
     @IBAction func save() {
         savedProgram = brain.program
@@ -54,6 +68,7 @@ class ViewController: UIViewController {
     private var brain: CalculatorBrain = CalculatorBrain()
     
     @IBAction private func performedOperation(_ sender: UIButton) {
+        dot = false
         if userIsInTheMiddleOfTyping {
             brain.setOperand(operand: displayValue) //i've change it 1
             userIsInTheMiddleOfTyping = false
@@ -65,13 +80,17 @@ class ViewController: UIViewController {
         displayValue = brain.result
     }
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == outputControllerMSegued {
-            outputcontroller = segue.destination as? OutputController
-        }
+    @IBAction func clear(_ sender: UIButton) {
+        display.text = String("0")
+        brain.clear()
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        
+//        if segue.identifier == outputControllerMSegued {
+//            outputcontroller = segue.destination as? OutputController
+//        }
+//    }
     
 }
 
