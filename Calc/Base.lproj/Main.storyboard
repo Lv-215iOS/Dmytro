@@ -185,13 +185,6 @@
                                     <action selector="performedOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RlZ-S0-7M7"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="SCB-HQ-UkE">
-                                <rect key="frame" x="67" y="204" width="135" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoK-uC-JJ0">
                                 <rect key="frame" x="137" y="232" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -303,6 +296,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="+/-"/>
                             </button>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qxS-ea-vaY">
+                                <rect key="frame" x="59" y="76" width="240" height="82"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="W2w-Cb-RNF" kind="embed" identifier="OutputControllerSegue" id="YUF-Z2-taN"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -312,25 +312,33 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="457" y="-67"/>
+            <point key="canvasLocation" x="485.60000000000002" y="-375.56221889055473"/>
         </scene>
         <!--Output Controller-->
-        <scene sceneID="9hF-fx-Xp4">
+        <scene sceneID="T4e-O1-dd8">
             <objects>
-                <viewController id="jpP-Lb-ro3" customClass="OutputController" customModule="Calc" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="hqi-mQ-jBI"/>
-                        <viewControllerLayoutGuide type="bottom" id="RdP-36-Ag2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="dF9-zQ-VNg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController id="W2w-Cb-RNF" customClass="OutputController" customModule="Calc" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="t3x-In-xZr">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="82"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="SCB-HQ-UkE">
+                                <rect key="frame" x="53" y="32" width="135" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="display" destination="SCB-HQ-UkE" id="JcJ-p3-dMS"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="C9K-sL-bB9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z2I-NC-tWJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1099" y="-374"/>
+            <point key="canvasLocation" x="782" y="149"/>
         </scene>
     </scenes>
 </document>

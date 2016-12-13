@@ -10,7 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet private weak var display: UILabel!
+    var outputController : OutputController? = nil
+//    var inputController : InputController? = nil
+    
+//    @IBOutlet private weak var display: UILabel!
     
 //    var outputControllerMSegued = "OutputControllerMSegued"
 //    var outputcontroller: OutputController? = nil
@@ -26,10 +29,13 @@ class ViewController: UIViewController {
         }
         
         if userIsInTheMiddleOfTyping {
-            let textCurrentlyInDisplay = display.text!
-            display.text = textCurrentlyInDisplay + digit
+            let textCurrentlyInDisplay = self.outputController?.display.text!
+            self.outputController?.display.text = textCurrentlyInDisplay! + digit
+//            let textCurrentlyInDisplay = display.text!
+//            display.text = textCurrentlyInDisplay + digit
         } else {
-            display.text = digit
+            self.outputController?.display.text = digit
+//            display.text = digit
         }
         if digit == "." {
             dot = true
@@ -39,14 +45,17 @@ class ViewController: UIViewController {
     
     private var displayValue: Double {
         get {
-            return Double(display.text!)!   //1?
+            return Double((self.outputController?.display.text)!)!
+//            return Double(display.text!)!
         }
         set {
 //            let z: = newValue - Int(newValue)
             if round(newValue) == newValue {
-                display.text = String(Int(newValue))
+                self.outputController?.display.text = String(Int(newValue))
+//                display.text = String(Int(newValue))
             } else {
-               display.text = String(newValue)
+                self.outputController?.display.text = String(newValue)
+//               display.text = String(newValue)
             }
             
         }
@@ -81,16 +90,25 @@ class ViewController: UIViewController {
     }
     
     @IBAction func clear(_ sender: UIButton) {
-        display.text = String("0")
+        self.outputController?.display.text = String("0")
+//        display.text = String("0")
         brain.clear()
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        if segue.identifier == outputControllerMSegued {
-//            outputcontroller = segue.destination as? OutputController
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "OutputControllerSegue" {
+            outputController = segue.destination as? OutputController
+            outputController?.viewController = self
+        } else if segue.identifier == "InputControllerSegue" {
+//            inputController = segue.destination as? InputController
+//            inputController?.viewController = self
+        }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
 }
 
