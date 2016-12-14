@@ -17,6 +17,7 @@
 		25707DBC1DF82EAD008CE313 /* CalcUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25707DBB1DF82EAD008CE313 /* CalcUITests.swift */; };
 		25A459111DFE9EDD00FDA3C3 /* OutputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A459101DFE9EDD00FDA3C3 /* OutputController.swift */; };
 		25C8B54C1DFB1B6400FBA896 /* FaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C8B54B1DFB1B6400FBA896 /* FaceView.swift */; };
+		25CEC60C1E01410D00330178 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CEC60B1E01410D00330178 /* InputController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		25707DBD1DF82EAD008CE313 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25A459101DFE9EDD00FDA3C3 /* OutputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputController.swift; sourceTree = "<group>"; };
 		25C8B54B1DFB1B6400FBA896 /* FaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceView.swift; sourceTree = "<group>"; };
+		25CEC60B1E01410D00330178 /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				25707DA41DF82EAD008CE313 /* LaunchScreen.storyboard */,
 				25707DA71DF82EAD008CE313 /* Info.plist */,
 				25C8B54B1DFB1B6400FBA896 /* FaceView.swift */,
+				25CEC60B1E01410D00330178 /* InputController.swift */,
 			);
 			path = Calc;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25CEC60C1E01410D00330178 /* InputController.swift in Sources */,
 				256E74891DF88C990032AF51 /* CalculatorBrain.swift in Sources */,
 				25A459111DFE9EDD00FDA3C3 /* OutputController.swift in Sources */,
 				25707D9E1DF82EAD008CE313 /* ViewController.swift in Sources */,
