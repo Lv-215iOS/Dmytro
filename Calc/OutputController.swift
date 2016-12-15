@@ -14,6 +14,18 @@ protocol OutputProtocol {
 
 class OutputController: UIViewController{
     
+    func appendSymbol(symbol: String) {
+        if display.text != nil {
+            display.text = display.text! + symbol
+        } else {
+            display.text = symbol
+        }
+    }
+    
+    func setResult(symbol: String) {
+        display.text = symbol
+    }
+    
     @IBOutlet weak var display: UILabel!
     var viewController : ViewController? = nil
     
@@ -27,10 +39,10 @@ class OutputController: UIViewController{
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "OutputControllerSegue" {
-            viewController = segue.source as? ViewController
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "OutputControllerSegue" {
+//            viewController = segue.source as? ViewController
+//        }
+//    }
     
 }

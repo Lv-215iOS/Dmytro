@@ -9,29 +9,55 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
     var outputController: OutputController? = nil
     var inputController: InputController? = nil
+    var brain = CalculatorBrain()
     
-//    @IBOutlet private weak var display: UILabel!
-    
-    public var displayValue: Double {
-        get {
-            return Double((self.outputController?.display.text)!)!
-//            return Double(display.text!)!
-        }
-        set {
-//            let z: = newValue - Int(newValue)
-            if round(newValue) == newValue {
-                self.outputController?.display.text = String(Int(newValue))
-//                display.text = String(Int(newValue))
+    func touchButton(symbol: String) {
+        switch symbol {
+        case "+":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 2
+            brain.binary(operation: .Plus)
+        case "-":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 2
+            brain.binary(operation: .Minus)
+        case "✕":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 2
+            brain.binary(operation: .Mul)
+        case "÷":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 2
+            brain.binary(operation: .Div)
+        case "=":
+            brain.utility(operation: .Equal)
+        default:
+            outputController?.appendSymbol(symbol: symbol)
+            print("\(brain.stack.count) != \(CalculatorBrain.counter)")
+            if brain.stack.count == CalculatorBrain.counter {
+                brain.stack.append(symbol)
             } else {
-                self.outputController?.display.text = String(newValue)
-//               display.text = String(newValue)
+                brain.stack[CalculatorBrain.counter] = String(Double(String(brain.stack[CalculatorBrain.counter]))! * 10 + Double(symbol)!)
             }
+            
+            brain.digit(value: Double(symbol)!)
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        brain.result = { (value, error)->() in
+            if (value != nil) {
+                self.outputController?.setResult(symbol: "\(value!)")
+            }
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "OutputControllerSegue" {
@@ -47,6 +73,5 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 }
 

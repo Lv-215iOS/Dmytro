@@ -8,120 +8,191 @@
 
 import Foundation
 
-//func multiply(op1: Double, op2: Double) -> Double {
-//    return op1 * op2
-//}
-//
-//func devide(op1: Double, op2: Double) -> Double {
-//    if op2 == 0 {
-//        return op2
-//    }
-//    return op1 / op2
-//}
-//
-//func add(op1: Double, op2: Double) -> Double {
-//    return op1 + op2
-//}
-//
-//func substract(op1: Double, op2: Double) -> Double {
-//    return op1 - op2
-//}
+enum BinaryOperation : String{
+    case Plus = "+"
+    case Minus = "-"
+    case Mul = "*"
+    case Div = "/"
+    case Power = "^"
+    case Mod = "%"
+}
 
-class CalculatorBrain
+enum UnaryOperation : String{
+    case Sin = "sin"
+    case Cos = "cos"
+    case Tg = "tg"
+    case Ctg = "ctg"
+    case Sqrt = "sqrt"
+}
+
+enum UtilityOperation : String{
+    case RightBracket = ")"
+    case LeftBracket = "("
+    case Dot = "."
+    case Equal = "="
+    case Clean = "C"
+    case AClean = "AC"
+}
+
+protocol CalcBrainInterface {
+    func digit(value: Double)
+    func binary(operation: BinaryOperation)
+//    func unary(operation: UnaryOperation)
+    func utility(operation: UtilityOperation)
+    var result: ((Double?, Error?)->())? {get set}
+}
+
+class CalculatorBrain: CalcBrainInterface
 {
-    private var accumulator = 0.0
+    var inputString = ""
+    var stack: [String] = ["0"]
+    var res: Double = 0.0
+//    var i: Int = 0
+    static var counter = 0
     
-    private var internalProgram = [AnyObject]()
     
-    func setOperand(operand: Double) { //getAlllabel
-        accumulator = operand
-        internalProgram.append(operand as AnyObject)    //??
+    func digit(value: Double) {
+        inputString += String(Int(value))
     }
     
-    private var  operations: Dictionary<String,Operation> = [
-        "π" : Operation.Constant(M_PI),
-        "e" : Operation.Constant(M_E),
-        "√" : Operation.UnaryOperation(sqrt),
-        "cos" : Operation.UnaryOperation(cos),
-        "✕" : Operation.BinaryOperation({ $0 * $1}),
-        "=" : Operation.Equals,
-        "÷" : Operation.BinaryOperation({ $0 / $1}),
-        "+" : Operation.BinaryOperation({ $0 + $1}),
-        "-" : Operation.BinaryOperation({ $0 - $1}),
-        "+-" : Operation.UnaryOperation({ -$0 })
-        
-    ]
-    
-    private enum Operation {
-        case Constant(Double)
-        case UnaryOperation ((Double) -> Double)
-        case BinaryOperation ((Double, Double) -> Double)
-        case Equals
-        
+    func binary(operation: BinaryOperation) {
+        inputString += operation.rawValue
     }
     
-    func performOperation(symbol: String) {
-        internalProgram.append(symbol as AnyObject)     //??
-        if let operation = operations[symbol]{
-            switch operation {
-            case .Constant(let value) :
-                accumulator = value
-            case .UnaryOperation(let function) :
-                accumulator = function(accumulator)
-            case .BinaryOperation(let function) :
-                pending = PendingDinaryOperationInfo(binaryFunction: function, firstOperand: accumulator)
-            case .Equals :
-                executePendingBinaryOperation()
-                
+    func utility(operation: UtilityOperation){
+        if operation == .Equal {
+            let temp = DoCalc() //func of result will be here
+            res = 0
+            result?(temp,nil)
+//            inputString = "\(temp)"
+        } else {
+            inputString += operation.rawValue
+        }
+    }
+    
+    var result: ((Double?, Error?) -> ())?
+    
+    func DoCalc() -> Double {
+        res += Double(String(stack[0]))!
+        for index in 1..<CalculatorBrain.counter {
+            switch stack[index] {
+            case "+":
+                res += Double(String(stack[index+1]))!
+            case "-":
+                res -= Double(String(stack[index+1]))!
+            default:
+                break
             }
         }
+        stack = []
+        CalculatorBrain.counter = 0
+        stack.append(String(res))
+        return res
     }
     
-    private func executePendingBinaryOperation()
-    {
-        if pending != nil {
-            accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
-            pending = nil
-        }
-    }
     
-    private var pending: PendingDinaryOperationInfo?
+//    private var accumulator = 0.0
+//    private var internalProgram = [AnyObject]()
+//    var valueFromButton: String = ""
+//    var viewController: ViewController? = nil
     
-    private struct  PendingDinaryOperationInfo {
-        var  binaryFunction : (Double, Double) -> Double
-        var  firstOperand : Double
-        
-    }
     
-    typealias PropertyList = AnyObject
     
-    var program: PropertyList {
-        get {
-            return internalProgram as CalculatorBrain.PropertyList
-        }
-        set {
-            clear()
-            if let arrayOfOps = newValue as? [AnyObject] {
-                for op in arrayOfOps {
-                    if let operand = op as? Double {
-                        setOperand(operand: operand)
-                    } else if let operation = op as? String {
-                        performOperation(symbol: operation)
-                    }
-                }
-            }
-        }
-    }
+//    func getValue() {
+//        button = (viewController?.getButton)!
+//    }
     
-    func clear() {
-        accumulator = 0.0
-        pending = nil
-        internalProgram.removeAll()     //??
-    }
     
-    var result: Double {
-        get {
-            return accumulator
-        }
-    }
+//    func setOperand(operand: Double) { //getAlllabel
+//        accumulator = operand
+//        internalProgram.append(operand as AnyObject)    //??
+//    }
+//    
+//    private var  operations: Dictionary<String,Operation> = [
+//        "π" : Operation.Constant(M_PI),
+//        "e" : Operation.Constant(M_E),
+//        "√" : Operation.UnaryOperation(sqrt),
+//        "cos" : Operation.UnaryOperation(cos),
+//        "✕" : Operation.BinaryOperation({ $0 * $1}),
+//        "=" : Operation.Equals,
+//        "÷" : Operation.BinaryOperation({ $0 / $1}),
+//        "+" : Operation.BinaryOperation({ $0 + $1}),
+//        "-" : Operation.BinaryOperation({ $0 - $1}),
+//        "+-" : Operation.UnaryOperation({ -$0 })
+//        
+//    ]
+//    
+//    private enum Operation {
+//        case Constant(Double)
+//        case UnaryOperation ((Double) -> Double)
+//        case BinaryOperation ((Double, Double) -> Double)
+//        case Equals
+//        
+//    }
+//    
+//    func performOperation(symbol: String) {
+//        internalProgram.append(symbol as AnyObject)
+//        if let operation = operations[symbol]{
+//            switch operation {
+//            case .Constant(let value) :
+//                accumulator = value
+//            case .UnaryOperation(let function) :
+//                accumulator = function(accumulator)
+//            case .BinaryOperation(let function) :
+//                pending = PendingDinaryOperationInfo(binaryFunction: function, firstOperand: accumulator)
+//            case .Equals :
+//                executePendingBinaryOperation()
+//                
+//            }
+//        }
+//    }
+//    
+//    private func executePendingBinaryOperation()
+//    {
+//        if pending != nil {
+//            accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
+//            pending = nil
+//        }
+//    }
+//    
+//    private var pending: PendingDinaryOperationInfo?
+//    
+//    private struct  PendingDinaryOperationInfo {
+//        var  binaryFunction : (Double, Double) -> Double
+//        var  firstOperand : Double
+//        
+//    }
+//    
+//    typealias PropertyList = AnyObject
+//    
+//    var program: PropertyList {
+//        get {
+//            return internalProgram as CalculatorBrain.PropertyList
+//        }
+//        set {
+//            clear()
+//            if let arrayOfOps = newValue as? [AnyObject] {
+//                for op in arrayOfOps {
+//                    if let operand = op as? Double {
+//                        setOperand(operand: operand)
+//                    } else if let operation = op as? String {
+//                        performOperation(symbol: operation)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    
+//    func clear() {
+////        valueFromButton = (viewController?.valueFromButton)!
+//        accumulator = 0.0
+//        pending = nil
+//        internalProgram.removeAll()     //??
+//    }
+//    
+//    var result: Double {
+//        get {
+//            return accumulator
+//        }
+//    }
 }
