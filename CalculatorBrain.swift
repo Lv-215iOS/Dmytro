@@ -31,7 +31,7 @@ enum UtilityOperation : String{
     case Dot = "."
     case Equal = "="
     case Clean = "C"
-    case AClean = "AC"
+    case CleanLast = "⌫"
 }
 
 protocol CalcBrainInterface {
@@ -45,10 +45,9 @@ protocol CalcBrainInterface {
 class CalculatorBrain: CalcBrainInterface
 {
     var inputString = ""
-    var stack: [String] = ["0"]
+    var stack: [String] = []
     var res: Double = 0.0
-    static var counter = 0
-    
+    static var counter = 0    
     
     func digit(value: Double) {
         inputString += String(Int(value))
@@ -63,7 +62,7 @@ class CalculatorBrain: CalcBrainInterface
     }
     func utility(operation: UtilityOperation){
         if operation == .Equal {
-            let temp = DoCalc() //func of result will be here
+            let temp = DoCalc()
             res = 0
             result?(temp,nil)
 //            inputString = "\(temp)"
@@ -75,33 +74,69 @@ class CalculatorBrain: CalcBrainInterface
     var result: ((Double?, Error?) -> ())?
     
     func DoCalc() -> Double {
-        res += Double(String(stack[0]))!
         var index = 0
+        if var tmp: Double = Double(stack[0]) {
+            res += Double(String(stack[0]))!
+            index += 1
+        }
         while index < CalculatorBrain.counter {
-            if stack[index+1] == "√" {
-                stack[index+1] = String(sqrt(Double(String(stack[index+2]))!))
-                stack.remove(at: index+2)
+            switch stack[index] {
+            case "√":
+                stack[index] = String(sqrt(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-            }
-            switch stack[index] {
+                res = Double(stack[index])!
+            case "sin":
+                stack[index] = String(sin(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "cos":
+                stack[index] = String(cos(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "tg":
+                stack[index] = String(tan(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "ctg":
+                stack[index] = String(1/tan(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
             case "+":
                 res += Double(String(stack[index+1]))!
+                index += 1
             case "-":
                 res -= Double(String(stack[index+1]))!
+                index += 1
             case "✕":
                 res *= Double(String(stack[index+1]))!
+                index += 1
             case "÷":
                 res /= Double(String(stack[index+1]))!
-//            case "√":
-//                stack[index] = String(sqrt(Double(String(stack[index+1]))!))
-//                stack.remove(at: index+1)
-//                index -= 1
+                index += 1
+            case "^":
+                res = pow(res, Double(String(stack[index+1]))!)
+                index += 1
+            case "%":
+                res = res.truncatingRemainder(dividingBy: Double(String(stack[index+1]))!)
+                index += 1
             default:
                 break
             }
-            index += 1
         }
         stack = []
         CalculatorBrain.counter = 0

@@ -22,6 +22,14 @@ class OutputController: UIViewController{
         }
     }
     
+    func clearScreen() {
+        display.text = ""
+    }
+    
+    func clearLastSymbol() {
+        display.text?.remove(at: (display.text?.index(before: (display.text?.endIndex)!))!)
+    }
+    
     func setResult(symbol: String) {
         display.text = symbol
     }
