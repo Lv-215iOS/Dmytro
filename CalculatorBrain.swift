@@ -11,8 +11,8 @@ import Foundation
 enum BinaryOperation : String{
     case Plus = "+"
     case Minus = "-"
-    case Mul = "*"
-    case Div = "/"
+    case Mul = "✕"
+    case Div = "÷"
     case Power = "^"
     case Mod = "%"
 }
@@ -22,7 +22,7 @@ enum UnaryOperation : String{
     case Cos = "cos"
     case Tg = "tg"
     case Ctg = "ctg"
-    case Sqrt = "sqrt"
+    case Sqrt = "√"
 }
 
 enum UtilityOperation : String{
@@ -37,7 +37,7 @@ enum UtilityOperation : String{
 protocol CalcBrainInterface {
     func digit(value: Double)
     func binary(operation: BinaryOperation)
-//    func unary(operation: UnaryOperation)
+    func unary(operation: UnaryOperation)
     func utility(operation: UtilityOperation)
     var result: ((Double?, Error?)->())? {get set}
 }
@@ -47,7 +47,6 @@ class CalculatorBrain: CalcBrainInterface
     var inputString = ""
     var stack: [String] = ["0"]
     var res: Double = 0.0
-//    var i: Int = 0
     static var counter = 0
     
     
@@ -59,6 +58,9 @@ class CalculatorBrain: CalcBrainInterface
         inputString += operation.rawValue
     }
     
+    func unary(operation: UnaryOperation) {
+        inputString += operation.rawValue
+    }
     func utility(operation: UtilityOperation){
         if operation == .Equal {
             let temp = DoCalc() //func of result will be here
@@ -74,12 +76,20 @@ class CalculatorBrain: CalcBrainInterface
     
     func DoCalc() -> Double {
         res += Double(String(stack[0]))!
-        for index in 1..<CalculatorBrain.counter {
+        for var index in 0..<CalculatorBrain.counter {
             switch stack[index] {
             case "+":
                 res += Double(String(stack[index+1]))!
             case "-":
                 res -= Double(String(stack[index+1]))!
+            case "✕":
+                res *= Double(String(stack[index+1]))!
+            case "÷":
+                res /= Double(String(stack[index+1]))!
+            case "√":
+                stack[index] = String(sqrt(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                index -= 1
             default:
                 break
             }
