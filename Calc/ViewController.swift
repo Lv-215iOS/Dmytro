@@ -15,6 +15,11 @@ class ViewController: UIViewController {
     var dot: Double = 1
     
     func touchButton(symbol: String) {
+        if (outputController?.isResult)! {
+            outputController?.appendSymbol(symbol: String((Double(brain.stack[0]) == Double(Int(Double(brain.stack[0])!))) ? String(Int(Double(brain.stack[0])!)) : symbol))
+            
+            outputController?.isResult = false
+        }
         switch symbol {
         case "+":
             outputController?.appendSymbol(symbol: symbol)
@@ -94,6 +99,7 @@ class ViewController: UIViewController {
             }
             brain.utility(operation: .CleanLast)
         case "=":
+            outputController?.appendSymbol(symbol: symbol)
             brain.utility(operation: .Equal)
         default:
             if outputController?.display.text == "0" {

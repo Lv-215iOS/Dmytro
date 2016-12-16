@@ -30,12 +30,23 @@ class OutputController: UIViewController{
         display.text?.remove(at: (display.text?.index(before: (display.text?.endIndex)!))!)
     }
     
+    var isResult = false
+    
     func setResult(symbol: String) {
-        display.text = symbol
+        if Double(symbol) == Double(Int(Double(symbol)!)) {
+            displayResult.text = String(Int(Double(symbol)!))
+        } else {
+            displayResult.text = symbol
+        }
+        isResult = true
     }
+    
     
     @IBOutlet weak var display: UILabel!
     var viewController : ViewController? = nil
+    
+    @IBOutlet weak var displayResult: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
