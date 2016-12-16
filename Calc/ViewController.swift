@@ -20,6 +20,9 @@ class ViewController: UIViewController {
             
             outputController?.isResult = false
         }
+        if brain.stack == [] {
+            CalculatorBrain.counter -= 1
+        }
         switch symbol {
         case "+":
             outputController?.appendSymbol(symbol: symbol)
@@ -36,6 +39,7 @@ class ViewController: UIViewController {
             brain.stack.append(symbol)
             CalculatorBrain.counter += 1
             brain.binary(operation: .Mul)
+            print(symbol)
         case "÷":
             outputController?.appendSymbol(symbol: symbol)
             brain.stack.append(symbol)
@@ -56,6 +60,11 @@ class ViewController: UIViewController {
             brain.stack.append(symbol)
             CalculatorBrain.counter += 1
             brain.unary(operation: .Sqrt)
+        case "!":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+            brain.unary(operation: .Fact)
         case "sin":
             outputController?.appendSymbol(symbol: symbol)
             brain.stack.append(symbol)
@@ -76,6 +85,50 @@ class ViewController: UIViewController {
             brain.stack.append(symbol)
             CalculatorBrain.counter += 1
             brain.unary(operation: .Ctg)
+        case "sinh":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+            brain.unary(operation: .Sinh)
+        case "cosh":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+            brain.unary(operation: .Cosh)
+        case "tgh":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+            brain.unary(operation: .Tgh)
+        case "ctgh":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+            brain.unary(operation: .Ctgh)
+        case "ln":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+            print(CalculatorBrain.counter)
+            brain.unary(operation: .Ln)
+        case "log":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+            brain.unary(operation: .Log)
+        case "+/-":
+            outputController?.clearLastNumber(symbol: brain.stack[CalculatorBrain.counter])
+            print(CalculatorBrain.counter)
+            brain.stack[CalculatorBrain.counter] = String(Double(brain.stack[CalculatorBrain.counter])!*(-1))
+            outputController?.appendSymbol(symbol: brain.stack[CalculatorBrain.counter])
+        case "π":
+            outputController?.appendSymbol(symbol: String(M_PI))
+            brain.stack.append(String(M_PI))
+            CalculatorBrain.counter += 1
+        case "e":
+            outputController?.appendSymbol(symbol: String(M_E))
+            brain.stack.append(String(M_E))
+            CalculatorBrain.counter += 1
         case ".":
             outputController?.appendSymbol(symbol: symbol)
             brain.utility(operation: .Dot)
@@ -93,7 +146,6 @@ class ViewController: UIViewController {
             if smth == nil || smth!/10 == 0 {
                 brain.stack.remove(at: CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
-                
             } else {
                 brain.stack[CalculatorBrain.counter].remove(at: brain.stack[CalculatorBrain.counter].index(before: brain.stack[CalculatorBrain.counter].endIndex))
             }
@@ -105,16 +157,21 @@ class ViewController: UIViewController {
             if outputController?.display.text == "0" {
                 outputController?.clearScreen()
             }
+            
             outputController?.appendSymbol(symbol: symbol)
-            if CalculatorBrain.counter > 0 {
-                var smth: Int? = Int(brain.stack[CalculatorBrain.counter])
-                if smth == nil {
+            print(CalculatorBrain.counter)
+            if CalculatorBrain.counter >= -1 {
+                if CalculatorBrain.counter == -1 {
                     CalculatorBrain.counter += 1
+                } else {
+                    var smth: Int? = Int(brain.stack[CalculatorBrain.counter])
+                    if smth == nil {
+                        CalculatorBrain.counter += 1
+                    }
                 }
+                
             }
-            
-            
-            print("\(brain.stack.count) != \(CalculatorBrain.counter)")
+//            print("\(brain.stack.count) != \(CalculatorBrain.counter)")
             if brain.stack.count == CalculatorBrain.counter {
                 brain.stack.append(symbol)
                 dot = 1

@@ -23,6 +23,13 @@ enum UnaryOperation : String{
     case Tg = "tg"
     case Ctg = "ctg"
     case Sqrt = "√"
+    case Ln = "ln"
+    case Log = "log"
+    case Sinh = "sinh"
+    case Cosh = "cosh"
+    case Tgh = "tgh"
+    case Ctgh = "ctgh"
+    case Fact = "!"
 }
 
 enum UtilityOperation : String{
@@ -88,6 +95,13 @@ class CalculatorBrain: CalcBrainInterface
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
                 res = Double(stack[index])!
+            case "!":
+                stack[index] = String(Factorial(n: Int(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
             case "sin":
                 stack[index] = String(sin(Double(String(stack[index+1]))!))
                 stack.remove(at: index+1)
@@ -104,6 +118,55 @@ class CalculatorBrain: CalcBrainInterface
                 res = Double(stack[index])!
             case "tg":
                 stack[index] = String(tan(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "ctg":
+                stack[index] = String(1/tan(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "sinh":
+                stack[index] = String(sinh(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "cosh":
+                stack[index] = String(cosh(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "tgh":
+                stack[index] = String(tanh(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "ctgh":
+                stack[index] = String(1/tanh(Double(String(stack[index+1]))!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "ln":
+                stack[index] = String(log(Double(stack[index+1])!))
+                stack.remove(at: index+1)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+                res = Double(stack[index])!
+            case "log":
+                stack[index] = String(log10(Double(stack[index+1])!))
                 stack.remove(at: index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
@@ -142,6 +205,13 @@ class CalculatorBrain: CalcBrainInterface
         CalculatorBrain.counter = 0
         stack.append(String(res))
         return res
+    }
+    
+    func Factorial(n: Int) -> Int {
+        if n == 0 { return 1 }
+        else {
+            return n*Factorial(n: n - 1)
+        }
     }
     
     

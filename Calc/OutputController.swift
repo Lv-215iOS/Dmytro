@@ -24,10 +24,19 @@ class OutputController: UIViewController{
     
     func clearScreen() {
         display.text = ""
+        displayResult.text = "0"
     }
     
     func clearLastSymbol() {
         display.text?.remove(at: (display.text?.index(before: (display.text?.endIndex)!))!)
+    }
+    func clearLastNumber(symbol: String) {
+        var symb = symbol
+        while symb != "" {
+            display.text?.remove(at: (display.text?.index(before: (display.text?.endIndex)!))!)
+            symb.remove(at: (symb.index(before: (symb.endIndex))))
+        }
+        
     }
     
     var isResult = false
