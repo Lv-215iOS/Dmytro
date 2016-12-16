@@ -15,12 +15,6 @@ class ViewController: UIViewController {
     var prior = false
     
     func touchButton(symbol: String) {
-        if prior == true {
-            brain.stack[CalculatorBrain.counter-1] = String(sqrt(Double(String(brain.stack[CalculatorBrain.counter]))!))
-            prior = false
-            brain.stack.remove(at: CalculatorBrain.counter)
-            CalculatorBrain.counter -= 1
-        }
         switch symbol {
         case "+":
             outputController?.appendSymbol(symbol: symbol)
@@ -44,7 +38,7 @@ class ViewController: UIViewController {
             brain.binary(operation: .Div)
         case "√":
             outputController?.appendSymbol(symbol: symbol)
-            prior = true
+//            prior = true
             brain.stack.append(symbol)
             CalculatorBrain.counter += 1
             brain.unary(operation: .Sqrt)
@@ -61,6 +55,12 @@ class ViewController: UIViewController {
             
             brain.digit(value: Double(symbol)!)
         }
+//        if prior == true {
+//            brain.stack[CalculatorBrain.counter-1] = String(sqrt(Double(String(brain.stack[CalculatorBrain.counter]))!))
+//            prior = false
+//            brain.stack.remove(at: CalculatorBrain.counter)
+//            CalculatorBrain.counter -= 1
+//        }
     }
     
     override func viewDidLoad() {

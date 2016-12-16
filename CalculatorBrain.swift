@@ -76,7 +76,15 @@ class CalculatorBrain: CalcBrainInterface
     
     func DoCalc() -> Double {
         res += Double(String(stack[0]))!
-        for var index in 0..<CalculatorBrain.counter {
+        var index = 0
+        while index < CalculatorBrain.counter {
+            if stack[index+1] == "√" {
+                stack[index+1] = String(sqrt(Double(String(stack[index+2]))!))
+                stack.remove(at: index+2)
+                print(CalculatorBrain.counter)
+                CalculatorBrain.counter -= 1
+                print(CalculatorBrain.counter)
+            }
             switch stack[index] {
             case "+":
                 res += Double(String(stack[index+1]))!
@@ -86,13 +94,14 @@ class CalculatorBrain: CalcBrainInterface
                 res *= Double(String(stack[index+1]))!
             case "÷":
                 res /= Double(String(stack[index+1]))!
-            case "√":
-                stack[index] = String(sqrt(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
-                index -= 1
+//            case "√":
+//                stack[index] = String(sqrt(Double(String(stack[index+1]))!))
+//                stack.remove(at: index+1)
+//                index -= 1
             default:
                 break
             }
+            index += 1
         }
         stack = []
         CalculatorBrain.counter = 0
