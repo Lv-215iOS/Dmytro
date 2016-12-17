@@ -53,8 +53,9 @@ class CalculatorBrain: CalcBrainInterface
 {
     var inputString = ""
     var stack: [String] = []
-    var res: Double = 0.0
-    static var counter = 0    
+    static var counter = 0
+    static var brackets = false
+    static var index = 0
     
     func digit(value: Double) {
         inputString += String(Int(value))
@@ -70,7 +71,7 @@ class CalculatorBrain: CalcBrainInterface
     func utility(operation: UtilityOperation){
         if operation == .Equal {
             let temp = DoCalc()
-            res = 0
+//            res = 0
             result?(temp,nil)
 //            inputString = "\(temp)"
         } else {
@@ -81,129 +82,166 @@ class CalculatorBrain: CalcBrainInterface
     var result: ((Double?, Error?) -> ())?
     
     func DoCalc() -> Double {
-        var index = 0
-        if var tmp: Double = Double(stack[0]) {
-            res += Double(String(stack[0]))!
-            index += 1
+        var res: Double = 0.0
+        if !CalculatorBrain.brackets {
+            CalculatorBrain.index = 0
+            if var tmp: Double = Double(stack[0]) {
+                res += Double(String(stack[0]))!
+//                CalculatorBrain.index += 1
+            }
+            
         }
-        while index < CalculatorBrain.counter {
-            switch stack[index] {
+        while CalculatorBrain.index < CalculatorBrain.counter {
+            print("counter = \(CalculatorBrain.counter)")
+            if stack[CalculatorBrain.index+1] == "(" {
+                CalculatorBrain.brackets = true
+                var temp = CalculatorBrain.index+1
+                CalculatorBrain.index += 2
+                stack[temp] = String(DoCalc())
+                CalculatorBrain.brackets = false
+                CalculatorBrain.index += 1
+                print(CalculatorBrain.index)
+                while (temp < CalculatorBrain.index) {
+                    stack.remove(at: CalculatorBrain.index)
+                    CalculatorBrain.index -= 1
+                }
+                CalculatorBrain.index -= 1
+                CalculatorBrain.counter = CalculatorBrain.index
+                print(CalculatorBrain.index)
+//                break
+            }
+            print(CalculatorBrain.index)
+            if  stack[CalculatorBrain.index+1] == ")" {
+                break
+            }
+            switch stack[CalculatorBrain.index] {
             case "√":
-                stack[index] = String(sqrt(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(sqrt(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "!":
-                stack[index] = String(Factorial(n: Int(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(Factorial(n: Int(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "sin":
-                stack[index] = String(sin(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(sin(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "cos":
-                stack[index] = String(cos(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(cos(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "tg":
-                stack[index] = String(tan(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(tan(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "ctg":
-                stack[index] = String(1/tan(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(1/tan(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "sinh":
-                stack[index] = String(sinh(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(sinh(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "cosh":
-                stack[index] = String(cosh(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(cosh(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "tgh":
-                stack[index] = String(tanh(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(tanh(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "ctgh":
-                stack[index] = String(1/tanh(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(1/tanh(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "ln":
-                stack[index] = String(log(Double(stack[index+1])!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(log(Double(stack[CalculatorBrain.index+1])!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "log":
-                stack[index] = String(log10(Double(stack[index+1])!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(log10(Double(stack[CalculatorBrain.index+1])!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "ctg":
-                stack[index] = String(1/tan(Double(String(stack[index+1]))!))
-                stack.remove(at: index+1)
+                stack[CalculatorBrain.index] = String(1/tan(Double(String(stack[CalculatorBrain.index+1]))!))
+                stack.remove(at: CalculatorBrain.index+1)
                 print(CalculatorBrain.counter)
                 CalculatorBrain.counter -= 1
                 print(CalculatorBrain.counter)
-                res = Double(stack[index])!
+                res = Double(stack[CalculatorBrain.index])!
             case "+":
-                res += Double(String(stack[index+1]))!
-                index += 1
+                res += Double(String(stack[CalculatorBrain.index+1]))!
+                CalculatorBrain.index += 1
             case "-":
-                res -= Double(String(stack[index+1]))!
-                index += 1
+                res -= Double(String(stack[CalculatorBrain.index+1]))!
+                CalculatorBrain.index += 1
             case "✕":
-                res *= Double(String(stack[index+1]))!
-                index += 1
+                res *= Double(String(stack[CalculatorBrain.index+1]))!
+                CalculatorBrain.index += 1
             case "÷":
-                res /= Double(String(stack[index+1]))!
-                index += 1
+                res /= Double(String(stack[CalculatorBrain.index+1]))!
+                CalculatorBrain.index += 1
             case "^":
-                res = pow(res, Double(String(stack[index+1]))!)
-                index += 1
+                res = pow(res, Double(String(stack[CalculatorBrain.index+1]))!)
+                CalculatorBrain.index += 1
             case "%":
-                res = res.truncatingRemainder(dividingBy: Double(String(stack[index+1]))!)
-                index += 1
+                res = res.truncatingRemainder(dividingBy: Double(String(stack[CalculatorBrain.index+1]))!)
+                CalculatorBrain.index += 1
             default:
+//                if CalculatorBrain.index == 0 {
+//                    res += Double(stack[CalculatorBrain.index])!
+//                }
+                if CalculatorBrain.brackets && res == 0 {
+                    print(CalculatorBrain.index)
+                    res += Double(stack[CalculatorBrain.index])!
+                }
+                CalculatorBrain.index += 1
                 break
             }
         }
-        stack = []
-        CalculatorBrain.counter = 0
-        stack.append(String(res))
+        if !CalculatorBrain.brackets {
+            stack = []
+            CalculatorBrain.counter = 0
+            stack.append(String(res))
+        }
+        
         return res
     }
     

@@ -138,7 +138,7 @@ class ViewController: UIViewController {
             brain.stack = []
             CalculatorBrain.counter = 0
             brain.utility(operation: .Clean)
-            brain.res = 0
+//            brain.res = 0
         case "⌫":
             outputController?.clearLastSymbol()
             print(CalculatorBrain.counter)
@@ -153,6 +153,16 @@ class ViewController: UIViewController {
         case "=":
             outputController?.appendSymbol(symbol: symbol)
             brain.utility(operation: .Equal)
+        case "(":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+            brain.utility(operation: .LeftBracket)
+        case ")":
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+            brain.utility(operation: .RightBracket)
         default:
             if outputController?.display.text == "0" {
                 outputController?.clearScreen()
