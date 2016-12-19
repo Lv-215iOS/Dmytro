@@ -29,6 +29,14 @@ class InputController: UIInputViewController {
         // Dispose of any resources that can be recreated.
     }
     
+//    var currentDraw
+    
+//    func drawRect(rect: CGRect) {
+//        var path = UIBezierPath(ovalIn: rect)
+//        UIColor.green.setFill()
+//        path.fill()
+//    }
+    
 
       
     

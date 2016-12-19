@@ -13,6 +13,11 @@ protocol OutputProtocol {
 }
 
 class OutputController: UIViewController{
+    @IBOutlet weak var labelError: UILabel!
+    
+    func setWarning(name: String) {
+        labelError.text = name
+    }
     
     func appendSymbol(symbol: String) {
         if display.text != nil {
