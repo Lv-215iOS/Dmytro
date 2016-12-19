@@ -30,11 +30,7 @@ class InputController: UIInputViewController {
     }
     
 
-    
-    
-    
-    
-    
+      
     
     //    private var userIsInTheMiddleOfTyping = false
     //    private var dot = false

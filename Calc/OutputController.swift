@@ -22,6 +22,7 @@ class OutputController: UIViewController{
         }
     }
     
+    
     func setResult(symbol: String) {
         display.text = symbol
     }
