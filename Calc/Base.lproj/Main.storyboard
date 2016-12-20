@@ -470,11 +470,16 @@
                         <outlet property="btn7" destination="HxE-GO-TXG" id="MXP-gg-gzU"/>
                         <outlet property="btn8" destination="ECB-Ew-R9w" id="cyg-8n-bSE"/>
                         <outlet property="btn9" destination="v9r-aS-SrD" id="jud-f1-CMv"/>
+                        <outlet property="btnAdd" destination="VcK-Ic-MYp" id="tfv-xd-XWx"/>
+                        <outlet property="btnBack" destination="3C2-yO-JGx" id="lSq-iz-ORq"/>
                         <outlet property="btnC" destination="Y1v-Gw-93n" id="UiH-MZ-ipg"/>
                         <outlet property="btnCos" destination="Ps5-23-WlC" id="z7d-Bg-yeS"/>
                         <outlet property="btnCosh" destination="LtW-sS-Nyd" id="YZ7-Xj-vFf"/>
                         <outlet property="btnCtgh" destination="YWm-hx-HIA" id="1Ok-vr-yw5"/>
+                        <outlet property="btnDiv" destination="Xj6-Fd-U3l" id="fbS-r5-ahw"/>
+                        <outlet property="btnDot" destination="QUd-jd-eCg" id="nBc-tI-Khw"/>
                         <outlet property="btnE" destination="KQO-zG-0pQ" id="Tex-sJ-68F"/>
+                        <outlet property="btnEqual" destination="7D5-mn-h1i" id="isU-Yc-0pt"/>
                         <outlet property="btnFact" destination="f7L-R6-LAK" id="2Oj-Db-2oc"/>
                         <outlet property="btnForDesign" destination="bXU-Qy-Rct" id="H8L-A1-Ihg"/>
                         <outlet property="btnLeftBracket" destination="9zp-Eh-HcJ" id="qVm-mZ-sy0"/>
@@ -484,19 +489,24 @@
                         <outlet property="btnMMinus" destination="ZmR-cK-QZc" id="dQQ-RC-aZK"/>
                         <outlet property="btnMPlus" destination="oBk-xw-UP9" id="8Fi-sg-4dN"/>
                         <outlet property="btnMRead" destination="nPV-ic-4Vu" id="Xmx-qS-Fu4"/>
+                        <outlet property="btnMinus" destination="Xgz-S4-HcL" id="PLw-44-OL7"/>
+                        <outlet property="btnMod" destination="jk6-Ka-rUN" id="0Lq-BL-y9N"/>
+                        <outlet property="btnMul" destination="xL0-29-Jjh" id="1eG-1U-bLy"/>
                         <outlet property="btnPi" destination="deH-Ol-uL2" id="z0q-wo-kPt"/>
+                        <outlet property="btnPlusMinus" destination="gPi-kl-pd5" id="Rbz-kh-Xse"/>
                         <outlet property="btnPow" destination="lHI-LC-Gkh" id="Tnr-YC-6YW"/>
                         <outlet property="btnRand" destination="d1j-3C-hQC" id="rxN-2Q-KDE"/>
                         <outlet property="btnRightBracket" destination="2BB-Wk-oam" id="U5U-IY-8MS"/>
                         <outlet property="btnSin" destination="bfj-jY-irE" id="1FC-jo-clL"/>
                         <outlet property="btnSinh" destination="uM7-Qv-cTF" id="NbT-WW-Fhl"/>
+                        <outlet property="btnSqrt" destination="T3x-Fc-CzT" id="6Xp-2P-yBI"/>
                         <outlet property="btnTg" destination="U5L-jT-661" id="UkH-Y1-1zA"/>
                         <outlet property="btnTgh" destination="fhb-kp-ykg" id="MFT-lB-OVF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fqv-he-BJs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-199.19999999999999" y="-293.25337331334333"/>
+            <point key="canvasLocation" x="-386" y="-168"/>
         </scene>
     </scenes>
 </document>
