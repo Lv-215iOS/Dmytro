@@ -14,6 +14,7 @@ import UIKit
 
     override func draw(_ rect: CGRect) {
         var path = UIBezierPath(ovalIn: rect)
+        
         fillColor.setFill()
         path.fill()
         
@@ -41,6 +42,8 @@ import UIKit
         plusPath.stroke()
         
     }
+    
+//    func setPosition
     
     /*
     // Only override draw() if you perform custom drawing.
