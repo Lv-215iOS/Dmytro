@@ -198,7 +198,7 @@ class CalculatorBrain:  CalcBrainInterface
                 return false
             }
         case .MClear:
-            if stack == [] {
+            if stack == [] && valueInMemory == 0 {
                 return false
             }
         case .MRead:
@@ -219,7 +219,7 @@ class CalculatorBrain:  CalcBrainInterface
     
     func DoCalc() -> Double {
         
-        if !CalculatorBrain.brackets {
+        if !CalculatorBrain.brackets && stack != []{
             CalculatorBrain.index = 0
             if var _: Double = Double(stack[0]) {     //tmp -> _
                 res += Double(String(stack[0]))!
@@ -289,7 +289,7 @@ class CalculatorBrain:  CalcBrainInterface
                 break
             }
         }
-        if !CalculatorBrain.brackets {
+        if !CalculatorBrain.brackets && stack != [] {
             stack = []
             CalculatorBrain.counter = 0
             stack.append(String(res))

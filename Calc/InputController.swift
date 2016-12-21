@@ -14,6 +14,7 @@ protocol InputProtocol {
 
 class InputController: UIInputViewController {
     var viewController: ViewController? = nil
+    var curve: Curve = Curve()
     
     @IBOutlet weak var btnPow: UIButton!
     @IBOutlet weak var btnFact: UIButton!
@@ -72,10 +73,46 @@ class InputController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        horizontalPosition()
+        switch UIDevice.current.orientation.isLandscape {
+        case true:
+            verticalPosition()
+            curve = Curve()
+            //                RoundButton.frame.origin = CGPoint(x: 450, y: 150)
+            print("ok")
+        case false:
+            horizontalPosition()
+            //                RoundButton.frame.origin = CGPoint(x: 50, y: 50)
+            print("not ok")
+            curve = Curve()
+        }
         
 //        btn0.frame.origin = CGPoint(x: 0.05*screenWidth, y: 0.6*screenHeight)
         
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    @IBOutlet weak var RoundButton: UIButton!
+    weak var btn: UIButton!
+    
+    var l: CALayer {
+        return btn.layer
+    }
+    
+    func setUpLayer() {
+//        l.backgroundColor = UIColor.blue.cgColor
+        l.borderWidth = 1.0
+        l.borderColor = UIColor.black.cgColor
+        
+//        l.shadowOpacity = 0.7
+//        l.shadowRadius = 10.0
+        l.cornerRadius = 35.0
+        
+    }
+    
+    func horizontalPosition() {
         btnPow.frame.origin = CGPoint(x:-100, y:-100)
         btnFact.frame.origin = CGPoint(x:-100, y:-100)
         btnTgh.frame.origin = CGPoint(x:-100, y:-100)
@@ -95,54 +132,70 @@ class InputController: UIInputViewController {
         btnRightBracket.frame.origin = CGPoint(x:-100, y:-100)
         RoundButton.frame.origin = CGPoint(x:-100, y:-100)
         btnForDesign.frame.origin = CGPoint(x:-100, y:-100)
-    }
-    
-    func horizontalPosition() {
+        
         btn = btn0
         setUpLayer()
+        
         btn = btn1
         setUpLayer()
+        
         btn = btn2
         setUpLayer()
+        
         btn = btn3
         setUpLayer()
+        
         btn = btn4
         setUpLayer()
+        
         btn = btn5
         setUpLayer()
+        
         btn = btn6
         setUpLayer()
+        
         btn = btn7
         setUpLayer()
+        
         btn = btn8
         setUpLayer()
+        
         btn = btn9
         setUpLayer()
         
         btn = btnMClean
         setUpLayer()
+        
         btn = btnMPlus
         setUpLayer()
+        
         btn = btnMMinus
         setUpLayer()
+        
         btn = btnC
         setUpLayer()
+        
         btn = btnMRead
         setUpLayer()
         
         btn = btnMul
         setUpLayer()
+        
         btn = btnDiv
         setUpLayer()
+        
         btn = btnMod
         setUpLayer()
+        
         btn = btnSqrt
         setUpLayer()
         
         btn = btnAdd
         setUpLayer()
+        
         btn = btnMinus
         setUpLayer()
+        
         btn = btnPlusMinus
         setUpLayer()
         
@@ -151,19 +204,14 @@ class InputController: UIInputViewController {
         
         btn = btnDot
         setUpLayer()
+        
         btn = btnBack
         setUpLayer()
         
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
-//        var kx: CGFloat = 0.04
-//        var ky: CGFloat = 0.58
-        var xySize: CGFloat = screenWidth/5*0.9 //0.00025*screenWidth*screenHeight
-//        var koefX: CGFloat = screenWidth/5 * kx/32
-//        var koefY: CGFloat = screenHeight/5 * 0.0006
-//        var kilk: CGFloat = 1.5
-        
+        var xySize: CGFloat = screenWidth/5*0.9
         var x: CGFloat
         var y: CGFloat
         
@@ -187,12 +235,12 @@ class InputController: UIInputViewController {
         y = 0.58 * screenHeight
         setButton(btn: btnMul)
         
-        x = 0.48 * screenWidth
+        x = 0.46 * screenWidth
         y = 0.48 * screenHeight
         setButton(btn: btnDiv)
         
         x = 0.61 * screenWidth
-        y = 0.4 * screenHeight
+        y = 0.39 * screenHeight
         setButton(btn: btnMod)
         
         x = 0.8 * screenWidth
@@ -203,205 +251,264 @@ class InputController: UIInputViewController {
         y = 0.58 * screenHeight
         setButton(btn: btnC)
         
-        x = 0.29 * screenWidth
+        x = 0.26 * screenWidth
         y = 0.47 * screenHeight
         setButton(btn: btnMRead)
         
-        x = 0.42 * screenWidth
-        y = 0.37 * screenHeight
+        x = 0.39 * screenWidth
+        y = 0.36 * screenHeight
         setButton(btn: btnMPlus)
         
-        x = 0.6 * screenWidth
-        y = 0.29 * screenHeight
+        x = 0.59 * screenWidth
+        y = 0.28 * screenHeight
         setButton(btn: btnMMinus)
         
         x = 0.8 * screenWidth
-        y = 0.24 * screenHeight
+        y = 0.26 * screenHeight
         setButton(btn: btnMClean)
         
-        x = 0.02 * screenWidth
+        x = 0.01 * screenWidth
         y = 0.58 * screenHeight
         setButton(btn: btnBack)
         
-        x = 0.09 * screenWidth
+        x = 0.06 * screenWidth
         y = 0.47 * screenHeight
         setButton(btn: btn0)
         
-        x = 0.22 * screenWidth
+        x = 0.13 * screenWidth
         y = 0.37 * screenHeight
         setButton(btn: btn1)
         
-        x = 0.37 * screenWidth
-        y = 0.27 * screenHeight
+        x = 0.25 * screenWidth
+        y = 0.28 * screenHeight
         setButton(btn: btn2)
         
-        x = 0.54 * screenWidth
-        y = 0.19 * screenHeight
+        x = 0.41 * screenWidth
+        y = 0.21 * screenHeight
         setButton(btn: btn3)
         
-        x = 0.72 * screenWidth
-        y = 0.14 * screenHeight
+        x = 0.6 * screenWidth
+        y = 0.17 * screenHeight
         setButton(btn: btn4)
         
-        x = 0.03 * screenWidth
-        y = 0.37 * screenHeight
+        x = 0.8 * screenWidth
+        y = 0.15 * screenHeight
+        setButton(btn: btnPlusMinus)
+        
+        x = 0.01 * screenWidth
+        y = 0.27 * screenHeight
         setButton(btn: btnDot)
         
         x = 0.13 * screenWidth
-        y = 0.27 * screenHeight
+        y = 0.19 * screenHeight
         setButton(btn: btn5)
         
-        x = 0.24 * screenWidth
-        y = 0.18 * screenHeight
+        x = 0.28 * screenWidth
+        y = 0.13 * screenHeight
         setButton(btn: btn6)
         
-        x = 0.39 * screenWidth
-        y = 0.11 * screenHeight
+        x = 0.45 * screenWidth
+        y = 0.08 * screenHeight
         setButton(btn: btn7)
         
-        x = 0.56 * screenWidth
-        y = 0.07 * screenHeight
+        x = 0.63 * screenWidth
+        y = 0.05 * screenHeight
         setButton(btn: btn8)
         
-        x = 0.75 * screenWidth
-        y = 0.02 * screenHeight
+        x = 0.81 * screenWidth
+        y = 0.04 * screenHeight
         setButton(btn: btn9)
-        
-        x = 0.03 * screenWidth
-        y = 0.18 * screenHeight
-        setButton(btn: btnPlusMinus)
-        
-//        func setButtonFive(btn: UIButton) {
-//            btn.frame = CGRect(x: kx*screenWidth, y: ky*screenHeight, width: xySize, height: xySize)
-//            kx += koefX*kilk
-//            kilk += 0.21
-//            ky -= koefY
-//            koefY *= 0.75
-//        }
-//        
-//        func setButtonFour(btn: UIButton) {
-//            btn.frame = CGRect(x: kx*screenWidth, y: ky*screenHeight, width: xySize, height: xySize)
-//            kx += koefX*kilk
-//            kilk += 0.08
-//            ky -= koefY
-//            koefY *= 0.75
-//        }
-//        
-//        func setButtonThree(btn: UIButton) {
-//            btn.frame = CGRect(x: kx*screenWidth, y: ky*screenHeight, width: xySize, height: xySize)
-//            kx += koefX*kilk
-//            kilk += 0.01
-//            ky -= koefY
-//            koefY *= 0.75
-//        }
-//        
-//        setButtonFive(btn: btn0)
-//        setButtonFive(btn: btn1)
-//        setButtonFive(btn: btn2)
-//        setButtonFive(btn: btn3)
-//        setButtonFive(btn: btn4)
-//        
-//        kx = 0.04
-//        ky = 0.42
-//        kilk = 1.5
-//        koefX = screenWidth/5 * kx/32
-//        koefY = screenHeight/5 * 0.0006
-//        setButtonFive(btn: btn5)
-//        setButtonFive(btn: btn6)
-//        setButtonFive(btn: btn7)
-//        setButtonFive(btn: btn8)
-//        setButtonFive(btn: btn9)
-//        
-//        kx = 0.04
-//        ky = 0.26
-//        kilk = 1.5
-//        koefX = screenWidth/5 * kx/32
-//        koefY = screenHeight/5 * 0.0006
-//        setButtonFive(btn: btnC)
-//        setButtonFive(btn: btnMPlus)
-//        setButtonFive(btn: btnMMinus)
-//        setButtonFive(btn: btnMRead)
-//        setButtonFive(btn: btnMClean)
-//        
-//        kx = 0.25
-//        ky = 0.58
-//        kilk = 0.2
-//        koefX = screenWidth/5 * kx/32
-//        koefY = screenHeight/5 * 0.0006
-//        setButtonFour(btn: btnMul)
-//        setButtonFour(btn: btnDiv)
-//        setButtonFour(btn: btnMod)
-//        setButtonFour(btn: btnSqrt)
-//        
-//        kx = 0.45
-//        ky = 0.58
-//        kilk = 0.15
-//        koefX = screenWidth/5 * kx/32
-//        koefY = screenHeight/5 * 0.0006
-//        setButtonThree(btn: btnAdd)
-//        setButtonThree(btn: btnMinus)
-//        setButtonThree(btn: btnPlusMinus)
-//        
-//        kx = 0.75
-//        ky = 0.58
-//        kilk = 0.15
-//        koefX = screenWidth/5 * kx/32
-//        koefY = screenHeight/5 * 0.0006
-//        setButtonThree(btn: btnEqual)
-//        
-//        kx = 0.04
-//        ky = 0.10
-//        kilk = 1.5
-//        koefX = screenWidth/5 * kx/32
-//        koefY = screenHeight/5 * 0.0006
-//        setButtonFive(btn: btnDot)
-//        setButtonFive(btn: btnBack)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    @IBOutlet weak var RoundButton: UIButton!
-    weak var btn: UIButton!
-//    var l (btn: UIButton) -> CALayer {
-//        return btn.layer
-//    }
-    var l: CALayer {
-        return btn.layer
-    }
-    
-    func setUpLayer() {
-//        l.backgroundColor = UIColor.blue.cgColor
-        l.borderWidth = 1.0
-//        l.borderColor = UIColor.black.cgColor
+    func verticalPosition() {
+        btn3.frame.origin = CGPoint(x:-100, y:-100)
+        btn4.frame.origin = CGPoint(x:-100, y:-100)
+        btn5.frame.origin = CGPoint(x:-100, y:-100)
+        btn6.frame.origin = CGPoint(x:-100, y:-100)
+        btn7.frame.origin = CGPoint(x:-100, y:-100)
+        btn8.frame.origin = CGPoint(x:-100, y:-100)
+        btn9.frame.origin = CGPoint(x:-100, y:-100)
+        btnBack.frame.origin = CGPoint(x:-100, y:-100)
+        btnMClean.frame.origin = CGPoint(x:-100, y:-100)
+        btnMMinus.frame.origin = CGPoint(x:-100, y:-100)
+        btnMPlus.frame.origin = CGPoint(x:-100, y:-100)
+        btnMRead.frame.origin = CGPoint(x:-100, y:-100)
+        btnDot.frame.origin = CGPoint(x:-100, y:-100)
+        btnAdd.frame.origin = CGPoint(x:-100, y:-100)
+        btnDiv.frame.origin = CGPoint(x:-100, y:-100)
+        btnMod.frame.origin = CGPoint(x:-100, y:-100)
+        btnMul.frame.origin = CGPoint(x:-100, y:-100)
+        btnEqual.frame.origin = CGPoint(x:-100, y:-100)
+        btnSqrt.frame.origin = CGPoint(x:-100, y:-100)
         
-//        l.shadowOpacity = 0.7
-//        l.shadowRadius = 10.0
-        l.cornerRadius = 35.0
+//        btn = btnPow
+//        setUpLayer()
+//        
+//        btn = btnFact
+//        setUpLayer()
+//        
+//        btn = btnTgh
+//        setUpLayer()
+//        
+//        btn = btnCtgh
+//        setUpLayer()
+//        
+//        btn = btnCosh
+//        setUpLayer()
+//        
+//        btn = btnSinh
+//        setUpLayer()
+//        
+//        btn = btnSin
+//        setUpLayer()
+//        
+//        btn = bthCtg
+//        setUpLayer()
+//        
+//        btn = btnLog
+//        setUpLayer()
+//        
+//        btn = btnLn
+//        setUpLayer()
+//        
+//        btn = btnPi
+//        setUpLayer()
+//        
+//        btn = btnE
+//        setUpLayer()
+//        
+//        btn = btnCos
+//        setUpLayer()
+//        
+//        btn = btnTg
+//        setUpLayer()
+//        
+//        btn = btnRand
+//        setUpLayer()
+//        
+//        btn = btnLeftBracket
+//        setUpLayer()
+//        
+//        btn = btnRightBracket
+//        setUpLayer()
+//        
+//        btn = RoundButton
+//        setUpLayer()
+//        
+//        btn = btnForDesign
+//        setUpLayer()
+//        
+//        btn = btn0
+//        setUpLayer()
         
-    }
-    
-        override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-            switch UIDevice.current.orientation.isLandscape {
-            case true:
-//                RoundButton.frame.origin = CGPoint(x: 450, y: 150)
-                print("ok")
-            case false:
-//                RoundButton.frame.origin = CGPoint(x: 50, y: 50)
-                print("not ok")
-            }
-            
+        btn = btn1
+        setUpLayer()
+
+//        btn = btn2
+//        setUpLayer()
+//        
+//        btn = btn3
+//        setUpLayer()
+//        
+//        btn = btn4
+//        setUpLayer()
+//        
+//        btn = btn5
+//        setUpLayer()
+//        
+//        btn = btn6
+//        setUpLayer()
+//        
+//        btn = btn7
+//        setUpLayer()
+//        
+//        btn = btn8
+//        setUpLayer()
+//        
+//        btn = btn9
+//        setUpLayer()
+//        
+//        btn = btnMClean
+//        setUpLayer()
+//        
+//        btn = btnMPlus
+//        setUpLayer()
+//        
+//        btn = btnMMinus
+//        setUpLayer()
+//        
+//        btn = btnC
+//        setUpLayer()
+//        
+//        btn = btnMRead
+//        setUpLayer()
+//        
+//        btn = btnMul
+//        setUpLayer()
+//        
+//        btn = btnDiv
+//        setUpLayer()
+//        
+//        btn = btnMod
+//        setUpLayer()
+//        
+//        btn = btnSqrt
+//        setUpLayer()
+//        
+//        btn = btnAdd
+//        setUpLayer()
+//        
+//        btn = btnMinus
+//        setUpLayer()
+//        
+//        btn = btnPlusMinus
+//        setUpLayer()
+//        
+//        btn = btnEqual
+//        setUpLayer()
+//        
+//        btn = btnDot
+//        setUpLayer()
+//        
+//        btn = btnBack
+//        setUpLayer()
+        
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        var xySize: CGFloat = screenWidth/5*0.9
+        var x: CGFloat
+        var y: CGFloat
+        
+        func setButton(btn: UIButton) {
+            btn.frame = CGRect(x: x, y: y, width: xySize, height: xySize)
         }
+        
+        x = 0.4 * screenWidth
+        y = 0.6 * screenHeight
+        setButton(btn: btn1)
+
+    }
     
-    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        switch UIDevice.current.orientation.isLandscape {
+        case true:
+            verticalPosition()
+            //                RoundButton.frame.origin = CGPoint(x: 450, y: 150)
+            print("ok")
+        case false:
+            horizontalPosition()
+            //                RoundButton.frame.origin = CGPoint(x: 50, y: 50)
+            print("not ok")
+        }
+    }
     
 //
 //    
 //    @IBAction private func touchDigit(_ sender: UIButton) {
 //        valueFromButton = sender.currentTitle!
 ////        viewController?.valueFromInput = sender.currentTitle!
-//        
+//
 //        if let digit = sender.currentTitle {
 //            if digit == "." && dot == true {
 //                return

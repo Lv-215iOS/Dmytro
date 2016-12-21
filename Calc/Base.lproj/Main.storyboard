@@ -100,7 +100,7 @@
                         <viewControllerLayoutGuide type="top" id="DgM-3S-u7w"/>
                         <viewControllerLayoutGuide type="bottom" id="czB-IE-22L"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="RAd-Se-9fx">
+                    <view key="view" contentMode="scaleToFill" id="RAd-Se-9fx" customClass="Curve" customModule="Calc" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="512"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

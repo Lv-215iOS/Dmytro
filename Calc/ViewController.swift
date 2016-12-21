@@ -15,12 +15,14 @@ class ViewController: UIViewController {
     var dot: Double = 1
     
     func touchButton(symbol: String) {
+        var symbol: String = symbol
         if (outputController?.isResult)! {
-            outputController?.appendSymbol(symbol: String((Double(brain.stack[0]) == Double(Int(Double(brain.stack[0])!))) ? String(Int(Double(brain.stack[0])!)) : symbol))
-            
+            if brain.stack != [] {
+                outputController?.appendSymbol(symbol: String((Double(brain.stack[0]) == Double(Int(Double(brain.stack[0])!))) ? String(Int(Double(brain.stack[0])!)) : symbol))
+            }
             outputController?.isResult = false
         }
-        if brain.stack == [] {
+        if brain.stack == [] && symbol != "⌫" && symbol != "="{
             CalculatorBrain.counter -= 1
         }
         switch symbol {
@@ -151,28 +153,25 @@ class ViewController: UIViewController {
             } else {
                 brain.valueInMemory = 0
             }
-        case "MR":
-            if !brain.utility(operation: .MRead) {
-                outputController?.setWarning(name: String("There is nothing in memory"))
-            } else {
-                outputController?.setResult(symbol: String(brain.valueInMemory))
-                outputController?.appendSymbol(symbol: String(brain.valueInMemory))
-//                if brain.valueInMemory != Double(brain.stack[CalculatorBrain.counter]) {
-//                    brain.stack[CalculatorBrain.counter] = String(brain.valueInMemory)
-//                }
-            }
+        
         case "⌫":
             outputController?.clearLastSymbol()
             print(CalculatorBrain.counter)
-            let smth: Int? = Int(brain.stack[CalculatorBrain.counter])      //var -> let
-            if smth == nil || smth!/10 == 0 {
-                brain.stack.remove(at: CalculatorBrain.counter)
-                CalculatorBrain.counter -= 1
-            } else {
-                brain.stack[CalculatorBrain.counter].remove(at: brain.stack[CalculatorBrain.counter].index(before: brain.stack[CalculatorBrain.counter].endIndex))
+            if brain.stack != [] {
+                let smth: Int? = Int(brain.stack[CalculatorBrain.counter])      //var -> let
+                if smth == nil || smth!/10 == 0 {
+                    brain.stack.remove(at: CalculatorBrain.counter)
+                    CalculatorBrain.counter -= 1
+                } else {
+                    brain.stack[CalculatorBrain.counter].remove(at: brain.stack[CalculatorBrain.counter].index(before: brain.stack[CalculatorBrain.counter].endIndex))
+                }
             }
             //should use -> brain.utility(operation: .CleanLast)
         case "=":
+            print(CalculatorBrain.counter)
+            if brain.stack == [] {
+                break
+            }
             outputController?.appendSymbol(symbol: symbol)
             if brain.utility(operation: .Equal) {
                 //do something
@@ -187,6 +186,20 @@ class ViewController: UIViewController {
             brain.stack.append(symbol)
             CalculatorBrain.counter += 1
             //should use -> brain.utility(operation: .RightBracket)
+            
+        case "MR":
+            if !brain.utility(operation: .MRead) {
+                outputController?.setWarning(name: String("There is nothing in memory"))
+            } else {
+                outputController?.setResult(symbol: String(brain.valueInMemory))
+                outputController?.appendSymbol(symbol: String(brain.valueInMemory))
+                symbol = String(brain.valueInMemory)
+                fallthrough
+                //                if brain.valueInMemory != Double(brain.stack[CalculatorBrain.counter]) {
+                //                    brain.stack[CalculatorBrain.counter] = String(brain.valueInMemory)
+                //                }
+            }
+            
         default:
             if outputController?.display.text == "0" {
                 outputController?.clearScreen()
@@ -204,12 +217,13 @@ class ViewController: UIViewController {
                 }
                 
             }
-            
+            print(brain.stack.count)
+            print(CalculatorBrain.counter)
             if brain.stack.count == CalculatorBrain.counter {
                 brain.stack.append(symbol)
                 dot = 1
             } else if dot == 1{
-                brain.stack[CalculatorBrain.counter] = String(Int(String(brain.stack[CalculatorBrain.counter]))! * 10 + Int(symbol)!)
+                brain.stack[CalculatorBrain.counter] = String(Int(String(brain.stack[CalculatorBrain.counter]))! * 10 + (Int(symbol))!)
             } else if dot < 1 {
                 brain.stack[CalculatorBrain.counter] = String(Double(String(brain.stack[CalculatorBrain.counter]))! + Double(symbol)!*dot)
                 dot *= 0.1

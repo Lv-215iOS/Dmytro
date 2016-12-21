@@ -17,6 +17,8 @@
 		25707DBC1DF82EAD008CE313 /* CalcUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25707DBB1DF82EAD008CE313 /* CalcUITests.swift */; };
 		258F09A11E0976A000DD7DB8 /* btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 258F09A01E0976A000DD7DB8 /* btn.png */; };
 		25A459111DFE9EDD00FDA3C3 /* OutputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A459101DFE9EDD00FDA3C3 /* OutputController.swift */; };
+		25CA68B01E0AD2C200A02AD3 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CA68AF1E0AD2C200A02AD3 /* Curve.swift */; };
+		25CA68B21E0AEB3500A02AD3 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CA68B11E0AEB3500A02AD3 /* LaunchScreen.swift */; };
 		25CEC60C1E01410D00330178 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CEC60B1E01410D00330178 /* InputController.swift */; };
 		25F9F83F1E08585D00A06C83 /* DrawButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9F83E1E08585D00A06C83 /* DrawButton.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +57,8 @@
 		25707DBD1DF82EAD008CE313 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		258F09A01E0976A000DD7DB8 /* btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn.png; sourceTree = "<group>"; };
 		25A459101DFE9EDD00FDA3C3 /* OutputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputController.swift; sourceTree = "<group>"; };
+		25CA68AF1E0AD2C200A02AD3 /* Curve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
+		25CA68B11E0AEB3500A02AD3 /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		25CEC60B1E01410D00330178 /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		25F9F83E1E08585D00A06C83 /* DrawButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +119,8 @@
 				25A459101DFE9EDD00FDA3C3 /* OutputController.swift */,
 				25CEC60B1E01410D00330178 /* InputController.swift */,
 				25F9F83E1E08585D00A06C83 /* DrawButton.swift */,
+				25CA68AF1E0AD2C200A02AD3 /* Curve.swift */,
+				25CA68B11E0AEB3500A02AD3 /* LaunchScreen.swift */,
 			);
 			path = Calc;
 			sourceTree = "<group>";
@@ -283,6 +289,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25CA68B21E0AEB3500A02AD3 /* LaunchScreen.swift in Sources */,
+				25CA68B01E0AD2C200A02AD3 /* Curve.swift in Sources */,
 				25CEC60C1E01410D00330178 /* InputController.swift in Sources */,
 				256E74891DF88C990032AF51 /* CalculatorBrain.swift in Sources */,
 				25A459111DFE9EDD00FDA3C3 /* OutputController.swift in Sources */,

@@ -33,7 +33,10 @@ class OutputController: UIViewController{
     }
     
     func clearLastSymbol() {
-        display.text?.remove(at: (display.text?.index(before: (display.text?.endIndex)!))!)
+        if display.text != "" {
+            display.text?.remove(at: (display.text?.index(before: (display.text?.endIndex)!))!)
+        }
+        
     }
     func clearLastNumber(symbol: String) {
         var symb = symbol
