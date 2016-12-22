@@ -14,6 +14,14 @@ protocol OutputProtocol {
 
 class OutputController: UIViewController{
     @IBOutlet weak var labelError: UILabel!
+    @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var displayResult: UILabel!
+    var viewController : ViewController? = nil
+    var isResult = false
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
     
     func setWarning(name: String) {
         labelError.text = name
@@ -38,16 +46,14 @@ class OutputController: UIViewController{
         }
         
     }
+    
     func clearLastNumber(symbol: String) {
         var symb = symbol
         while symb != "" {
             display.text?.remove(at: (display.text?.index(before: (display.text?.endIndex)!))!)
             symb.remove(at: (symb.index(before: (symb.endIndex))))
         }
-        
     }
-    
-    var isResult = false
     
     func setResult(symbol: String) {
         if Double(symbol) == Double(Int(Double(symbol)!)) {
@@ -57,28 +63,4 @@ class OutputController: UIViewController{
         }
         isResult = true
     }
-    
-    
-    @IBOutlet weak var display: UILabel!
-    var viewController : ViewController? = nil
-    
-    @IBOutlet weak var displayResult: UILabel!
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "OutputControllerSegue" {
-//            viewController = segue.source as? ViewController
-//        }
-//    }
-    
 }

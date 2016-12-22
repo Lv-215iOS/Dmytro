@@ -65,6 +65,7 @@ class CalculatorBrain:  CalcBrainInterface
     var res: Double = 0.0
     var outputController: OutputController? = nil
     var inputController: InputController? = nil
+    var result: ((Double?, Error?) -> ())?
     
     func digit() {
         if CalculatorBrain.brackets && res == 0 {
@@ -98,7 +99,7 @@ class CalculatorBrain:  CalcBrainInterface
     
     func unary(operation: UnaryOperation) {
         switch operation {
-        case .Sqrt:
+        case .Sqrt:        
             stack[CalculatorBrain.index] = String(sqrt(Double(String(stack[CalculatorBrain.index+1]))!))
             stack.remove(at: CalculatorBrain.index+1)
             print(CalculatorBrain.counter)
@@ -184,6 +185,7 @@ class CalculatorBrain:  CalcBrainInterface
             res = Double(stack[CalculatorBrain.index])!
         }
     }
+    
     func utility(operation: UtilityOperation) -> Bool{
         switch operation {
         case .Equal:
@@ -215,21 +217,20 @@ class CalculatorBrain:  CalcBrainInterface
         return true
     }
     
-    var result: ((Double?, Error?) -> ())?
-    
     func DoCalc() -> Double {
         
-        if !CalculatorBrain.brackets && stack != []{
+        if !CalculatorBrain.brackets && stack != [] && !(stack[1] == "√" || stack[1] == "sin" || stack[1] == "cos" || stack[1] == "tg" || stack[1] == "ctg" || stack[1] == "ln" || stack[1] == "log" || stack[1] == "sinh" || stack[1] == "cosh" || stack[1] == "tgh" || stack[1] == "ctgh" || stack[1] == "!") {
             CalculatorBrain.index = 0
-            if var _: Double = Double(stack[0]) {     //tmp -> _
+            if var _: Double = Double(stack[0]) {
                 res += Double(String(stack[0]))!
             }
             
         }
+        
         while CalculatorBrain.index < CalculatorBrain.counter {
             if stack[CalculatorBrain.index+1] == "(" {
                 CalculatorBrain.brackets = true
-                let temp = CalculatorBrain.index+1      //var -> let
+                let temp = CalculatorBrain.index+1
                 CalculatorBrain.index += 2
                 stack[temp] = String(DoCalc())
                 CalculatorBrain.brackets = false
@@ -241,10 +242,22 @@ class CalculatorBrain:  CalcBrainInterface
                 CalculatorBrain.index -= 1
                 CalculatorBrain.counter = CalculatorBrain.index
             }
-            print(CalculatorBrain.index)
-            if  stack[CalculatorBrain.index+1] == ")" {
+            
+            if stack[CalculatorBrain.index+1] == ")" {
                 break
             }
+            
+            
+            if CalculatorBrain.index+2 < stack.count, var _: Double = Double(stack[CalculatorBrain.index+2]) {
+                print(stack[0])
+            } else {
+                if stack[CalculatorBrain.index+1] == "√" || stack[CalculatorBrain.index+1] == "sin" || stack[CalculatorBrain.index+1] == "cos" || stack[CalculatorBrain.index+1] == "tg" || stack[CalculatorBrain.index+1] == "ctg" || stack[CalculatorBrain.index+1] == "ln" || stack[CalculatorBrain.index+1] == "log" || stack[CalculatorBrain.index+1] == "sinh" || stack[CalculatorBrain.index+1] == "cosh" || stack[CalculatorBrain.index+1] == "tgh" || stack[CalculatorBrain.index+1] == "ctgh" || stack[CalculatorBrain.index+1] == "!" {
+                    let temp = stack[CalculatorBrain.index]
+                    stack[CalculatorBrain.index] = stack[CalculatorBrain.index+1]
+                    stack[CalculatorBrain.index+1] = temp
+                }
+            }
+            
             switch stack[CalculatorBrain.index] {
             case "+":
                 binary(operation: .Plus)
@@ -307,120 +320,4 @@ class CalculatorBrain:  CalcBrainInterface
     func Rand() -> Float {
         return Float(arc4random()) /  Float(UInt32.max) * 1000.0 - 500.0
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "OutputControllerSegue" {
-//            outputController = segue.destination as? OutputController
-//            outputController?.viewController = self
-//        } else if segue.identifier == "InputControllerSegue" {
-//            inputController = segue.destination as? InputController
-//            inputController?.viewController = self
-//        }
-//    }
-    
-    
-//    private var accumulator = 0.0
-//    private var internalProgram = [AnyObject]()
-//    var valueFromButton: String = ""
-//    var viewController: ViewController? = nil
-    
-    
-    
-//    func getValue() {
-//        button = (viewController?.getButton)!
-//    }
-    
-    
-//    func setOperand(operand: Double) { //getAlllabel
-//        accumulator = operand
-//        internalProgram.append(operand as AnyObject)    //??
-//    }
-//    
-//    private var  operations: Dictionary<String,Operation> = [
-//        "π" : Operation.Constant(M_PI),
-//        "e" : Operation.Constant(M_E),
-//        "√" : Operation.UnaryOperation(sqrt),
-//        "cos" : Operation.UnaryOperation(cos),
-//        "✕" : Operation.BinaryOperation({ $0 * $1}),
-//        "=" : Operation.Equals,
-//        "÷" : Operation.BinaryOperation({ $0 / $1}),
-//        "+" : Operation.BinaryOperation({ $0 + $1}),
-//        "-" : Operation.BinaryOperation({ $0 - $1}),
-//        "+-" : Operation.UnaryOperation({ -$0 })
-//        
-//    ]
-//    
-//    private enum Operation {
-//        case Constant(Double)
-//        case UnaryOperation ((Double) -> Double)
-//        case BinaryOperation ((Double, Double) -> Double)
-//        case Equals
-//        
-//    }
-//    
-//    func performOperation(symbol: String) {
-//        internalProgram.append(symbol as AnyObject)
-//        if let operation = operations[symbol]{
-//            switch operation {
-//            case .Constant(let value) :
-//                accumulator = value
-//            case .UnaryOperation(let function) :
-//                accumulator = function(accumulator)
-//            case .BinaryOperation(let function) :
-//                pending = PendingDinaryOperationInfo(binaryFunction: function, firstOperand: accumulator)
-//            case .Equals :
-//                executePendingBinaryOperation()
-//                
-//            }
-//        }
-//    }
-//    
-//    private func executePendingBinaryOperation()
-//    {
-//        if pending != nil {
-//            accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
-//            pending = nil
-//        }
-//    }
-//    
-//    private var pending: PendingDinaryOperationInfo?
-//    
-//    private struct  PendingDinaryOperationInfo {
-//        var  binaryFunction : (Double, Double) -> Double
-//        var  firstOperand : Double
-//        
-//    }
-//    
-//    typealias PropertyList = AnyObject
-//    
-//    var program: PropertyList {
-//        get {
-//            return internalProgram as CalculatorBrain.PropertyList
-//        }
-//        set {
-//            clear()
-//            if let arrayOfOps = newValue as? [AnyObject] {
-//                for op in arrayOfOps {
-//                    if let operand = op as? Double {
-//                        setOperand(operand: operand)
-//                    } else if let operation = op as? String {
-//                        performOperation(symbol: operation)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    
-//    func clear() {
-////        valueFromButton = (viewController?.valueFromButton)!
-//        accumulator = 0.0
-//        pending = nil
-//        internalProgram.removeAll()     //??
-//    }
-//    
-//    var result: Double {
-//        get {
-//            return accumulator
-//        }
-//    }
 }

@@ -9,15 +9,12 @@
 import UIKit
 
 @IBDesignable class DrawButton: UIButton {
-    
     @IBInspectable var fillColor: UIColor = UIColor.green
-
+    
     override func draw(_ rect: CGRect) {
-        var path = UIBezierPath(ovalIn: rect)
-        
+        let path = UIBezierPath(ovalIn: rect)
         fillColor.setFill()
         path.fill()
-        
         drawSign()
     }
     
@@ -29,7 +26,7 @@ import UIKit
         let plusHeigh: CGFloat = 3.0
         let plusWidth: CGFloat = min(bounds.width, bounds.height) * 0.6
         
-        var plusPath = UIBezierPath()
+        let plusPath = UIBezierPath()
         plusPath.lineWidth = plusHeigh
         
         plusPath.move(to: CGPoint(x: bounds.width/2 - plusWidth/2, y: bounds.height/2))
@@ -40,17 +37,5 @@ import UIKit
         
         UIColor.white.setStroke()
         plusPath.stroke()
-        
     }
-    
-//    func setPosition
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
 }

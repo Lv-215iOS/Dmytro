@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,21 +18,21 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cfc-hS-v0U">
-                                <rect key="frame" x="0.0" y="155" width="375" height="512"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <segue destination="rDt-C9-f1X" kind="embed" identifier="InputControllerSegue" id="anP-iq-zP3"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qxS-ea-vaY">
-                                <rect key="frame" x="16" y="9" width="343" height="138"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="202"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="W2w-Cb-RNF" kind="embed" identifier="OutputControllerSegue" id="YUF-Z2-taN"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="bottom" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cfc-hS-v0U">
+                                <rect key="frame" x="0.0" y="225" width="414" height="511"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <segue destination="rDt-C9-f1X" kind="embed" identifier="InputControllerSegue" id="anP-iq-zP3"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -44,7 +44,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="485.60000000000002" y="-375.56221889055473"/>
+            <point key="canvasLocation" x="485.50724637681162" y="-375.81521739130437"/>
         </scene>
         <!--Output Controller-->
         <scene sceneID="T4e-O1-dd8">
@@ -55,27 +55,27 @@
                         <viewControllerLayoutGuide type="bottom" id="fH1-T9-Tj8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="t3x-In-xZr">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="138"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="202"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="SCB-HQ-UkE">
-                                <rect key="frame" x="16" y="94" width="311" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HSA-8e-Srq">
-                                <rect key="frame" x="16" y="39" width="311" height="34"/>
+                                <rect key="frame" x="20" y="52" width="374" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZN-ai-Cg9">
-                                <rect key="frame" x="16" y="10" width="311" height="15"/>
+                                <rect key="frame" x="52" y="29" width="311" height="15"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="SCB-HQ-UkE">
+                                <rect key="frame" x="20" y="94" width="374" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -90,7 +90,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z2I-NC-tWJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1312.8" y="-640.47976011994012"/>
+            <point key="canvasLocation" x="1311.5942028985507" y="-641.57608695652175"/>
         </scene>
         <!--Input Controller-->
         <scene sceneID="L84-lg-mxK">
@@ -101,7 +101,7 @@
                         <viewControllerLayoutGuide type="bottom" id="czB-IE-22L"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="RAd-Se-9fx" customClass="Curve" customModule="Calc" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="512"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="491"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPV-ic-4Vu">
@@ -457,6 +457,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="414" height="491"/>
                     <connections>
                         <outlet property="RoundButton" destination="mOL-m4-JA1" id="xaK-JU-4ch"/>
                         <outlet property="bthCtg" destination="vKj-A0-7EW" id="IaX-Cl-1Hk"/>
@@ -506,7 +508,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fqv-he-BJs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-386" y="-168"/>
+            <point key="canvasLocation" x="-229" y="276"/>
         </scene>
     </scenes>
 </document>

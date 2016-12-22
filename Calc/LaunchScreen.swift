@@ -8,8 +8,7 @@
 
 import UIKit
 
-class LaunchScreen: UIInputViewController {    
-    
+class LaunchScreen: UIInputViewController {       
     
     
 }

@@ -17,14 +17,16 @@ class ViewController: UIViewController {
     func touchButton(symbol: String) {
         var symbol: String = symbol
         if (outputController?.isResult)! {
-            if brain.stack != [] {
+            if brain.stack != [] && (Double(brain.stack[0]) == Double(Int(Double(brain.stack[0])!))) {
                 outputController?.appendSymbol(symbol: String((Double(brain.stack[0]) == Double(Int(Double(brain.stack[0])!))) ? String(Int(Double(brain.stack[0])!)) : symbol))
+                
             }
             outputController?.isResult = false
         }
-        if brain.stack == [] && symbol != "⌫" && symbol != "="{
+        if brain.stack == [] && symbol != "⌫" && symbol != "=" {
             CalculatorBrain.counter -= 1
         }
+        
         switch symbol {
         case "+":
             outputController?.appendSymbol(symbol: symbol)
@@ -134,7 +136,8 @@ class ViewController: UIViewController {
             outputController?.clearScreen()
             brain.stack = []
             CalculatorBrain.counter = 0
-            //should use -> brain.utility(operation: .Clean)
+            brain.res = 0
+        //should use -> brain.utility(operation: .Clean)
         case "M+":
             if !brain.utility(operation: .MPlus) {
                 outputController?.setWarning(name: String("Write the number or press '='"))
@@ -153,12 +156,12 @@ class ViewController: UIViewController {
             } else {
                 brain.valueInMemory = 0
             }
-        
+            
         case "⌫":
             outputController?.clearLastSymbol()
             print(CalculatorBrain.counter)
             if brain.stack != [] {
-                let smth: Int? = Int(brain.stack[CalculatorBrain.counter])      //var -> let
+                let smth: Int? = Int(brain.stack[CalculatorBrain.counter])
                 if smth == nil || smth!/10 == 0 {
                     brain.stack.remove(at: CalculatorBrain.counter)
                     CalculatorBrain.counter -= 1
@@ -166,7 +169,7 @@ class ViewController: UIViewController {
                     brain.stack[CalculatorBrain.counter].remove(at: brain.stack[CalculatorBrain.counter].index(before: brain.stack[CalculatorBrain.counter].endIndex))
                 }
             }
-            //should use -> brain.utility(operation: .CleanLast)
+        //should use -> brain.utility(operation: .CleanLast)
         case "=":
             print(CalculatorBrain.counter)
             if brain.stack == [] {
@@ -180,7 +183,7 @@ class ViewController: UIViewController {
             outputController?.appendSymbol(symbol: symbol)
             brain.stack.append(symbol)
             CalculatorBrain.counter += 1
-            //should use -> brain.utility(operation: .LeftBracket)
+        //should use -> brain.utility(operation: .LeftBracket)
         case ")":
             outputController?.appendSymbol(symbol: symbol)
             brain.stack.append(symbol)
@@ -210,15 +213,13 @@ class ViewController: UIViewController {
                 if CalculatorBrain.counter == -1 {
                     CalculatorBrain.counter += 1
                 } else {
-                    let smth: Int? = Int(brain.stack[CalculatorBrain.counter])      //var -> let
+                    let smth: Int? = Int(brain.stack[CalculatorBrain.counter])
                     if smth == nil {
                         CalculatorBrain.counter += 1
                     }
                 }
-                
             }
-            print(brain.stack.count)
-            print(CalculatorBrain.counter)
+            
             if brain.stack.count == CalculatorBrain.counter {
                 brain.stack.append(symbol)
                 dot = 1
