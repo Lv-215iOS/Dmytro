@@ -78,12 +78,14 @@ class InputController: UIInputViewController {
         myFrame = CGPoint(x: view.frame.width, y: view.frame.height)
         screenWidth = Double(myFrame.x)
         screenHeight = Double(myFrame.y)
-        xySize = screenWidth/5*0.9
+        
         
         if screenWidth > screenHeight {
             verticalPosition()
+            xySize = screenWidth/10*0.9
         } else {
             horizontalPosition()
+            xySize = screenWidth/5*0.9
         }
     }
     
@@ -91,10 +93,8 @@ class InputController: UIInputViewController {
         switch UIDevice.current.orientation.isLandscape {
         case true:
             verticalPosition()
-            print("2ok")
         case false:
             horizontalPosition()
-            print("2not ok")
         }
     }
     
@@ -211,8 +211,6 @@ class InputController: UIInputViewController {
         btn = btnBack
         setUpLayer()
         
-        //81-80=+1
-        //85-58=+27
         setButton(x: 0.81 * screenWidth, y: 0.85 * screenHeight, btn: btnEqual)
         setButton(x: 0.61 * screenWidth, y: 0.84 * screenHeight, btn: btnAdd)
         setButton(x: 0.77 * screenWidth, y: 0.69 * screenHeight, btn: btnMinus)
@@ -308,23 +306,45 @@ class InputController: UIInputViewController {
         btnDot.frame.origin = CGPoint(x:-100, y:-100)
         btnBack.frame.origin = CGPoint(x:-100, y:-100)
         
+        btn = btn0
+        setUpLayer()
         
         btn = btn1
         setUpLayer()
         
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-        var xySize: CGFloat = screenHeight/5*0.9
-        var x: CGFloat
-        var y: CGFloat
+        btn = btn2
+        setUpLayer()
         
-        func setButton(btn: UIButton) {
-            btn.frame = CGRect(x: x, y: y, width: xySize, height: xySize)
-        }
+        btn = btn3
+        setUpLayer()
         
-        x = 0.3 * screenWidth
-        y = 0.9 * screenHeight
-        setButton(btn: btn1)
+        btn = btn4
+        setUpLayer()
+        
+        btn = btn5
+        setUpLayer()
+        
+        btn = btn6
+        setUpLayer()
+        
+        btn = btn7
+        setUpLayer()
+        
+        btn = btn8
+        setUpLayer()
+        
+        btn = btn9
+        setUpLayer()
+        
+        setButton(x: 0.01 * screenWidth, y: 0.01 * screenHeight, btn: btn0)
+        setButton(x: 0.1 * screenWidth, y: 0.07 * screenHeight, btn: btn1)
+        setButton(x: 0.18 * screenWidth, y: 0.25 * screenHeight, btn: btn2)
+        setButton(x: 0.1 * screenWidth, y: 0.43 * screenHeight, btn: btn3)
+        setButton(x: 0.01 * screenWidth, y: 0.49 * screenHeight, btn: btn4)
+//        setButton(x: 0.05 * screenWidth, y: 0.1 * screenHeight, btn: btn5)
+//        setButton(x: 0.13 * screenWidth, y: 0.2 * screenHeight, btn: btn6)
+//        setButton(x: 0.21 * screenWidth, y: 0.3 * screenHeight, btn: btn7)
+//        setButton(x: 0.13 * screenWidth, y: 0.4 * screenHeight, btn: btn8)
+//        setButton(x: 0.05 * screenWidth, y: 0.5 * screenHeight, btn: btn9)
     }
 }

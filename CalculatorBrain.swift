@@ -86,7 +86,12 @@ class CalculatorBrain:  CalcBrainInterface
             res *= Double(String(stack[CalculatorBrain.index+1]))!
             CalculatorBrain.index += 1
         case .Div:
-            res /= Double(String(stack[CalculatorBrain.index+1]))!
+            if Double(String(stack[CalculatorBrain.index+1]))! == 0 {
+                res = 0
+                outputController?.setWarning(name: String("Infinity"))
+            } else {
+                res /= Double(String(stack[CalculatorBrain.index+1]))!
+            }
             CalculatorBrain.index += 1
         case .Pow:
             res = pow(res, Double(String(stack[CalculatorBrain.index+1]))!)
@@ -224,7 +229,6 @@ class CalculatorBrain:  CalcBrainInterface
             if var _: Double = Double(stack[0]) {
                 res += Double(String(stack[0]))!
             }
-            
         }
         
         while CalculatorBrain.index < CalculatorBrain.counter {
