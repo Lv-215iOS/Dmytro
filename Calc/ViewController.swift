@@ -14,6 +14,30 @@ class ViewController: UIViewController {
     var brain = CalculatorBrain()
     var dot: Double = 1
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        brain.result = { (value, error)->() in
+            if (value != nil) {
+                self.outputController?.setResult(symbol: "\(value!)")
+            }
+        }
+        inputController?.buttonTouched = { [unowned self] (operation)->() in self.touchButton(symbol: operation)}
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "OutputControllerSegue" {
+            outputController = segue.destination as? OutputController
+            outputController?.viewController = self
+        } else if segue.identifier == "InputControllerSegue" {
+            inputController = segue.destination as? InputController
+            inputController?.viewController = self
+        }
+    }
+    
+    func setText(text: String) {
+        outputController?.setWarning(name: text)
+    }
+    
     func touchButton(symbol: String) {
         var symbol: String = symbol
         if (outputController?.isResult)! {
@@ -198,9 +222,6 @@ class ViewController: UIViewController {
                 outputController?.appendSymbol(symbol: String(brain.valueInMemory))
                 symbol = String(brain.valueInMemory)
                 fallthrough
-                //                if brain.valueInMemory != Double(brain.stack[CalculatorBrain.counter]) {
-                //                    brain.stack[CalculatorBrain.counter] = String(brain.valueInMemory)
-                //                }
             }
             
         default:
@@ -229,29 +250,6 @@ class ViewController: UIViewController {
                 brain.stack[CalculatorBrain.counter] = String(Double(String(brain.stack[CalculatorBrain.counter]))! + Double(symbol)!*dot)
                 dot *= 0.1
             }
-        }
-    }
-    
-    func setText(text: String) {
-        outputController?.setWarning(name: text)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        brain.result = { (value, error)->() in
-            if (value != nil) {
-                self.outputController?.setResult(symbol: "\(value!)")
-            }
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "OutputControllerSegue" {
-            outputController = segue.destination as? OutputController
-            outputController?.viewController = self
-        } else if segue.identifier == "InputControllerSegue" {
-            inputController = segue.destination as? InputController
-            inputController?.viewController = self
         }
     }
 }

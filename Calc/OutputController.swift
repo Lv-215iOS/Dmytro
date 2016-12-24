@@ -9,7 +9,12 @@
 import UIKit
 
 protocol OutputProtocol {
-    func Output()
+    func setWarning(name: String)
+    func appendSymbol(symbol: String)
+    func clearScreen()
+    func clearLastSymbol()
+    func clearLastNumber(symbol: String)
+    func setResult(symbol: String)
 }
 
 class OutputController: UIViewController{

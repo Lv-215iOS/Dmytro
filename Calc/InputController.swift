@@ -9,7 +9,7 @@
 import UIKit
 
 protocol InputProtocol {
-    func Input()
+    var buttonTouched: ((String) -> ())? {get set}
 }
 
 class InputController: UIInputViewController {
@@ -59,42 +59,46 @@ class InputController: UIInputViewController {
     
     var viewController: ViewController? = nil
     var myFrame = CGPoint(x: 0, y: 0)
-    var screenWidth = 0.0
-    var screenHeight = 0.0
     var xySize = 0.0
     var screenSize = UIScreen.main.bounds
     var x = 0.0
     var y = 0.0
-    
-    @IBAction func touchButton(_ sender: UIButton) {
-        viewController?.touchButton(symbol: sender.currentTitle!)
-    }
+    var buttonTouched: ((String) -> ())? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    @IBAction func touchButton(_ sender: UIButton) {
+        buttonTouched?(sender.currentTitle!)
+        // MARK: delete it - viewController?.touchButton(symbol: sender.currentTitle!)
+    }
+    
     override func viewWillLayoutSubviews() {
         myFrame = CGPoint(x: view.frame.width, y: view.frame.height)
-        screenWidth = Double(myFrame.x)
-        screenHeight = Double(myFrame.y)
-        
+        let screenWidth = Double(myFrame.x)
+        let screenHeight = Double(myFrame.y)
         
         if screenWidth > screenHeight {
-            verticalPosition()
+            verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight)
+            //MARK: change it
             xySize = screenWidth/10*0.9
         } else {
-            horizontalPosition()
+            horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight)
             xySize = screenWidth/5*0.9
+            _ = Curve(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         }
     }
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        let screenWidth = Double(myFrame.x)
+        let screenHeight = Double(myFrame.y)
         switch UIDevice.current.orientation.isLandscape {
         case true:
-            verticalPosition()
+            verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight)
+            _ = Curve(frame: CGRect(x: 0, y: 0, width: screenHeight, height: screenWidth))
         case false:
-            horizontalPosition()
+            horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight)
         }
     }
     
@@ -115,7 +119,7 @@ class InputController: UIInputViewController {
         btn.frame = CGRect(x: x, y: y, width: xySize, height: xySize)
     }
     
-    func horizontalPosition() {
+    func horizontalPosition(screenWidth: Double, screenHeight: Double) {
         btnPow.frame.origin = CGPoint(x:-100, y:-100)
         btnFact.frame.origin = CGPoint(x:-100, y:-100)
         btnTgh.frame.origin = CGPoint(x:-100, y:-100)
@@ -242,7 +246,7 @@ class InputController: UIInputViewController {
         setButton(x: 0.82 * screenWidth, y: 0.06 * screenHeight, btn: btn9)
     }
     
-    func verticalPosition() {
+    func verticalPosition(screenWidth: Double, screenHeight: Double) {
         btn3.frame.origin = CGPoint(x:-100, y:-100)
         btn4.frame.origin = CGPoint(x:-100, y:-100)
         btn5.frame.origin = CGPoint(x:-100, y:-100)

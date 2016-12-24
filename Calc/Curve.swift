@@ -10,17 +10,20 @@ import UIKit
 
 class Curve: UIView {
     var context = UIGraphicsGetCurrentContext()
-    var x1: CGFloat = 0
-    var y1: CGFloat = 0
-    var x2: CGFloat = 0
-    var y2: CGFloat = 0
-    var x_ctrl: CGFloat = 0
-    var y_ctrl: CGFloat = 0
-    var inputController = InputController()
-    var screenWidth: CGFloat = 0.0
-    var screenHeight: CGFloat = 0.0
-    var xySize: CGFloat = 0.0
-    var myFrame = CGPoint(x: 0, y: 0)
+    var x1: Double = 0
+    var y1: Double = 0
+    var x2: Double = 0
+    var y2: Double = 0
+    var x_ctrl: Double = 0
+    var y_ctrl: Double = 0
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     func setCurve(){
         context = UIGraphicsGetCurrentContext()
@@ -32,21 +35,9 @@ class Curve: UIView {
         context?.strokePath()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        screenWidth = 414
-        screenHeight = 511
-//        screenWidth = UIScreen.main.bounds.width
-//        screenHeight = UIScreen.main.bounds.height
-//        inputController.viewWillLayoutSubviews()
-        print(self.inputController.view.frame.height)
-    }
-    
-    func horizontal() {
-        xySize = (screenWidth + screenHeight)/10*0.9
-        
-        //95-80=
-        //57+23=
+    func horizontal( screenWidth: Double, screenHeight: Double) {
+        let screenHeight = screenHeight
+        let screenWidth = screenWidth
         x1 = 0.81 * screenWidth
         y1 = screenHeight
         x2 = screenWidth
@@ -96,23 +87,15 @@ class Curve: UIView {
         setCurve()
     }
     
-    func checkOrientation () {
-        print("cool")
-        switch UIDevice.current.orientation.isLandscape {
-        case true:
-            context = nil
-            print("ok")
-        case false:
-            horizontal()
-            print("not ok")
+    func vertical(screenWidth: Double, screenHeight: Double) {
+        context = nil
+    }
+    
+    override func draw(_ rect: CGRect) {        
+        if frame.width > frame.height {
+            vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
+        } else {
+            horizontal(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
         }
     }
-    
-    override func draw(_ rect: CGRect) {
-        checkOrientation()
-    }
-    
-    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-    }
-    
 }
