@@ -85,6 +85,7 @@ class InputController: UIInputViewController {
             xySize = screenWidth/10*0.9
         } else {
             horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight)
+            //TODO: fix radius of a button
             xySize = screenWidth/5*0.9
             _ = Curve(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         }

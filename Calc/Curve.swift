@@ -43,7 +43,7 @@ class Curve: UIView {
         x2 = screenWidth
         y2 = 0.85 * screenHeight
         x_ctrl = 0.75 * screenWidth
-        y_ctrl = 0.99 * screenWidth
+        y_ctrl = 1.16 * screenWidth
         setCurve()
         
         x1 = 0.61 * screenWidth
@@ -51,7 +51,7 @@ class Curve: UIView {
         x2 = screenWidth
         y2 = 0.69 * screenHeight
         x_ctrl = 0.55 * screenWidth
-        y_ctrl = 0.79 * screenWidth
+        y_ctrl = 0.92 * screenWidth
         setCurve()
         
         x1 = 0.42 * screenWidth
@@ -59,7 +59,7 @@ class Curve: UIView {
         x2 = screenWidth
         y2 = 0.53 * screenHeight
         x_ctrl = 0.36 * screenWidth
-        y_ctrl = 0.6 * screenWidth
+        y_ctrl = 0.68 * screenWidth
         setCurve()
         
         x1 = 0.23 * screenWidth
@@ -67,7 +67,7 @@ class Curve: UIView {
         x2 = screenWidth
         y2 = 0.38 * screenHeight
         x_ctrl = 0.16 * screenWidth
-        y_ctrl = 0.41 * screenWidth
+        y_ctrl = 0.45 * screenWidth
         setCurve()
         
         x1 = 0.04 * screenWidth
