@@ -64,6 +64,7 @@ class InputController: UIInputViewController {
     var x = 0.0
     var y = 0.0
     var buttonTouched: ((String) -> ())? = nil
+//    static var curve = Curve()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +72,6 @@ class InputController: UIInputViewController {
     
     @IBAction func touchButton(_ sender: UIButton) {
         buttonTouched?(sender.currentTitle!)
-        // MARK: delete it - viewController?.touchButton(symbol: sender.currentTitle!)
     }
     
     override func viewWillLayoutSubviews() {
@@ -80,14 +80,13 @@ class InputController: UIInputViewController {
         let screenHeight = Double(myFrame.y)
         
         if screenWidth > screenHeight {
-            verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight)
-            //MARK: change it
-            xySize = screenWidth/10*0.9
+            xySize = (screenWidth + screenHeight)/15*0.9
+            verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
         } else {
-            horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight)
-            //TODO: fix radius of a button
-            xySize = screenWidth/5*0.9
-            _ = Curve(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+            xySize = (screenWidth + screenHeight)/12*0.9
+            horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
+//            InputController.curve = Curve(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+//            _ = Curve(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         }
     }
     
@@ -96,10 +95,13 @@ class InputController: UIInputViewController {
         let screenHeight = Double(myFrame.y)
         switch UIDevice.current.orientation.isLandscape {
         case true:
-            verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight)
-            _ = Curve(frame: CGRect(x: 0, y: 0, width: screenHeight, height: screenWidth))
+            verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
+//            InputController.curve = Curve(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+//            curve = Curve(frame: CGRect(x: 0, y: 0, width: screenHeight, height: screenWidth))
+//            _ = Curve(frame: CGRect(x: 50, y: 50, width: screenHeight, height: screenWidth))
         case false:
-            horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight)
+            horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
+//            curve = Curve(frame: CGRect(x: 0, y: 0, width: screenHeight, height: screenWidth))
         }
     }
     
@@ -120,7 +122,7 @@ class InputController: UIInputViewController {
         btn.frame = CGRect(x: x, y: y, width: xySize, height: xySize)
     }
     
-    func horizontalPosition(screenWidth: Double, screenHeight: Double) {
+    func horizontalPosition(screenWidth: Double, screenHeight: Double, radius: Double) {
         btnPow.frame.origin = CGPoint(x:-100, y:-100)
         btnFact.frame.origin = CGPoint(x:-100, y:-100)
         btnTgh.frame.origin = CGPoint(x:-100, y:-100)
@@ -247,7 +249,7 @@ class InputController: UIInputViewController {
         setButton(x: 0.82 * screenWidth, y: 0.06 * screenHeight, btn: btn9)
     }
     
-    func verticalPosition(screenWidth: Double, screenHeight: Double) {
+    func verticalPosition(screenWidth: Double, screenHeight: Double, radius: Double) {
         btn3.frame.origin = CGPoint(x:-100, y:-100)
         btn4.frame.origin = CGPoint(x:-100, y:-100)
         btn5.frame.origin = CGPoint(x:-100, y:-100)
@@ -341,15 +343,147 @@ class InputController: UIInputViewController {
         btn = btn9
         setUpLayer()
         
-        setButton(x: 0.01 * screenWidth, y: 0.01 * screenHeight, btn: btn0)
-        setButton(x: 0.1 * screenWidth, y: 0.07 * screenHeight, btn: btn1)
-        setButton(x: 0.18 * screenWidth, y: 0.25 * screenHeight, btn: btn2)
-        setButton(x: 0.1 * screenWidth, y: 0.43 * screenHeight, btn: btn3)
-        setButton(x: 0.01 * screenWidth, y: 0.49 * screenHeight, btn: btn4)
-//        setButton(x: 0.05 * screenWidth, y: 0.1 * screenHeight, btn: btn5)
-//        setButton(x: 0.13 * screenWidth, y: 0.2 * screenHeight, btn: btn6)
-//        setButton(x: 0.21 * screenWidth, y: 0.3 * screenHeight, btn: btn7)
-//        setButton(x: 0.13 * screenWidth, y: 0.4 * screenHeight, btn: btn8)
-//        setButton(x: 0.05 * screenWidth, y: 0.5 * screenHeight, btn: btn9)
+        btn = btnDot
+        setUpLayer()
+        
+        btn = btnAdd
+        setUpLayer()
+        
+        btn = btnMinus
+        setUpLayer()
+        
+        btn = btnMul
+        setUpLayer()
+        
+        btn = btnDiv
+        setUpLayer()
+        
+        btn = btnMod
+        setUpLayer()
+        
+        btn = btnEqual
+        setUpLayer()
+        
+        btn = btnRand
+        setUpLayer()
+        
+        btn = btnSqrt
+        setUpLayer()
+        
+        btn = btnBack
+        setUpLayer()
+        
+        btn = btnC
+        setUpLayer()
+        
+        btn = btnSin
+        setUpLayer()
+        
+        btn = btnSqrt
+        setUpLayer()
+        
+        btn = btnLeftBracket
+        setUpLayer()
+        
+        btn = btnRightBracket
+        setUpLayer()
+        
+        btn = btnLog
+        setUpLayer()
+        
+        btn = btnLn
+        setUpLayer()
+        
+        btn = btnPow
+        setUpLayer()
+        
+        btn = btnFact
+        setUpLayer()
+        
+        btn = btnE
+        setUpLayer()
+        
+        btn = btnPi
+        setUpLayer()
+        
+        btn = btnMClean
+        setUpLayer()
+        
+        btn = btnMRead
+        setUpLayer()
+        
+        btn = btnMPlus
+        setUpLayer()
+        
+        btn = btnMMinus
+        setUpLayer()
+        
+        btn = btnCos
+        setUpLayer()
+        
+        btn = btnTg
+        setUpLayer()
+        
+        btn = btnSinh
+        setUpLayer()
+        
+        btn = btnCosh
+        setUpLayer()
+        
+        btn = btnTgh
+        setUpLayer()
+        
+        setButton(x: 0.01 * screenWidth, y: 0.31 * screenHeight, btn: btnDot)
+        setButton(x: 0.01 * screenWidth, y: 0.53 * screenHeight, btn: btnEqual)
+        //TODO: butto graphic        setButton(x: 0.08 * screenWidth, y: 0.42 * screenHeight, btn: btnRand)
+        
+        setButton(x: 0.07 * screenWidth, y: 0.14 * screenHeight, btn: btn0)
+        setButton(x: 0.14 * screenWidth, y: 0.24 * screenHeight, btn: btn1)
+        setButton(x: 0.19 * screenWidth, y: 0.41 * screenHeight, btn: btn2)
+        setButton(x: 0.14 * screenWidth, y: 0.58 * screenHeight, btn: btn3)
+        setButton(x: 0.07 * screenWidth, y: 0.7 * screenHeight, btn: btn4)
+        
+        setButton(x: 0.14 * screenWidth, y: 0.02 * screenHeight, btn: btnAdd)
+        setButton(x: 0.21 * screenWidth, y: 0.14 * screenHeight, btn: btnMinus)
+        setButton(x: 0.27 * screenWidth, y: 0.3 * screenHeight, btn: btnMul)
+        setButton(x: 0.27 * screenWidth, y: 0.52 * screenHeight, btn: btnDiv)
+        setButton(x: 0.21 * screenWidth, y: 0.67 * screenHeight, btn: btnMod)
+        setButton(x: 0.14 * screenWidth, y: 0.79 * screenHeight, btn: btnFact)
+        
+        setButton(x: 0.91 * screenWidth, y: 0.31 * screenHeight, btn: btnC)
+        setButton(x: 0.91 * screenWidth, y: 0.53 * screenHeight, btn: btnBack)
+        //TODO: button music:        setButton(x: 0.84 * screenWidth, y: 0.42 * screenHeight, btn: btnSin)
+        
+        setButton(x: 0.85 * screenWidth, y: 0.14 * screenHeight, btn: btn5)
+        setButton(x: 0.78 * screenWidth, y: 0.24 * screenHeight, btn: btn6)
+        setButton(x: 0.73 * screenWidth, y: 0.41 * screenHeight, btn: btn7)
+        setButton(x: 0.78 * screenWidth, y: 0.58 * screenHeight, btn: btn8)
+        setButton(x: 0.85 * screenWidth, y: 0.7 * screenHeight, btn: btn9)
+        
+        setButton(x: 0.78 * screenWidth, y: 0.02 * screenHeight, btn: btnSqrt)
+        setButton(x: 0.71 * screenWidth, y: 0.14 * screenHeight, btn: btnPow)
+        setButton(x: 0.65 * screenWidth, y: 0.3 * screenHeight, btn: btnLeftBracket)
+        setButton(x: 0.65 * screenWidth, y: 0.52 * screenHeight, btn: btnRightBracket)
+        setButton(x: 0.71 * screenWidth, y: 0.67 * screenHeight, btn: btnLog)
+        setButton(x: 0.78 * screenWidth, y: 0.79 * screenHeight, btn: btnLn)
+        
+        
+        setButton(x: 0.38 * screenWidth, y: 0.02 * screenHeight, btn: btnRand)
+        setButton(x: 0.46 * screenWidth, y: 0.02 * screenHeight, btn: btnPi)
+        setButton(x: 0.54 * screenWidth, y: 0.02 * screenHeight, btn: btnE)
+        
+        setButton(x: 0.34 * screenWidth, y: 0.79 * screenHeight, btn: btnMClean)
+        setButton(x: 0.42 * screenWidth, y: 0.79 * screenHeight, btn: btnMRead)
+        setButton(x: 0.5 * screenWidth, y: 0.79 * screenHeight, btn: btnMPlus)
+        setButton(x: 0.58 * screenWidth, y: 0.79 * screenHeight, btn: btnMMinus)
+        
+        setButton(x: 0.38 * screenWidth, y: 0.59 * screenHeight, btn: btnSin)
+        setButton(x: 0.46 * screenWidth, y: 0.59 * screenHeight, btn: btnCos)
+        setButton(x: 0.54 * screenWidth, y: 0.59 * screenHeight, btn: btnTg)
+        
+        setButton(x: 0.42 * screenWidth, y: 0.41 * screenHeight, btn: btnSinh)
+        setButton(x: 0.5 * screenWidth, y: 0.41 * screenHeight, btn: btnCosh)
+        
+        setButton(x: 0.46 * screenWidth, y: 0.24 * screenHeight, btn: btnTgh)
     }
 }

@@ -52,6 +52,22 @@ class OutputController: UIViewController{
         
     }
     
+    func getLastSymbol() -> Character {
+        if display.text?.characters.last == nil {
+            return "1"
+        }
+        return (display.text?.characters.last)!
+    }
+    
+    func getNLastSymbol(n: Int) -> String {
+        if display.text?.characters.last == nil || CalculatorBrain.counter < 0{
+            return "1"
+        } else if (display.text?.characters.count)! >= n {
+            return (display.text?.substring(from: (display.text?.index((display.text?.endIndex)!, offsetBy: n*(-1)))!))!
+        }
+        return "0"
+    }
+    
     func clearLastNumber(symbol: String) {
         var symb = symbol
         while symb != "" {

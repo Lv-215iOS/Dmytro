@@ -24,7 +24,7 @@ class Curve: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     func setCurve(){
         context = UIGraphicsGetCurrentContext()
         context?.setLineWidth(1.0)
@@ -91,7 +91,10 @@ class Curve: UIView {
         context = nil
     }
     
-    override func draw(_ rect: CGRect) {        
+    override func draw(_ rect: CGRect) {
+        if frame.width == 0 || frame.height == 0 {
+            context = nil
+        }
         if frame.width > frame.height {
             vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
         } else {

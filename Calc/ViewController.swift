@@ -153,9 +153,28 @@ class ViewController: UIViewController {
             brain.stack.append(String(M_E))
             CalculatorBrain.counter += 1
         case ".":
-            outputController?.appendSymbol(symbol: symbol)
-            //should use -> brain.utility(operation: .Dot)
-            dot *= 0.1
+            let new_symbol: String = String(describing: outputController!.getLastSymbol())
+            print(new_symbol)
+            
+            if symbol != new_symbol {
+                if CalculatorBrain.counter >= 0 && Int(String(describing: brain.stack[CalculatorBrain.counter].characters.last)) != nil {
+                    if Int(String(describing: brain.stack[CalculatorBrain.counter].characters.last))! >= 0 && Int(String(describing: brain.stack[CalculatorBrain.counter].characters.last))! <= 9 {
+                        
+                    } else {
+                        CalculatorBrain.counter += 1
+                        brain.stack[CalculatorBrain.counter] = String(0)
+                    }
+                } else if CalculatorBrain.counter < 0{
+                    CalculatorBrain.counter = 0
+                    brain.stack.append(String(0))
+                }
+                if CalculatorBrain.counter >= 0 && (Int(brain.stack[CalculatorBrain.counter]) != nil) && Double(brain.stack[CalculatorBrain.counter]) == Double(Int(brain.stack[CalculatorBrain.counter])!) {
+                    outputController?.appendSymbol(symbol: symbol)
+                    //should use -> brain.utility(operation: .Dot)
+                    dot *= 0.1
+                }
+            }
+            
         case "C":
             outputController?.clearScreen()
             brain.stack = []
@@ -195,14 +214,15 @@ class ViewController: UIViewController {
             }
         //should use -> brain.utility(operation: .CleanLast)
         case "=":
-            print(CalculatorBrain.counter)
-            if brain.stack == [] {
-                break
-            }
-            outputController?.appendSymbol(symbol: symbol)
-            if brain.utility(operation: .Equal) {
-                //do something
-            }
+                if brain.stack == [] {
+                    break
+                }
+                if String(describing: outputController!.getNLastSymbol(n: brain.stack[0].characters.count+1).characters.first!) != "=" {
+                    outputController?.appendSymbol(symbol: symbol)
+                    if brain.utility(operation: .Equal) {
+                        
+                    }
+                }
         case "(":
             outputController?.appendSymbol(symbol: symbol)
             brain.stack.append(symbol)
@@ -234,17 +254,21 @@ class ViewController: UIViewController {
                 if CalculatorBrain.counter == -1 {
                     CalculatorBrain.counter += 1
                 } else {
-                    let smth: Int? = Int(brain.stack[CalculatorBrain.counter])
+                    let smth: Double? = Double(brain.stack[CalculatorBrain.counter])
                     if smth == nil {
                         CalculatorBrain.counter += 1
                     }
                 }
             }
             
+            print("pp")
+            print(brain.stack.count)
+            print(CalculatorBrain.counter)
+            
             if brain.stack.count == CalculatorBrain.counter {
                 brain.stack.append(symbol)
                 dot = 1
-            } else if dot == 1{
+            }  else if dot == 1 {
                 brain.stack[CalculatorBrain.counter] = String(Int(String(brain.stack[CalculatorBrain.counter]))! * 10 + (Int(symbol))!)
             } else if dot < 1 {
                 brain.stack[CalculatorBrain.counter] = String(Double(String(brain.stack[CalculatorBrain.counter]))! + Double(symbol)!*dot)
