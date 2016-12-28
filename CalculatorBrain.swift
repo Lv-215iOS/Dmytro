@@ -104,7 +104,7 @@ class CalculatorBrain:  CalcBrainInterface
     
     func unary(operation: UnaryOperation) {
         switch operation {
-        case .Sqrt:        
+        case .Sqrt:
             stack[CalculatorBrain.index] = String(sqrt(Double(String(stack[CalculatorBrain.index+1]))!))
             stack.remove(at: CalculatorBrain.index+1)
             CalculatorBrain.counter -= 1
@@ -175,7 +175,7 @@ class CalculatorBrain:  CalcBrainInterface
         switch operation {
         case .Equal:
             let temp = DoCalc()
-            result?(temp,nil)
+            result?(temp,nil)            
         case .MPlus:
             if stack == [] {
                 return false
@@ -202,6 +202,13 @@ class CalculatorBrain:  CalcBrainInterface
         return true
     }
     
+    func isOperand(symbol: String) -> Bool {
+        if symbol == "+" || symbol == "-" || symbol == "✕" || symbol == "÷" || symbol == "^" || symbol == "%" {
+            return true
+        }
+        return false
+    }
+    
     func DoCalc() -> Double {
         if stack.count == 1 {
             res = Double(stack[0])!
@@ -211,7 +218,9 @@ class CalculatorBrain:  CalcBrainInterface
         if CalculatorBrain.counter >= 1 && !CalculatorBrain.brackets && stack != [] && !(stack[1] == "√" || stack[1] == "sin" || stack[1] == "cos" || stack[1] == "tg" || stack[1] == "ctg" || stack[1] == "ln" || stack[1] == "log" || stack[1] == "sinh" || stack[1] == "cosh" || stack[1] == "tgh" || stack[1] == "ctgh" || stack[1] == "!") {
             CalculatorBrain.index = 0
             if var _: Double = Double(stack[0]) {
-                res += Double(String(stack[0]))!
+                if Double(stack[0]) != res {
+                    res += Double(String(stack[0]))!
+                }
             }
         } else if CalculatorBrain.counter == 0 {
             res += Double(String(stack[0]))!
@@ -222,7 +231,10 @@ class CalculatorBrain:  CalcBrainInterface
                 CalculatorBrain.brackets = true
                 let temp = CalculatorBrain.index+1
                 CalculatorBrain.index += 2
+                let results = res
+                res = Double(stack[temp+1])!
                 stack[temp] = String(DoCalc())
+                res = results
                 CalculatorBrain.brackets = false
                 CalculatorBrain.index += 1
                 while (temp < CalculatorBrain.index) {
@@ -236,18 +248,63 @@ class CalculatorBrain:  CalcBrainInterface
             if stack[CalculatorBrain.index+1] == ")" {
                 break
             }
-            
-            
-            if CalculatorBrain.index+2 < stack.count, var _: Double = Double(stack[CalculatorBrain.index+2]) {
-                
-            } else {
-                if stack[CalculatorBrain.index+1] == "√" || stack[CalculatorBrain.index+1] == "sin" || stack[CalculatorBrain.index+1] == "cos" || stack[CalculatorBrain.index+1] == "tg" || stack[CalculatorBrain.index+1] == "ctg" || stack[CalculatorBrain.index+1] == "ln" || stack[CalculatorBrain.index+1] == "log" || stack[CalculatorBrain.index+1] == "sinh" || stack[CalculatorBrain.index+1] == "cosh" || stack[CalculatorBrain.index+1] == "tgh" || stack[CalculatorBrain.index+1] == "ctgh" || stack[CalculatorBrain.index+1] == "!" {
-                    let temp = stack[CalculatorBrain.index]
-                    stack[CalculatorBrain.index] = stack[CalculatorBrain.index+1]
-                    stack[CalculatorBrain.index+1] = temp
+//            if CalculatorBrain.index+2 < stack.count, var _: Double = Double(stack[CalculatorBrain.index+2]) {
+//                
+//            }
+            if CalculatorBrain.index+2 < stack.count && Double(stack[CalculatorBrain.index+2]) != nil && stack[CalculatorBrain.index+1] == "√" || stack[CalculatorBrain.index+1] == "sin" || stack[CalculatorBrain.index+1] == "cos" || stack[CalculatorBrain.index+1] == "tg" || stack[CalculatorBrain.index+1] == "ctg" || stack[CalculatorBrain.index+1] == "ln" || stack[CalculatorBrain.index+1] == "log" || stack[CalculatorBrain.index+1] == "sinh" || stack[CalculatorBrain.index+1] == "cosh" || stack[CalculatorBrain.index+1] == "tgh" || stack[CalculatorBrain.index+1] == "ctgh" || stack[CalculatorBrain.index+1] == "!" {
+                switch stack[CalculatorBrain.index+1] {
+                case "√":
+                    stack[CalculatorBrain.index+1] = String(sqrt(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "sin":
+                    stack[CalculatorBrain.index+1] = String(sin(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "cos":
+                    stack[CalculatorBrain.index+1] = String(cos(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "tg":
+                    stack[CalculatorBrain.index+1] = String(tan(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "ctg":
+                    stack[CalculatorBrain.index+1] = String(1/tan(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "ln":
+                    stack[CalculatorBrain.index+1] = String(log(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "log":
+                    stack[CalculatorBrain.index+1] = String(log10(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "sinh":
+                    stack[CalculatorBrain.index+1] = String(sinh(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "cosh":
+                    stack[CalculatorBrain.index+1] = String(cosh(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "tgh":
+                    stack[CalculatorBrain.index+1] = String(tanh(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "ctgh":
+                    stack[CalculatorBrain.index+1] = String(1/tanh(Double(stack[CalculatorBrain.index+2])!))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                case "!":
+                    stack[CalculatorBrain.index+1] = String(Factorial(n: Int(Double(stack[CalculatorBrain.index+2])!)))
+                    stack.remove(at: CalculatorBrain.index+2)
+                    CalculatorBrain.counter -= 1
+                default:
+                    break
                 }
             }
-            
             switch stack[CalculatorBrain.index] {
             case "+":
                 binary(operation: .Plus)
@@ -295,7 +352,7 @@ class CalculatorBrain:  CalcBrainInterface
         if !CalculatorBrain.brackets && stack != [] {
             stack = []
             CalculatorBrain.counter = 0
-            stack.append(String(res))
+            stack.append(String(res == Double(Int(res)) ? String(Int(res)) : String(Double(Int(res)))))
         }
         return res
     }

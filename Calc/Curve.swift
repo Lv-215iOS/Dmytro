@@ -35,6 +35,16 @@ class Curve: UIView {
         context?.strokePath()
     }
     
+    func setNewCurve(){
+        context = UIGraphicsGetCurrentContext()
+        context?.setLineWidth(1.0)
+        context?.setStrokeColor(UIColor.red.cgColor)
+        context?.move(to: CGPoint(x: x1, y: y1))
+        context?.addQuadCurve(to: CGPoint(x: x2, y: y2),
+                              control: CGPoint(x: x_ctrl, y: y_ctrl))
+        context?.strokePath()
+    }
+    
     func horizontal( screenWidth: Double, screenHeight: Double) {
         let screenHeight = screenHeight
         let screenWidth = screenWidth
@@ -88,17 +98,68 @@ class Curve: UIView {
     }
     
     func vertical(screenWidth: Double, screenHeight: Double) {
-        context = nil
+        let screenHeight = screenHeight
+        let screenWidth = screenWidth
+        x1 = 0.81 * screenWidth
+        y1 = screenHeight
+        x2 = screenWidth
+        y2 = 0.85 * screenHeight
+        x_ctrl = 0.75 * screenWidth
+        y_ctrl = 1.16 * screenWidth
+        setNewCurve()
+        
+        x1 = 0.61 * screenWidth
+        y1 = screenHeight
+        x2 = screenWidth
+        y2 = 0.69 * screenHeight
+        x_ctrl = 0.55 * screenWidth
+        y_ctrl = 0.92 * screenWidth
+        setNewCurve()
+        
+        x1 = 0.42 * screenWidth
+        y1 = screenHeight
+        x2 = screenWidth
+        y2 = 0.53 * screenHeight
+        x_ctrl = 0.36 * screenWidth
+        y_ctrl = 0.68 * screenWidth
+        setNewCurve()
+        
+        x1 = 0.23 * screenWidth
+        y1 = screenHeight
+        x2 = screenWidth
+        y2 = 0.38 * screenHeight
+        x_ctrl = 0.16 * screenWidth
+        y_ctrl = 0.45 * screenWidth
+        setNewCurve()
+        
+        x1 = 0.04 * screenWidth
+        y1 = screenHeight
+        x2 = screenWidth
+        y2 = 0.22 * screenHeight
+        x_ctrl = -0.04 * screenWidth
+        y_ctrl = 0.23 * screenWidth
+        setNewCurve()
+        
+        x1 = 5
+        y1 = 0.38 * screenHeight
+        x2 = screenWidth
+        y2 = 0.06 * screenHeight
+        x_ctrl = 0.3 * screenWidth
+        y_ctrl = 0.43 * screenWidth
+        setNewCurve()
+    }
+    
+    override func setNeedsLayout() {
+//        vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
+//        vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
     }
     
     override func draw(_ rect: CGRect) {
-        if frame.width == 0 || frame.height == 0 {
-            context = nil
-        }
-        if frame.width > frame.height {
-            vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
-        } else {
-            horizontal(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
-        }
+//        if frame.width > frame.height {
+//            vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
+//        } else {
+//            horizontal(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
+////            context?.setStrokeColor(UIColor.clear.cgColor)
+//        }
     }
 }

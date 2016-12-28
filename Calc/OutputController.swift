@@ -29,7 +29,16 @@ class OutputController: UIViewController{
     }
     
     func setWarning(name: String) {
-        labelError.text = name
+        UIView.animate(withDuration: 3.0, animations: {
+            self.labelError.text = name
+            self.labelError.alpha = 0.0
+        }, completion: {
+            (finished: Bool) -> Void in
+            self.labelError.text = ""
+            UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                self.labelError.alpha = 1.0
+            }, completion: nil)
+        })
     }
     
     func appendSymbol(symbol: String) {
@@ -54,7 +63,7 @@ class OutputController: UIViewController{
     
     func getLastSymbol() -> Character {
         if display.text?.characters.last == nil {
-            return "1"
+            return "0"
         }
         return (display.text?.characters.last)!
     }
@@ -70,6 +79,9 @@ class OutputController: UIViewController{
     
     func clearLastNumber(symbol: String) {
         var symb = symbol
+        if Double(symb) == Double(String(describing: Int(Double(symb)!))) {
+            symb = String(Int(Double(symb)!))
+        }
         while symb != "" {
             display.text?.remove(at: (display.text?.index(before: (display.text?.endIndex)!))!)
             symb.remove(at: (symb.index(before: (symb.endIndex))))

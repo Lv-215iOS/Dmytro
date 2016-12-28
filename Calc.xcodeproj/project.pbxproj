@@ -56,7 +56,7 @@
 		25A459101DFE9EDD00FDA3C3 /* OutputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputController.swift; sourceTree = "<group>"; };
 		25CA68AF1E0AD2C200A02AD3 /* Curve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
 		25CEC60B1E01410D00330178 /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
-		25F9F83E1E08585D00A06C83 /* DrawButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawButton.swift; sourceTree = "<group>"; };
+		25F9F83E1E08585D00A06C83 /* DrawButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawButton.swift; path = Calc/DrawButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +91,7 @@
 				25707DAF1DF82EAD008CE313 /* CalcTests */,
 				25707DBA1DF82EAD008CE313 /* CalcUITests */,
 				25707D991DF82EAD008CE313 /* Products */,
+				25F9F83E1E08585D00A06C83 /* DrawButton.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,7 +114,6 @@
 				25707D9F1DF82EAD008CE313 /* Main.storyboard */,
 				25A459101DFE9EDD00FDA3C3 /* OutputController.swift */,
 				25CEC60B1E01410D00330178 /* InputController.swift */,
-				25F9F83E1E08585D00A06C83 /* DrawButton.swift */,
 				25CA68AF1E0AD2C200A02AD3 /* Curve.swift */,
 			);
 			path = Calc;

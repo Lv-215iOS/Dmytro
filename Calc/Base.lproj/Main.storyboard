@@ -82,7 +82,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Error" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZN-ai-Cg9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZN-ai-Cg9">
                                 <rect key="frame" x="1" y="0.0" width="373" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="lbg-c7-VIf"/>
@@ -465,27 +465,12 @@
                                     <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="fvP-sF-UuI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bXU-Qy-Rct" customClass="DrawButton" customModule="Calc" customModuleProvider="target">
-                                <rect key="frame" x="187" y="386" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="fillColor">
-                                        <color key="value" red="1" green="0.02771555849" blue="0.89728391600000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOL-m4-JA1">
-                                <rect key="frame" x="276" y="398" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="414" height="491"/>
                     <connections>
-                        <outlet property="RoundButton" destination="mOL-m4-JA1" id="xaK-JU-4ch"/>
                         <outlet property="bthCtg" destination="vKj-A0-7EW" id="IaX-Cl-1Hk"/>
                         <outlet property="btn0" destination="2DA-yd-BY9" id="Cij-XW-6c9"/>
                         <outlet property="btn1" destination="NHA-vA-ayj" id="Y4c-ed-hmP"/>
@@ -508,7 +493,6 @@
                         <outlet property="btnE" destination="KQO-zG-0pQ" id="Tex-sJ-68F"/>
                         <outlet property="btnEqual" destination="7D5-mn-h1i" id="isU-Yc-0pt"/>
                         <outlet property="btnFact" destination="f7L-R6-LAK" id="2Oj-Db-2oc"/>
-                        <outlet property="btnForDesign" destination="bXU-Qy-Rct" id="H8L-A1-Ihg"/>
                         <outlet property="btnLeftBracket" destination="9zp-Eh-HcJ" id="qVm-mZ-sy0"/>
                         <outlet property="btnLn" destination="tT6-7S-nZT" id="KGv-u7-I9y"/>
                         <outlet property="btnLog" destination="d2F-g8-2XR" id="fZ3-p5-m9L"/>

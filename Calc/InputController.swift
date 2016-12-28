@@ -45,7 +45,6 @@ class InputController: UIInputViewController {
     @IBOutlet weak var btnMRead: UIButton!
     @IBOutlet weak var btnMMinus: UIButton!
     @IBOutlet weak var btnMClean: UIButton!
-    @IBOutlet weak var btnForDesign: UIButton!
     @IBOutlet weak var btnMul: UIButton!
     @IBOutlet weak var btnDiv: UIButton!
     @IBOutlet weak var btnMinus: UIButton!
@@ -64,7 +63,6 @@ class InputController: UIInputViewController {
     var x = 0.0
     var y = 0.0
     var buttonTouched: ((String) -> ())? = nil
-//    static var curve = Curve()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,8 +83,6 @@ class InputController: UIInputViewController {
         } else {
             xySize = (screenWidth + screenHeight)/12*0.9
             horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
-//            InputController.curve = Curve(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
-//            _ = Curve(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         }
     }
     
@@ -96,16 +92,12 @@ class InputController: UIInputViewController {
         switch UIDevice.current.orientation.isLandscape {
         case true:
             verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
-//            InputController.curve = Curve(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-//            curve = Curve(frame: CGRect(x: 0, y: 0, width: screenHeight, height: screenWidth))
-//            _ = Curve(frame: CGRect(x: 50, y: 50, width: screenHeight, height: screenWidth))
         case false:
             horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
-//            curve = Curve(frame: CGRect(x: 0, y: 0, width: screenHeight, height: screenWidth))
         }
     }
     
-    @IBOutlet weak var RoundButton: UIButton!
+
     weak var btn: UIButton!
     
     var l: CALayer {
@@ -140,8 +132,6 @@ class InputController: UIInputViewController {
         btnRand.frame.origin = CGPoint(x:-100, y:-100)
         btnLeftBracket.frame.origin = CGPoint(x:-100, y:-100)
         btnRightBracket.frame.origin = CGPoint(x:-100, y:-100)
-        RoundButton.frame.origin = CGPoint(x:-100, y:-100)
-        btnForDesign.frame.origin = CGPoint(x:-100, y:-100)
         
         btn = btn0
         setUpLayer()
@@ -286,8 +276,6 @@ class InputController: UIInputViewController {
         btnRand.frame.origin = CGPoint(x:-100, y:-100)
         btnLeftBracket.frame.origin = CGPoint(x:-100, y:-100)
         btnRightBracket.frame.origin = CGPoint(x:-100, y:-100)
-        RoundButton.frame.origin = CGPoint(x:-100, y:-100)
-        btnForDesign.frame.origin = CGPoint(x:-100, y:-100)
         btn0.frame.origin = CGPoint(x:-100, y:-100)
         btn2.frame.origin = CGPoint(x:-100, y:-100)
         btn3.frame.origin = CGPoint(x:-100, y:-100)
@@ -452,7 +440,7 @@ class InputController: UIInputViewController {
         
         setButton(x: 0.91 * screenWidth, y: 0.31 * screenHeight, btn: btnC)
         setButton(x: 0.91 * screenWidth, y: 0.53 * screenHeight, btn: btnBack)
-        //TODO: button music:        setButton(x: 0.84 * screenWidth, y: 0.42 * screenHeight, btn: btnSin)
+        //TODO: button music:        setButton(x: 0.84 * screenWidth, y: 0.42 * screenHeight, btn: btnMusic)
         
         setButton(x: 0.85 * screenWidth, y: 0.14 * screenHeight, btn: btn5)
         setButton(x: 0.78 * screenWidth, y: 0.24 * screenHeight, btn: btn6)
