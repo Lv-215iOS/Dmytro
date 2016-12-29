@@ -189,16 +189,16 @@ class ViewController: UIViewController {
             if isOperand(symbol: prevSymbol) {
                 break
             }
-            if brain.stack != [] && (outputController?.getLastSymbol())! >= Character(String(0)) && (outputController?.getLastSymbol())! <= Character(String(9)) && Int(brain.stack[CalculatorBrain.counter])! >= 0 {
+            if brain.stack != [] && (outputController?.getLastSymbol()) != nil && (outputController?.getLastSymbol())! >= Character(String(0)) && (outputController?.getLastSymbol())! <= Character(String(9)) {
                 let temp = Double(brain.stack[CalculatorBrain.counter])!
-                if Double(brain.stack[CalculatorBrain.counter]) == Double(Int(brain.stack[CalculatorBrain.counter])!) {
+                if Double(brain.stack[CalculatorBrain.counter])! >= 0 && Double(brain.stack[CalculatorBrain.counter])! == Double(Int(Double(brain.stack[CalculatorBrain.counter])!)) {
                     self.brain.stack[CalculatorBrain.counter] = String(self.brain.Factorial(n: Int(self.brain.stack[CalculatorBrain.counter])!))
                 } else {
                     outputController?.clearScreen()
                     brain.stack = []
                     CalculatorBrain.counter = 0
                     brain.res = 0
-                    outputController?.setWarning(name: "Factorial can take Integer value only")
+                    outputController?.setWarning(name: "Factorial can take Integer value and value >= 0 only")
                     break
                 }
                 outputController?.clearLastNumber(symbol: String(describing: temp))
