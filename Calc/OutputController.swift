@@ -29,7 +29,7 @@ class OutputController: UIViewController{
     }
     
     func setWarning(name: String) {
-        UIView.animate(withDuration: 3.0, animations: {
+        UIView.animate(withDuration: 4.0, animations: {
             self.labelError.text = name
             self.labelError.alpha = 0.0
         }, completion: {

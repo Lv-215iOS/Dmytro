@@ -214,6 +214,10 @@ class CalculatorBrain:  CalcBrainInterface
             res = Double(stack[0])!
             return res
         }
+//        print(outputController.display.text.characters.last)
+//        if ((outputController?.getNLastSymbol(n: 2)) == "0.") {
+//            
+//        }
         
         if CalculatorBrain.counter >= 1 && !CalculatorBrain.brackets && stack != [] && !(stack[1] == "√" || stack[1] == "sin" || stack[1] == "cos" || stack[1] == "tg" || stack[1] == "ctg" || stack[1] == "ln" || stack[1] == "log" || stack[1] == "sinh" || stack[1] == "cosh" || stack[1] == "tgh" || stack[1] == "ctgh" || stack[1] == "!") {
             CalculatorBrain.index = 0
