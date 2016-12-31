@@ -233,11 +233,23 @@ class CalculatorBrain:  CalcBrainInterface
         return false
     }
     
+    func isBracket(from: Int) -> Int? {
+        var cur_index = from
+        while cur_index+1 <= stack.count {
+            if stack[cur_index] == "(" {
+                return cur_index
+            }
+            cur_index += 1
+        }
+        return nil
+    }
+    
     func DoCalc() -> Double {
         if stack.count == 1 {
             res = Double(stack[0])!
             return res
         }
+       
 //        if ((outputController?.getNLastSymbol(n: 2)) == "0.") {
 //            
 //        }
@@ -257,27 +269,27 @@ class CalculatorBrain:  CalcBrainInterface
         }
         
         while CalculatorBrain.index < CalculatorBrain.counter || (CalculatorBrain.index+1 <=  stack.count && stack[CalculatorBrain.index] == "%") {
-            if CalculatorBrain.index+1 < stack.count && stack[CalculatorBrain.index+1] == "(" {
-                CalculatorBrain.brackets = true
-                let temp = CalculatorBrain.index+1
-                CalculatorBrain.index += 2
-                let results = res
-                res = Double(stack[temp+1])!
-                stack[temp] = String(DoCalc())
-                res = results
-                CalculatorBrain.brackets = false
-                CalculatorBrain.index += 1
-                while (temp < CalculatorBrain.index) {
-                    stack.remove(at: CalculatorBrain.index)
-                    CalculatorBrain.index -= 1
-                }
-                CalculatorBrain.index -= 1
-                CalculatorBrain.counter = CalculatorBrain.index
-            }
-            
-            if CalculatorBrain.index+1 < stack.count && stack[CalculatorBrain.index+1] == ")" {
-                break
-            }
+//            if CalculatorBrain.index+1 < stack.count && stack[CalculatorBrain.index+1] == "(" {
+//                CalculatorBrain.brackets = true
+//                let temp = CalculatorBrain.index+1
+//                CalculatorBrain.index += 2
+//                let results = res
+//                res = Double(stack[temp+1])!
+//                stack[temp] = String(DoCalc())
+//                res = results
+//                CalculatorBrain.brackets = false
+//                CalculatorBrain.index += 1
+//                while (temp < CalculatorBrain.index) {
+//                    stack.remove(at: CalculatorBrain.index)
+//                    CalculatorBrain.index -= 1
+//                }
+//                CalculatorBrain.index -= 1
+//                CalculatorBrain.counter = CalculatorBrain.index
+//            }
+//            
+//            if CalculatorBrain.index+1 < stack.count && stack[CalculatorBrain.index+1] == ")" {
+//                break
+//            }
 //            if CalculatorBrain.index+2 < stack.count, var _: Double = Double(stack[CalculatorBrain.index+2]) {
 //                
 //            }
@@ -288,7 +300,9 @@ class CalculatorBrain:  CalcBrainInterface
                 return res
             }
             if stack[CalculatorBrain.index] != "%" {
-                if CalculatorBrain.index+2 < stack.count && Double(stack[CalculatorBrain.index+2]) != nil && stack[CalculatorBrain.index+1] == "√" || stack[CalculatorBrain.index+1] == "sin" || stack[CalculatorBrain.index+1] == "cos" || stack[CalculatorBrain.index+1] == "tg" || stack[CalculatorBrain.index+1] == "ctg" || stack[CalculatorBrain.index+1] == "ln" || stack[CalculatorBrain.index+1] == "log" || stack[CalculatorBrain.index+1] == "sinh" || stack[CalculatorBrain.index+1] == "cosh" || stack[CalculatorBrain.index+1] == "tgh" || stack[CalculatorBrain.index+1] == "ctgh" || stack[CalculatorBrain.index+1] == "!" {
+                print(CalculatorBrain.index+2)
+                print(stack.count)
+                if CalculatorBrain.index+2 < stack.count && Double(stack[CalculatorBrain.index+2]) != nil && (stack[CalculatorBrain.index+1] == "√" || stack[CalculatorBrain.index+1] == "sin" || stack[CalculatorBrain.index+1] == "cos" || stack[CalculatorBrain.index+1] == "tg" || stack[CalculatorBrain.index+1] == "ctg" || stack[CalculatorBrain.index+1] == "ln" || stack[CalculatorBrain.index+1] == "log" || stack[CalculatorBrain.index+1] == "sinh" || stack[CalculatorBrain.index+1] == "cosh" || stack[CalculatorBrain.index+1] == "tgh" || stack[CalculatorBrain.index+1] == "ctgh" || stack[CalculatorBrain.index+1] == "!") {
                     switch stack[CalculatorBrain.index+1] {
                     case "√":
                         stack[CalculatorBrain.index+1] = String(sqrt(Double(stack[CalculatorBrain.index+2])!))
@@ -342,6 +356,28 @@ class CalculatorBrain:  CalcBrainInterface
                         break
                     }
                 }
+            }
+            
+            if let temp_index: Int = isBracket(from: CalculatorBrain.index) {
+                let cur_index = CalculatorBrain.index
+                CalculatorBrain.index = temp_index+1
+                let temp_res = res
+                res = 0
+                let _ = DoCalc()
+                stack[temp_index] = String(res)
+                stack.remove(at: CalculatorBrain.index-1)
+                CalculatorBrain.index = cur_index
+                
+                
+                if stack.count != 1 {
+                    res = temp_res
+                }
+                continue
+            }
+            
+            if stack[CalculatorBrain.index] == ")" {
+                stack.remove(at: CalculatorBrain.index)
+                return res
             }
             
             switch stack[CalculatorBrain.index] {
