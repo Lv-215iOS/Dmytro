@@ -185,7 +185,7 @@ class CalculatorBrain:  CalcBrainInterface
     }
     
     func utility(operation: UtilityOperation) -> Bool{
-        switch operation {
+        equal: switch operation {
         case .Equal:
             let temp = DoCalc()
             result?(temp,nil)            
@@ -244,16 +244,30 @@ class CalculatorBrain:  CalcBrainInterface
         return nil
     }
     
+    func isBracketEqual() -> Bool {
+        var possition = 0
+        var status = 0
+        while possition+1 <= stack.count {
+            if stack[possition] == "(" {
+                status += 1
+            } else if stack[possition] == ")" {
+                status -= 1
+            }
+            possition += 1
+        }
+        if status == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func DoCalc() -> Double {
-        if stack.count == 1 {
+        if stack.count == 1 && Double(stack[0]) != nil {
             res = Double(stack[0])!
             return res
         }
-       
-//        if ((outputController?.getNLastSymbol(n: 2)) == "0.") {
-//            
-//        }
-        
+                
         if CalculatorBrain.counter >= 1 && !CalculatorBrain.brackets && stack != [] && !(stack[1] == "√" || stack[1] == "sin" || stack[1] == "cos" || stack[1] == "tg" || stack[1] == "ctg" || stack[1] == "ln" || stack[1] == "log" || stack[1] == "sinh" || stack[1] == "cosh" || stack[1] == "tgh" || stack[1] == "ctgh" || stack[1] == "!") {
             if isFirstEnter {
                 CalculatorBrain.index = 0
@@ -269,30 +283,6 @@ class CalculatorBrain:  CalcBrainInterface
         }
         
         while CalculatorBrain.index < CalculatorBrain.counter || (CalculatorBrain.index+1 <=  stack.count && stack[CalculatorBrain.index] == "%") {
-//            if CalculatorBrain.index+1 < stack.count && stack[CalculatorBrain.index+1] == "(" {
-//                CalculatorBrain.brackets = true
-//                let temp = CalculatorBrain.index+1
-//                CalculatorBrain.index += 2
-//                let results = res
-//                res = Double(stack[temp+1])!
-//                stack[temp] = String(DoCalc())
-//                res = results
-//                CalculatorBrain.brackets = false
-//                CalculatorBrain.index += 1
-//                while (temp < CalculatorBrain.index) {
-//                    stack.remove(at: CalculatorBrain.index)
-//                    CalculatorBrain.index -= 1
-//                }
-//                CalculatorBrain.index -= 1
-//                CalculatorBrain.counter = CalculatorBrain.index
-//            }
-//            
-//            if CalculatorBrain.index+1 < stack.count && stack[CalculatorBrain.index+1] == ")" {
-//                break
-//            }
-//            if CalculatorBrain.index+2 < stack.count, var _: Double = Double(stack[CalculatorBrain.index+2]) {
-//                
-//            }
             if CalculatorBrain.index+1 > stack.count {
                 if stack.count == 1 {
                     CalculatorBrain.counter = 0

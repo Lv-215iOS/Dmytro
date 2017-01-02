@@ -773,6 +773,17 @@ class ViewController: UIViewController {
             if brain.stack == [] {
                 break
             }
+            
+            if !brain.isBracketEqual() {
+                outputController?.clearScreen()
+                brain.stack = []
+                CalculatorBrain.counter = 0
+                brain.res = 0
+                brain.isFirstEnter = true
+                outputController?.setWarning(name: "Fail with brackets")
+                break
+            }
+            
             if isOperandAction(symbol: String(describing: outputController!.getLastSymbol())) {
                 outputController?.clearLastSymbol()
             }
