@@ -26,7 +26,7 @@ class Curve: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     func setCurve(){
         context = UIGraphicsGetCurrentContext()
         context?.setLineWidth(1.0)
@@ -152,22 +152,15 @@ class Curve: UIView {
         setNewCurve()
     }
     
-    func deleteFrame() {
-        context?.clear(frame)
-    }
-
-    
     override func setNeedsLayout() {
-        //        vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
-        //        vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
     }
     
     override func draw(_ rect: CGRect) {
                 if frame.width > frame.height && frame.width != 768 {
-                    vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
+//                    vertical(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
+//                    context?.clear(frame)
                 } else {
                     horizontal(screenWidth: Double(frame.width), screenHeight: Double(frame.height))
-        //            context?.setStrokeColor(UIColor.clear.cgColor)
                 }
-    }
+    }        
 }

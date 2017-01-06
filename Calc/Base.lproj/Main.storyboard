@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,9 +23,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rrw-Kn-jL4">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                                <variation key="heightClass=regular-widthClass=regular" image="23878286-FECA-4DE0-9A29-A124FCE256C2"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Rrw-Kn-jL4">
+                                <rect key="frame" x="-66.5" y="-37.5" width="800" height="450"/>
+                                <variation key="heightClass=regular-widthClass=regular" image="29138586-D1E3-4818-A754-B37896C9DE55"/>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qxS-ea-vaY">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="100"/>
@@ -46,17 +47,17 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Rrw-Kn-jL4" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1.2" id="0Gb-p1-dcD"/>
+                            <constraint firstItem="Rrw-Kn-jL4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1wE-VO-VzY"/>
                             <constraint firstItem="Cfc-hS-v0U" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="ELj-Ec-uGi"/>
-                            <constraint firstItem="Rrw-Kn-jL4" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="GpT-ZW-cjh"/>
-                            <constraint firstItem="Cfc-hS-v0U" firstAttribute="leading" secondItem="Rrw-Kn-jL4" secondAttribute="leading" id="Otb-nD-3jU"/>
+                            <constraint firstItem="Rrw-Kn-jL4" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="1.2" id="HfR-5w-XSp"/>
+                            <constraint firstItem="Rrw-Kn-jL4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="U4f-Is-7U7"/>
                             <constraint firstItem="Cfc-hS-v0U" firstAttribute="trailing" secondItem="qxS-ea-vaY" secondAttribute="trailing" id="UUk-RW-kRj"/>
                             <constraint firstItem="Cfc-hS-v0U" firstAttribute="leading" secondItem="qxS-ea-vaY" secondAttribute="leading" id="n4i-xW-zjB"/>
                             <constraint firstAttribute="trailing" secondItem="qxS-ea-vaY" secondAttribute="trailing" id="ooY-2h-WUO"/>
-                            <constraint firstItem="Rrw-Kn-jL4" firstAttribute="top" secondItem="qxS-ea-vaY" secondAttribute="top" id="rm2-WO-Mjf"/>
                             <constraint firstItem="qxS-ea-vaY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tZZ-rV-87h"/>
                             <constraint firstItem="Cfc-hS-v0U" firstAttribute="top" secondItem="qxS-ea-vaY" secondAttribute="bottom" id="vi6-Kw-pSC"/>
                             <constraint firstItem="qxS-ea-vaY" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="wZ5-VX-0wu"/>
-                            <constraint firstItem="Cfc-hS-v0U" firstAttribute="trailing" secondItem="Rrw-Kn-jL4" secondAttribute="trailing" id="wby-ei-uCD"/>
                         </constraints>
                     </view>
                     <connections>
@@ -821,4 +822,7 @@
             <point key="canvasLocation" x="1262.9685157421291" y="-252"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="background.jpg" width="1400" height="980"/>
+    </resources>
 </document>

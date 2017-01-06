@@ -47,7 +47,8 @@ class ViewController: UIViewController {
         }
         //unowned me = self
         inputController?.buttonTouched = { [unowned self] (operation)->() in self.touchButton(symbols: operation)}
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.jpg")!)
+//        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.jpg")!)
+        
         let min = CGFloat(-30)
         let max = CGFloat(30)
         
@@ -63,6 +64,7 @@ class ViewController: UIViewController {
         motionEffectGroup.motionEffects = [xMotion,yMotion]
         
         imageView.addMotionEffect(motionEffectGroup)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -302,7 +304,7 @@ class ViewController: UIViewController {
                 break
             }
             if symbol == "rand" {
-                append(symbol: symbol)
+                append(symbol: String(brain.Rand()))
             } else {
                 if isOperand(symbol: prevSymbol) {
                     outputController?.appendSymbol(symbol: symbol)
@@ -360,7 +362,11 @@ class ViewController: UIViewController {
             if !brain.utility(operation: .MPlus) {
                 outputController?.setWarning(name: String("Write the number or press '='"))
             } else {
-                brain.valueInMemory += Double(brain.stack[0])!
+                if let value = Double(brain.stack[0]) {
+                    brain.valueInMemory += value
+                } else {
+                    throw MyError(type: .M_minus_error)
+                }
             }
         case "M-":
             if !brain.utility(operation: .MMinus) {

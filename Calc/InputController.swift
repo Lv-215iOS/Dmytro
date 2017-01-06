@@ -66,7 +66,7 @@ class InputController: UIInputViewController {
     var x = 0.0
     var y = 0.0
     var buttonTouched: ((String) -> ())? = nil
-    var curve = Curve()
+    let curve = Curve()
     
     var audioPlayer = AVAudioPlayer()
     
@@ -100,10 +100,10 @@ class InputController: UIInputViewController {
         let screenWidth = Double(myFrame.x)
         let screenHeight = Double(myFrame.y)
         
+        self.view.setNeedsDisplay()
         if screenWidth > screenHeight && screenWidth != 768 {
             xySize = sqrt(screenWidth * screenWidth + screenHeight * screenHeight)/12.7
             verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
-            curve.setNewCurve()
         } else {
             xySize = sqrt(screenWidth * screenWidth + screenHeight * screenHeight)/9.5
             horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
