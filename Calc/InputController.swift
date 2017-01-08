@@ -58,6 +58,8 @@ class InputController: UIInputViewController {
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var soundOn: UIButton!
     @IBOutlet weak var soundOff: UIButton!
+    @IBOutlet weak var graphics: UIButton!
+    @IBOutlet weak var btnGraphEqual: UIButton!
     
     var viewController: ViewController? = nil
     var myFrame = CGPoint(x: 0, y: 0)
@@ -67,6 +69,7 @@ class InputController: UIInputViewController {
     var y = 0.0
     var buttonTouched: ((String) -> ())? = nil
     let curve = Curve()
+    var isGraphic = false
     
     var audioPlayer = AVAudioPlayer()
     
@@ -84,15 +87,47 @@ class InputController: UIInputViewController {
     }
     
     @IBAction func touchButton(_ sender: UIButton) {
+        if soundOff.isHidden {
+            if audioPlayer.currentTime < audioPlayer.duration / 3 {
+                audioPlayer.play()
+            }
+            while audioPlayer.currentTime < audioPlayer.duration / 3 {
+            }
+            if audioPlayer.currentTime > audioPlayer.duration / 3 {
+                audioPlayer.stop()
+                audioPlayer.currentTime = 0
+            }
+        }
+        
+        if sender.currentTitle == "📈" {
+            isGraphic = isGraphic ? false : true
+            sender.alpha = sender.alpha == 1 ? 0.3 : 1
+            btnMClean.isHidden = btnMClean.isHidden ? false : true
+            btnMRead.isHidden = btnMRead.isHidden ? false : true
+            btnMPlus.isHidden = btnMPlus.isHidden ? false : true
+            btnMMinus.isHidden = btnMMinus.isHidden ? false : true
+            btnGraphEqual.isHidden = btnMMinus.isHidden ? false : true
+            sender.transform = isGraphic ? CGAffineTransform(scaleX: 0.9, y: 0.9) : CGAffineTransform(scaleX: 1, y: 1)
+            return
+        }
         if sender.currentTitle! == "🔈" || sender.currentTitle! == "🔇" {
             soundOn.isHidden = soundOn.isHidden ? false : true
             soundOff.isHidden = soundOff.isHidden ? false : true
             return
         }
-        if soundOff.isHidden {
-            audioPlayer.play()
-        }        
+        
         buttonTouched?(sender.currentTitle!)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        sender.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+                        sender.setTitleColor(UIColor.blue, for: .normal)
+        },
+                       completion: { _ in
+                        UIView.animate(withDuration: 0.3) {
+                            sender.transform = CGAffineTransform.identity
+                            sender.setTitleColor(UIColor.black, for: .normal)
+                        }
+        })
     }
     
     override func viewWillLayoutSubviews() {
@@ -122,9 +157,11 @@ class InputController: UIInputViewController {
     }
     
     
+    
     weak var btn: UIButton!
     
     var l: CALayer {
+        btn.setTitleColor(UIColor .black, for: UIControlState.highlighted)
         return btn.layer
     }
     
@@ -133,6 +170,7 @@ class InputController: UIInputViewController {
             l.borderColor = UIColor.black.cgColor
         } else {
             l.borderColor = UIColor.clear.cgColor
+            l.shadowColor = UIColor.yellow.cgColor
         }
         l.borderWidth = 1.5
         l.cornerRadius = CGFloat(xySize/2)
@@ -206,6 +244,11 @@ class InputController: UIInputViewController {
         btnBack.frame.origin = CGPoint(x:-1000, y:-100)
         soundOn.frame.origin = CGPoint(x:-1000, y:-100)
         soundOff.frame.origin = CGPoint(x:-1000, y:-100)
+        graphics.frame.origin = CGPoint(x:-1000, y:-100)
+        btnGraphEqual.frame.origin = CGPoint(x:-1000, y:-100)
+        
+        btn = btnGraphEqual
+        setUpLayer(border: false)
         
         btn = soundOn
         setUpLayer(border: false)
@@ -288,8 +331,15 @@ class InputController: UIInputViewController {
         btn = btnBack
         setUpLayer(border: false)
         
-        setButton(x: 0.01 * screenWidth, y: 0.06 * screenHeight, btn: soundOn)
-        setButton(x: 0.01 * screenWidth, y: 0.06 * screenHeight, btn: soundOff)
+        btn = graphics
+        setUpLayer(border: false)
+        
+        setButton(x: 0.81 * screenWidth, y: 0.85 * screenHeight, btn: btnGraphEqual)
+        
+        setButton(x: -0.02 * screenWidth, y: 0.14 * screenHeight, btn: graphics)
+        
+        setButton(x: -0.02 * screenWidth, y: 0.03 * screenHeight, btn: soundOn)
+        setButton(x: -0.02 * screenWidth, y: 0.03 * screenHeight, btn: soundOff)
         
         setButton(x: 0.81 * screenWidth, y: 0.85 * screenHeight, btn: btnEqual)
         setButton(x: 0.61 * screenWidth, y: 0.84 * screenHeight, btn: btnAdd)
@@ -386,6 +436,14 @@ class InputController: UIInputViewController {
         btnBack.frame.origin = CGPoint(x:-100, y:-100)
         soundOn.frame.origin = CGPoint(x:-100, y:-100)
         soundOff.frame.origin = CGPoint(x:-100, y:-100)
+        graphics.frame.origin = CGPoint(x:-100, y:-100)
+        btnGraphEqual.frame.origin = CGPoint(x:-100, y:-100)
+        
+        btn = btnGraphEqual
+        setUpLayer(border: false)
+        
+        btn = graphics
+        setUpLayer(border: false)
         
         btn = soundOn
         setUpLayer(border: false)
@@ -513,12 +571,15 @@ class InputController: UIInputViewController {
         btn = btnTgh
         setUpLayer()
         
+        setButton(x: 0.01 * screenWidth, y: 0.53 * screenHeight, btn: btnGraphEqual)
+        
+        setButton(x: 0.91, y: 0, btn: graphics)
+        
         setButton(x: 0, y: 0, btn: soundOn)
         setButton(x: 0, y: 0, btn: soundOff)
         
         setButton(x: 0.01 * screenWidth, y: 0.31 * screenHeight, btn: btnDot)
         setButton(x: 0.01 * screenWidth, y: 0.53 * screenHeight, btn: btnEqual)
-        //TODO: butto graphic        setButton(x: 0.08 * screenWidth, y: 0.42 * screenHeight, btn: btnRand)
         
         setButton(x: 0.06 * screenWidth, y: 0.12 * screenHeight, btn: btn0)
         setButton(x: 0.13 * screenWidth, y: 0.24 * screenHeight, btn: btn1)
@@ -535,7 +596,6 @@ class InputController: UIInputViewController {
         
         setButton(x: 0.91 * screenWidth, y: 0.31 * screenHeight, btn: btnC)
         setButton(x: 0.91 * screenWidth, y: 0.53 * screenHeight, btn: btnBack)
-        //TODO: button music:        setButton(x: 0.84 * screenWidth, y: 0.42 * screenHeight, btn: btnMusic)
         
         setButton(x: 0.86 * screenWidth, y: 0.12 * screenHeight, btn: btn5)
         setButton(x: 0.79 * screenWidth, y: 0.24 * screenHeight, btn: btn6)
