@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Rrw-Kn-jL4">
-                                <rect key="frame" x="-37.5" y="-66.5" width="450" height="800"/>
+                                <rect key="frame" x="-38" y="-67" width="451" height="801"/>
                                 <variation key="heightClass=regular-widthClass=regular" image="29138586-D1E3-4818-A754-B37896C9DE55"/>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cfc-hS-v0U">

@@ -216,13 +216,13 @@ class ViewController: UIViewController {
                 break
             }
             checkEqual()
-            if !actionForSwitch(symbol: symbol) && prevSymbol != "x" {
+            if !actionForSwitch(symbol: symbol) && prevSymbol != "X" {
                 break
             }
             append(symbol: symbol)
         case "✕", "÷", "^", "%":
             checkEqual()
-            if !actionForSwitch(symbol: symbol) && prevSymbol != "x"  {
+            if !actionForSwitch(symbol: symbol) && prevSymbol != "X"  {
                 break
             }
             append(symbol: symbol)
@@ -466,11 +466,14 @@ class ViewController: UIViewController {
             outputController?.appendSymbol(symbol: symbol)
             brain.stack.append(symbol)
             CalculatorBrain.counter += 1
-        case "x":
-            if outputController?.getLastSymbol() == "0" {
+        case "X":
+            if outputController?.getLastSymbol() == "-" {
+                append(symbol: "-1")
+            }
+            if outputController?.getLastSymbol() == "0" && brain.stack == [] {
                 append(symbol: "1")
             }
-            if Double((outputController?.getNLastSymbol(n: 1))!) != nil || outputController?.getNLastSymbol(n: 1) == "x" {
+            if Double((outputController?.getNLastSymbol(n: 1))!) != nil || outputController?.getNLastSymbol(n: 1) == "X" {
                 outputController?.appendSymbol(symbol: "✕")
                 brain.stack.append("✕")
                 CalculatorBrain.counter += 1

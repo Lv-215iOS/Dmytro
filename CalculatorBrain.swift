@@ -81,7 +81,7 @@ class CalculatorBrain:  CalcBrainInterface
     func isContainX() -> Bool {
         var good = false
         for i in 0..<stack.count {
-            if stack[i] == "x" {
+            if stack[i] == "X" {
                 contentX[i] = true
                 good = true
             }
@@ -103,7 +103,7 @@ class CalculatorBrain:  CalcBrainInterface
     func changeValueIntoX() {
         for i in 0..<stack.count {
             if contentX[i] {
-                stack[i] = "x"
+                stack[i] = "X"
             }
         }
     }
@@ -502,9 +502,13 @@ class CalculatorBrain:  CalcBrainInterface
                 } else {
                     stack = []
                     CalculatorBrain.counter = 0
-                    stack.append(String(res == Double(Int(res)) ? String(Int(res)) : String(Double(Int(res)))))
+                    if !res.isInfinite {
+                        stack.append(String(res == Double(Int(res)) ? String(Int(res)) : String(Double(Int(res)))))
+                    } else {
+                        stack.append("0")
+                        res = 0
+                    }
                 }
-                
             }
             return res
         } catch {

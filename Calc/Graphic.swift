@@ -14,6 +14,8 @@ public protocol LineChartDelegate {
 }
 
 open class Graphic: UIView {
+    
+    
     /**
      * Helpers class
      */
@@ -163,7 +165,7 @@ open class Graphic: UIView {
             return
         }
         
-        self.drawingHeight = self.bounds.height - (2 * y.axis.inset)
+        self.drawingHeight = self.bounds.height * 0.9 - (2 * y.axis.inset)
         self.drawingWidth = self.bounds.width - (2 * x.axis.inset)
         
         // remove all labels
