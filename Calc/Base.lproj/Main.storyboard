@@ -402,20 +402,6 @@
                                     <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="ocu-rH-whO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xj6-Fd-U3l">
-                                <rect key="frame" x="124" y="129" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
-                                <state key="normal" title="÷">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="iMk-f0-dGP"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xL0-29-Jjh">
                                 <rect key="frame" x="82" y="164" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -724,6 +710,34 @@
                                     <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="Dxw-fK-Jd9"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFE-Ay-jlm">
+                                <rect key="frame" x="9" y="397" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                <state key="normal" title="X">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="lSc-05-eYe"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1y-WB-0D6">
+                                <rect key="frame" x="41" y="397" width="36" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                <state key="normal" title="Clear">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="QHE-tg-GJ0"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7L-R6-LAK">
                                 <rect key="frame" x="9" y="197" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -792,7 +806,49 @@
                                 </variation>
                                 <connections>
                                     <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="CGa-Fg-pQr"/>
-                                    <segue destination="YWI-rm-USM" kind="show" id="AMH-W1-ry6"/>
+                                    <segue destination="YWI-rm-USM" kind="show" identifier="GraphicControllerSegue" id="AMH-W1-ry6"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAv-SA-Z4w">
+                                <rect key="frame" x="10" y="435" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                <state key="normal" title="&gt;">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="xXn-Rm-0qU"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-LB-sp0">
+                                <rect key="frame" x="44" y="435" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                <state key="normal" title="&lt;">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="rnz-dF-Zbi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xj6-Fd-U3l">
+                                <rect key="frame" x="122" y="164" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                <state key="normal" title="÷">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="touchButton:" destination="rDt-C9-f1X" eventType="touchUpInside" id="iMk-f0-dGP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -825,6 +881,7 @@
                         <outlet property="btnFact" destination="f7L-R6-LAK" id="2Oj-Db-2oc"/>
                         <outlet property="btnGraphEqual" destination="BPq-y5-Rt0" id="IbM-qz-zkR"/>
                         <outlet property="btnLeftBracket" destination="9zp-Eh-HcJ" id="qVm-mZ-sy0"/>
+                        <outlet property="btnLess" destination="2vx-LB-sp0" id="2xU-xz-5qd"/>
                         <outlet property="btnLn" destination="tT6-7S-nZT" id="KGv-u7-I9y"/>
                         <outlet property="btnLog" destination="d2F-g8-2XR" id="fZ3-p5-m9L"/>
                         <outlet property="btnMClean" destination="Dvu-sj-gxh" id="Cba-2a-Wrd"/>
@@ -833,6 +890,7 @@
                         <outlet property="btnMRead" destination="nPV-ic-4Vu" id="Xmx-qS-Fu4"/>
                         <outlet property="btnMinus" destination="Xgz-S4-HcL" id="PLw-44-OL7"/>
                         <outlet property="btnMod" destination="jk6-Ka-rUN" id="0Lq-BL-y9N"/>
+                        <outlet property="btnMore" destination="yAv-SA-Z4w" id="c0n-cD-U3Q"/>
                         <outlet property="btnMul" destination="xL0-29-Jjh" id="1eG-1U-bLy"/>
                         <outlet property="btnPi" destination="deH-Ol-uL2" id="z0q-wo-kPt"/>
                         <outlet property="btnPlusMinus" destination="gPi-kl-pd5" id="Rbz-kh-Xse"/>
@@ -844,6 +902,8 @@
                         <outlet property="btnSqrt" destination="T3x-Fc-CzT" id="6Xp-2P-yBI"/>
                         <outlet property="btnTg" destination="U5L-jT-661" id="UkH-Y1-1zA"/>
                         <outlet property="btnTgh" destination="fhb-kp-ykg" id="MFT-lB-OVF"/>
+                        <outlet property="btnX" destination="kFE-Ay-jlm" id="z4j-Ni-Pwk"/>
+                        <outlet property="btnY" destination="b1y-WB-0D6" id="to3-Ln-mo0"/>
                         <outlet property="graphics" destination="Mcs-nX-GPC" id="Sf1-5o-KhD"/>
                         <outlet property="soundOff" destination="iZV-az-XaG" id="g5J-P7-nls"/>
                         <outlet property="soundOn" destination="rOC-qz-glY" id="Ovd-Nv-RJh"/>
@@ -853,15 +913,15 @@
             </objects>
             <point key="canvasLocation" x="1931.2" y="-485.30734632683664"/>
         </scene>
-        <!--View Controller-->
+        <!--Graphic Controller-->
         <scene sceneID="aGJ-0n-xfc">
             <objects>
-                <viewController id="YWI-rm-USM" sceneMemberID="viewController">
+                <viewController id="YWI-rm-USM" customClass="GraphicController" customModule="Calc" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0q4-QH-1jm"/>
                         <viewControllerLayoutGuide type="bottom" id="Zco-Vn-hUk"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Iym-jy-O3a">
+                    <view key="view" contentMode="scaleToFill" id="Iym-jy-O3a" customClass="Graphic" customModule="Calc" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="491"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

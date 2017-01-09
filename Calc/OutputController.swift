@@ -51,7 +51,9 @@ class OutputController: UIViewController{
     
     func clearScreen() {
         display.text = ""
-        displayResult.text = "0"
+        if displayResult.text != "y=" {
+            displayResult.text = "0"
+        }
     }
     
     func clearLastSymbol() {
@@ -89,7 +91,7 @@ class OutputController: UIViewController{
     }
     
     func setResult(symbol: String) {
-        if Double(symbol) == Double(Int(Double(symbol)!)) {
+        if Double(symbol) != nil && Double(symbol) == Double(Int(Double(symbol)!)) {
             displayResult.text = String(Int(Double(symbol)!))
         } else {
             displayResult.text = symbol

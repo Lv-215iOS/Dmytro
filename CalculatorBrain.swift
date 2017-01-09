@@ -68,12 +68,44 @@ class CalculatorBrain:  CalcBrainInterface
     var result: ((Double?, Error?) -> ())?
     var isFirstEnter = true
     let constTrigo = M_PI/180
+    var contentX = [Bool]()
+    var data: [[CGFloat]] = []
     
     func digit() {
         if CalculatorBrain.brackets && res == 0 {
             res += Double(stack[CalculatorBrain.index])!
         }
         CalculatorBrain.index += 1
+    }
+    
+    func isContainX() -> Bool {
+        var good = false
+        for i in 0..<stack.count {
+            if stack[i] == "x" {
+                contentX[i] = true
+                good = true
+            }
+        }
+        if good {
+            return true
+        }
+        return false
+    }
+    
+    func changeValueFromX(into: Int) {
+        for i in 0..<stack.count {
+            if contentX[i] {
+                stack[i] = String(into)
+            }
+        }
+    }
+    
+    func changeValueIntoX() {
+        for i in 0..<stack.count {
+            if contentX[i] {
+                stack[i] = "x"
+            }
+        }
     }
     
     func binary(operation: BinaryOperation) {
@@ -191,8 +223,29 @@ class CalculatorBrain:  CalcBrainInterface
     func utility(operation: UtilityOperation) -> Bool{
         equal: switch operation {
         case .Equal:
-            let temp = DoCalc()
-            result?(temp,nil)
+            data = []
+            let counter = CalculatorBrain.counter
+            contentX = Array(repeating: false, count: stack.count)
+            let stackCopy = stack
+            if isContainX() || valueInMemory == -1 {
+                for i in 0..<7 {
+                    stack = stackCopy
+                    CalculatorBrain.counter = counter
+                    changeValueFromX(into: i)
+                    if i == 0 {
+                        data.append([CGFloat(DoCalc())])
+                    } else {
+                        data[data.count - 1] += [CGFloat(DoCalc(number: i))]
+                    }
+                    changeValueIntoX()
+                    res = 0
+                    CalculatorBrain.index = 0
+                    isFirstEnter = true
+                }
+            } else {
+                let temp = DoCalc()
+                result?(temp,nil)
+            }
         case .MPlus:
             if stack == [] {
                 return false
@@ -266,7 +319,7 @@ class CalculatorBrain:  CalcBrainInterface
         }
     }
     
-    func DoCalc() -> Double {
+    func DoCalc(number: Int = 0) -> Double {
         do {
             if stack.count == 1 && Double(stack[0]) != nil {
                 res = Double(stack[0])!
@@ -287,6 +340,7 @@ class CalculatorBrain:  CalcBrainInterface
                 res += Double(String(stack[0]))!
             }
             
+            print(CalculatorBrain.counter)
             while CalculatorBrain.index < CalculatorBrain.counter || (CalculatorBrain.index+1 <=  stack.count && stack[CalculatorBrain.index] == "%") {
                 if CalculatorBrain.index+1 > stack.count {
                     if stack.count == 1 {
@@ -372,7 +426,7 @@ class CalculatorBrain:  CalcBrainInterface
                     stack.remove(at: CalculatorBrain.index)
                     return res
                 }
-                
+                print("Index = \(CalculatorBrain.index)")
                 switch stack[CalculatorBrain.index] {
                 case "+":
                     if isHigherPriority(numn: CalculatorBrain.index+1) {
@@ -436,15 +490,21 @@ class CalculatorBrain:  CalcBrainInterface
                     unary(operation: .Log)
                 case "ctg":
                     unary(operation: .Ctg)
+                    //case for x & u & > & <
                 default:
                     digit()
                     break
                 }
             }
             if !CalculatorBrain.brackets && stack != [] {
-                stack = []
-                CalculatorBrain.counter = 0
-                stack.append(String(res == Double(Int(res)) ? String(Int(res)) : String(Double(Int(res)))))
+                if !data.isEmpty {
+                    //do something
+                } else {
+                    stack = []
+                    CalculatorBrain.counter = 0
+                    stack.append(String(res == Double(Int(res)) ? String(Int(res)) : String(Double(Int(res)))))
+                }
+                
             }
             return res
         } catch {

@@ -9,8 +9,8 @@
 import UIKit
 
 enum ErrorType {
-    case SomeError
-    case AnotherError
+//    case SomeError
+//    case AnotherError
     case M_minus_error
 }
 
@@ -21,7 +21,6 @@ struct MyError: Error {
         switch self.type {
         case .M_minus_error:
             return "M_minus_error"
-            
         default:
             return "some error"
         }
@@ -43,8 +42,7 @@ class ViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
     }
     
-    override func viewWillDisappear(_ animated: Bool)
-    {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = false
     }
@@ -56,9 +54,7 @@ class ViewController: UIViewController {
                 self.outputController?.setResult(symbol: "\(value!)")
             }
         }
-        //unowned me = self
         inputController?.buttonTouched = { [unowned self] (operation)->() in self.touchButton(symbols: operation)}
-//        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.jpg")!)
         
         let min = CGFloat(-30)
         let max = CGFloat(30)
@@ -75,7 +71,6 @@ class ViewController: UIViewController {
         motionEffectGroup.motionEffects = [xMotion,yMotion]
         
         imageView.addMotionEffect(motionEffectGroup)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -179,7 +174,6 @@ class ViewController: UIViewController {
                 default:
                     break
                 }
-                
             } else {
                 outputController?.clearScreen()
                 brain.stack = []
@@ -198,6 +192,7 @@ class ViewController: UIViewController {
     }
     
     func process(symbols: String) throws {
+        print("Here counter: \(CalculatorBrain.counter)")
         var symbol: String = symbols
         if symbol != "=" {
             isEqual = false
@@ -205,7 +200,7 @@ class ViewController: UIViewController {
         if (outputController?.isResult)! {
             outputController?.isResult = false
         }
-        if brain.stack == [] && symbol != "⌫" && symbol != "=" {
+        if brain.stack == [] && symbol != "⌫" && symbol != "=" && symbol != "Clear" {
             CalculatorBrain.counter -= 1
         }
         switch symbol {
@@ -221,13 +216,13 @@ class ViewController: UIViewController {
                 break
             }
             checkEqual()
-            if !actionForSwitch(symbol: symbol) {
+            if !actionForSwitch(symbol: symbol) && prevSymbol != "x" {
                 break
             }
             append(symbol: symbol)
         case "✕", "÷", "^", "%":
             checkEqual()
-            if !actionForSwitch(symbol: symbol) {
+            if !actionForSwitch(symbol: symbol) && prevSymbol != "x"  {
                 break
             }
             append(symbol: symbol)
@@ -247,7 +242,9 @@ class ViewController: UIViewController {
                 brain.stack[CalculatorBrain.counter] = String(sqrt(Double(brain.stack[CalculatorBrain.counter])!))
                 outputController?.clearLastNumber(symbol: String(describing: temp))
                 outputController?.appendSymbol(symbol: Double(brain.stack[CalculatorBrain.counter]) == Double(String(Int(Double(brain.stack[CalculatorBrain.counter])!))) ? String(Int(Double(brain.stack[CalculatorBrain.counter])!)) : String(brain.stack[CalculatorBrain.counter]))
-                outputController?.setResult(symbol: String(brain.res))
+                if outputController?.displayResult.text != "y=" {
+                    outputController?.setResult(symbol: String(brain.res))
+                }
                 break
             }
             if isOperand(symbol: prevSymbol) {
@@ -274,7 +271,9 @@ class ViewController: UIViewController {
                 }
                 outputController?.clearLastNumber(symbol: String(describing: temp))
                 outputController?.appendSymbol(symbol: Double(brain.stack[CalculatorBrain.counter]) == Double(String(Int(Double(brain.stack[CalculatorBrain.counter])!))) ? String(Int(Double(brain.stack[CalculatorBrain.counter])!)) : String(brain.stack[CalculatorBrain.counter]))
-                outputController?.setResult(symbol: String(brain.res))
+                if outputController?.displayResult.text != "y=" {
+                    outputController?.setResult(symbol: String(brain.res))
+                }
                 break
             }
             append(symbol: symbol)
@@ -433,11 +432,24 @@ class ViewController: UIViewController {
                 outputController?.setWarning(name: "Error")
                 break
             }
-            if !isEqual {
-                isEqual = true
-                if outputController?.getLastSymbol() != "=" {
-                    outputController?.appendSymbol(symbol: symbol)
-                    var _ = brain.utility(operation: .Equal)
+            if (inputController?.isGraphic)! {
+                inputController?.graphicController?.function = ""
+                for str in brain.stack {
+                    inputController?.graphicController?.function?.append(str)
+                }
+                var _ = brain.utility(operation: .Equal)
+                outputController?.clearScreen()
+                brain.stack = []
+                CalculatorBrain.counter = 0
+                brain.res = 0
+                brain.isFirstEnter = true
+            } else {
+                if !isEqual {
+                    isEqual = true
+                    if outputController?.getLastSymbol() != "=" {
+                        outputController?.appendSymbol(symbol: symbol)
+                        var _ = brain.utility(operation: .Equal)
+                    }
                 }
             }
             
@@ -454,7 +466,21 @@ class ViewController: UIViewController {
             outputController?.appendSymbol(symbol: symbol)
             brain.stack.append(symbol)
             CalculatorBrain.counter += 1
-            
+        case "x":
+            if outputController?.getLastSymbol() == "0" {
+                append(symbol: "1")
+            }
+            if Double((outputController?.getNLastSymbol(n: 1))!) != nil || outputController?.getNLastSymbol(n: 1) == "x" {
+                outputController?.appendSymbol(symbol: "✕")
+                brain.stack.append("✕")
+                CalculatorBrain.counter += 1
+            }
+            outputController?.appendSymbol(symbol: symbol)
+            brain.stack.append(symbol)
+            CalculatorBrain.counter += 1
+        case "Clear":
+            inputController?.graphicController?.data.removeAll()
+            brain.data.removeAll()
         case "MR":
             if !brain.utility(operation: .MRead) || brain.valueInMemory == 0 {
                 outputController?.setWarning(name: String("There is nothing in memory"))
@@ -524,4 +550,3 @@ class ViewController: UIViewController {
         prevSymbol = symbol
     }
 }
-
