@@ -169,21 +169,21 @@ class ViewController: UIViewController {
             if Double(brain.stack[CalculatorBrain.counter]) != nil {
                 switch symb {
                 case "sin":
-                    brain.stack[CalculatorBrain.counter] = String(sin(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(sin(Double(brain.stack[CalculatorBrain.counter])!))
                 case "cos":
-                    brain.stack[CalculatorBrain.counter] = String(cos(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(cos(Double(brain.stack[CalculatorBrain.counter])!))
                 case "tg":
-                    brain.stack[CalculatorBrain.counter] = String(tan(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(tan(Double(brain.stack[CalculatorBrain.counter])!))
                 case "ctg":
-                    brain.stack[CalculatorBrain.counter] = String(1/tan(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(1/tan(Double(brain.stack[CalculatorBrain.counter])!))
                 case "sinh":
-                    brain.stack[CalculatorBrain.counter] = String(sinh(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(sinh(Double(brain.stack[CalculatorBrain.counter])!))
                 case "cosh":
-                    brain.stack[CalculatorBrain.counter] = String(cosh(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(cosh(Double(brain.stack[CalculatorBrain.counter])!))
                 case "tgh":
-                    brain.stack[CalculatorBrain.counter] = String(tanh(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(tanh(Double(brain.stack[CalculatorBrain.counter])!))
                 case "ctgh":
-                    brain.stack[CalculatorBrain.counter] = String(1/tanh(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(1/tanh(Double(brain.stack[CalculatorBrain.counter])!))
                 case "ln":
                     brain.stack[CalculatorBrain.counter] = String(log(Double(brain.stack[CalculatorBrain.counter])!))
                 case "log":
@@ -206,6 +206,23 @@ class ViewController: UIViewController {
             }
             outputController?.clearLastNumber(symbol: String(describing: temp))
             if Double(Int.max) >= Double(brain.stack[CalculatorBrain.counter])! {
+                if (Double(brain.stack[CalculatorBrain.counter])?.isNaN)! {
+                    outputController?.clearScreen()
+                    brain.stack = []
+                    CalculatorBrain.counter = 0
+                    brain.res = 0
+                    brain.isFirstEnter = true
+                    outputController?.setWarning(name: "NaN")
+                    return false
+                } else if (Double(brain.stack[CalculatorBrain.counter])?.isInfinite)! {
+                    outputController?.clearScreen()
+                    brain.stack = []
+                    CalculatorBrain.counter = 0
+                    brain.res = 0
+                    brain.isFirstEnter = true
+                    outputController?.setWarning(name: "Infinity(∞)")
+                    return false
+                }
                 outputController?.appendSymbol(symbol: Double(brain.stack[CalculatorBrain.counter]) == Double(String(Int(Double(brain.stack[CalculatorBrain.counter])!))) ? String(Int(Double(brain.stack[CalculatorBrain.counter])!)) : String(brain.stack[CalculatorBrain.counter]))
             } else {
                 outputController?.appendSymbol(symbol: String(brain.stack[CalculatorBrain.counter]))
@@ -303,7 +320,7 @@ class ViewController: UIViewController {
             }
             if brain.stack != [] && (outputController?.getLastSymbol()) != nil && (outputController?.getLastSymbol())! >= Character(String(0)) && (outputController?.getLastSymbol())! <= Character(String(9)) {
                 let temp = Double(brain.stack[CalculatorBrain.counter])!
-                if Double(Int.max) >= Double(brain.stack[CalculatorBrain.counter])! {
+                if Double(brain.stack[CalculatorBrain.counter]) != nil && Double(Int.max) >= Double(brain.stack[CalculatorBrain.counter])! {
                     if Double(brain.stack[CalculatorBrain.counter])! >= 0 && Double(brain.stack[CalculatorBrain.counter])! == Double(Int(Double(brain.stack[CalculatorBrain.counter])!)) {
                         self.brain.stack[CalculatorBrain.counter] = String(self.brain.Factorial(n: Int(self.brain.stack[CalculatorBrain.counter])!))
                     } else {
@@ -406,21 +423,21 @@ class ViewController: UIViewController {
                 }
                 switch prevSymbol {
                 case "sin":
-                    brain.stack[CalculatorBrain.counter] = String(sin(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(sin(Double(brain.stack[CalculatorBrain.counter])!))
                 case "cos":
-                    brain.stack[CalculatorBrain.counter] = String(cos(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(cos(Double(brain.stack[CalculatorBrain.counter])!))
                 case "tg":
-                    brain.stack[CalculatorBrain.counter] = String(tan(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(tan(Double(brain.stack[CalculatorBrain.counter])!))
                 case "ctg":
-                    brain.stack[CalculatorBrain.counter] = String(1/tan(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(1/tan(Double(brain.stack[CalculatorBrain.counter])!))
                 case "sinh":
-                    brain.stack[CalculatorBrain.counter] = String(sinh(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(sinh(Double(brain.stack[CalculatorBrain.counter])!))
                 case "cosh":
-                    brain.stack[CalculatorBrain.counter] = String(cosh(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(cosh(Double(brain.stack[CalculatorBrain.counter])!))
                 case "tgh":
-                    brain.stack[CalculatorBrain.counter] = String(tanh(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(tanh(Double(brain.stack[CalculatorBrain.counter])!))
                 case "ctgh":
-                    brain.stack[CalculatorBrain.counter] = String(1/tanh(brain.constTrigo * Double(brain.stack[CalculatorBrain.counter])!))
+                    brain.stack[CalculatorBrain.counter] = String(1/tanh(Double(brain.stack[CalculatorBrain.counter])!))
                 case "ln":
                     brain.stack[CalculatorBrain.counter] = String(log(Double(brain.stack[CalculatorBrain.counter])!))
                 case "log":
@@ -492,6 +509,7 @@ class ViewController: UIViewController {
                 outputController?.clearScreen()
                 brain.stack[CalculatorBrain.counter] = String(0)
                 brain.res = 0
+                dot = 1
                 brain.isFirstEnter = true
                 outputController?.appendSymbol(symbol: "0")
             }
@@ -507,12 +525,18 @@ class ViewController: UIViewController {
                 }
 //                && (Int(brain.stack[CalculatorBrain.counter]) != nil) && Double(brain.stack[CalculatorBrain.counter]) == Double(Int(brain.stack[CalculatorBrain.counter])!)) || isConstSymbol(symbol: prevSymbol)
                 if (CalculatorBrain.counter >= 0 && (Double(brain.stack[CalculatorBrain.counter]) != nil)) || isConstSymbol(symbol: prevSymbol) {
-                    outputController?.appendSymbol(symbol: symbol)
-                    if isConstSymbol(symbol: prevSymbol) {
-                        brain.stack.append(String(0))
-                        CalculatorBrain.counter += 1
+                    if dot >= 1 {
+                        if outputController?.display.text == "" {
+                            outputController?.appendSymbol(symbol: "0")
+                        }
+                        outputController?.appendSymbol(symbol: symbol)
+                        if isConstSymbol(symbol: prevSymbol) {
+                            brain.stack.append(String(0))
+                            CalculatorBrain.counter += 1
+                        }
+                        dot *= 0.1
                     }
-                    dot *= 0.1
+                    
                 }
             }
             prevSymbol = symbol
@@ -749,7 +773,7 @@ class ViewController: UIViewController {
                 prevSymbol = brain.stack[0]
                 CalculatorBrain.counter = 0
             } else if dot == 1 {
-                if Double(Int.max) >= Double(brain.stack[CalculatorBrain.counter])! && Double(brain.stack[CalculatorBrain.counter]) != Double(Int(Double(brain.stack[CalculatorBrain.counter])!)) {
+                if Double(brain.stack[CalculatorBrain.counter]) != nil && Double(Int.max) >= Double(brain.stack[CalculatorBrain.counter])! && Double(brain.stack[CalculatorBrain.counter]) != Double(Int(Double(brain.stack[CalculatorBrain.counter])!)) {
                     brain.stack[CalculatorBrain.counter] = String(0)
                     outputController?.clearScreen()
                     outputController?.appendSymbol(symbol: symbols)
