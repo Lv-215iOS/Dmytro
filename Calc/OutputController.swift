@@ -81,8 +81,12 @@ class OutputController: UIViewController{
     
     func clearLastNumber(symbol: String) {
         var symb = symbol
-        if Double(symb) == Double(String(describing: Int(Double(symb)!))) {
-            symb = String(Int(Double(symb)!))
+        if Double(Int.max) >= Double(symb)! {
+            if Double(symb) == Double(String(describing: Int(Double(symb)!))) {
+                symb = String(Int(Double(symb)!))
+            }
+        } else {
+            symb = String(Double(symb)!)
         }
         while symb != "" {
             display.text?.remove(at: (display.text?.index(before: (display.text?.endIndex)!))!)
@@ -91,8 +95,11 @@ class OutputController: UIViewController{
     }
     
     func setResult(symbol: String) {
-        if Double(symbol) != nil && Double(symbol) == Double(Int(Double(symbol)!)) {
+        if Double(Int.max) >= Double(symbol)! && Double(symbol) != nil && Double(symbol) == Double(Int(Double(symbol)!)) {
             displayResult.text = String(Int(Double(symbol)!))
+            
+        } else if Double(Int.max) < Double(symbol)! && Double(symbol) != nil {
+            displayResult.text = String(Double(symbol)!)
         } else {
             displayResult.text = symbol
         }

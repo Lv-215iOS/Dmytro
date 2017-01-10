@@ -101,6 +101,11 @@ class InputController: UIInputViewController {
     }
     
     @IBAction func touchButton(_ sender: UIButton) {
+        if sender.currentTitle! == "🔈" || sender.currentTitle! == "🔇" {
+            soundOn.isHidden = soundOn.isHidden ? false : true
+            soundOff.isHidden = soundOff.isHidden ? false : true
+            return
+        }
         if soundOff.isHidden {
             if audioPlayer.currentTime < audioPlayer.duration / 3 {
                 audioPlayer.play()
@@ -136,11 +141,7 @@ class InputController: UIInputViewController {
             sender.transform = isGraphic ? CGAffineTransform(scaleX: 0.9, y: 0.9) : CGAffineTransform(scaleX: 1, y: 1)
             return
         }
-        if sender.currentTitle! == "🔈" || sender.currentTitle! == "🔇" {
-            soundOn.isHidden = soundOn.isHidden ? false : true
-            soundOff.isHidden = soundOff.isHidden ? false : true
-            return
-        }
+        
         buttonTouched?(sender.currentTitle!)
         if sender.currentTitle! == "=" {
             graphicController?.data.removeAll()

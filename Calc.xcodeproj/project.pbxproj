@@ -18,7 +18,6 @@
 		25A459111DFE9EDD00FDA3C3 /* OutputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A459101DFE9EDD00FDA3C3 /* OutputController.swift */; };
 		25CA68B01E0AD2C200A02AD3 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CA68AF1E0AD2C200A02AD3 /* Curve.swift */; };
 		25CEC60C1E01410D00330178 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CEC60B1E01410D00330178 /* InputController.swift */; };
-		25F9F83F1E08585D00A06C83 /* DrawButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9F83E1E08585D00A06C83 /* DrawButton.swift */; };
 		25FC30FB1E1E849D0069D478 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25FC30FA1E1E849D0069D478 /* background.jpg */; };
 		25FC30FD1E1E8FF50069D478 /* sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 25FC30FC1E1E8FF50069D478 /* sound.wav */; };
 		661203AA1E21B95500ED47FA /* Graphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661203A91E21B95500ED47FA /* Graphic.swift */; };
@@ -61,11 +60,10 @@
 		25A459101DFE9EDD00FDA3C3 /* OutputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputController.swift; sourceTree = "<group>"; };
 		25CA68AF1E0AD2C200A02AD3 /* Curve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
 		25CEC60B1E01410D00330178 /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
-		25F9F83E1E08585D00A06C83 /* DrawButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawButton.swift; path = Calc/DrawButton.swift; sourceTree = "<group>"; };
 		25FC30FA1E1E849D0069D478 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = background.jpg; path = ../../../background.jpg; sourceTree = "<group>"; };
 		25FC30FC1E1E8FF50069D478 /* sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sound.wav; path = ../../../../Downloads/sound.wav; sourceTree = "<group>"; };
-		661203A91E21B95500ED47FA /* Graphic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Graphic.swift; path = Calc/Graphic.swift; sourceTree = "<group>"; };
-		6670DA181E22671100FE0057 /* GraphicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphicController.swift; path = Calc/GraphicController.swift; sourceTree = "<group>"; };
+		661203A91E21B95500ED47FA /* Graphic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graphic.swift; sourceTree = "<group>"; };
+		6670DA181E22671100FE0057 /* GraphicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphicController.swift; sourceTree = "<group>"; };
 		6670DA1A1E232C3500FE0057 /* LaunchScreenControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreenControllerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,13 +95,10 @@
 		25707D8F1DF82EAD008CE313 = {
 			isa = PBXGroup;
 			children = (
-				6670DA181E22671100FE0057 /* GraphicController.swift */,
-				661203A91E21B95500ED47FA /* Graphic.swift */,
 				25707D9A1DF82EAD008CE313 /* Calc */,
 				25707DAF1DF82EAD008CE313 /* CalcTests */,
 				25707DBA1DF82EAD008CE313 /* CalcUITests */,
 				25707D991DF82EAD008CE313 /* Products */,
-				25F9F83E1E08585D00A06C83 /* DrawButton.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +118,8 @@
 				25FC30F91E1E84810069D478 /* picture */,
 				25CB7CCA1E02E7FF0074E6BD /* not using */,
 				256E74881DF88C990032AF51 /* CalculatorBrain.swift */,
+				6670DA181E22671100FE0057 /* GraphicController.swift */,
+				661203A91E21B95500ED47FA /* Graphic.swift */,
 				25707D9D1DF82EAD008CE313 /* ViewController.swift */,
 				25707D9F1DF82EAD008CE313 /* Main.storyboard */,
 				25A459101DFE9EDD00FDA3C3 /* OutputController.swift */,
@@ -317,7 +314,6 @@
 				25707D9C1DF82EAD008CE313 /* AppDelegate.swift in Sources */,
 				6670DA191E22671100FE0057 /* GraphicController.swift in Sources */,
 				661203AA1E21B95500ED47FA /* Graphic.swift in Sources */,
-				25F9F83F1E08585D00A06C83 /* DrawButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
