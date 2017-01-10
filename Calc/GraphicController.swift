@@ -35,27 +35,15 @@ class GraphicController: UIViewController, LineChartDelegate {
         views["label"] = label
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[label]-|", options: [], metrics: nil, views: views))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-80-[label]", options: [], metrics: nil, views: views))
-        
-        // simple arrays
-//        data = []
-//        data.append([3, 4, -2, 11, 13, 15])
-//        data.append([1, 3, 5, 13, 17, 20, 30, 39])
-//        data[2] += [17, 22]
-        
-//        data.removeAll()
-//        if inputViewController
-        
-//        let data: [CGFloat] = [3, 4, -2, 11, 13, 15]
-//        let data2: [CGFloat] = [1, 3, 5, 13, 17, 20, 30, 39]
-        
-        // simple line with custom x axis labels
-        let xLabels: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]
+
+        let xLabels = [String](repeating: "ww", count: 71)
         
         lineChart = Graphic()
         if data.isEmpty {
             lineChart.clearAll()
-            data.append([0,0,0,0,0,0,0])
-        }        
+            return
+//            data.append([0,0,0,0,0,0,0])
+        }
         lineChart.animation.enabled = true
         lineChart.area = true
         lineChart.x.labels.visible = true

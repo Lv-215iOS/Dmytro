@@ -103,8 +103,14 @@ open class Graphic: UIView {
     // values calculated on init
     fileprivate var drawingHeight: CGFloat = 0 {
         didSet {
-            let max = getMaximumValue()
-            let min = getMinimumValue()
+            var max = getMaximumValue()
+            if max > 15 {
+                max = 15
+            }
+            var min = getMinimumValue()
+            if min < -15 {
+                min = -15
+            }
             y.linear = LinearScale(domain: [min, max], range: [0, drawingHeight])
             y.scale = y.linear.scale()
             y.ticks = y.linear.ticks(Int(y.grid.count))
@@ -112,9 +118,11 @@ open class Graphic: UIView {
     }
     fileprivate var drawingWidth: CGFloat = 0 {
         didSet {
-//            dataStore.append([3, 4, -2, 11, 13, 15])
+            if Graphic.dataStore.isEmpty {
+                return
+            }
             let data = Graphic.dataStore[0]
-            x.linear = LinearScale(domain: [0.0, CGFloat(data.count - 1)], range: [0, drawingWidth])
+            x.linear = LinearScale(domain: [0.0, 71], range: [0, drawingWidth]) //CGFloat(data.count - 1)
             x.scale = x.linear.scale()
             x.invert = x.linear.invert()
             x.ticks = x.linear.ticks(Int(x.grid.count))
@@ -203,15 +211,13 @@ open class Graphic: UIView {
             drawLine(lineIndex)
             
             // draw dots
-            if dots.visible { drawDataDots(lineIndex) }
+//            if dots.visible { drawDataDots(lineIndex) }
             
             // draw area under line chart
             if area { drawAreaBeneathLineChart(lineIndex) }
             
         }
-        
-    }
-    
+    }    
     
     
     /**
@@ -322,7 +328,6 @@ open class Graphic: UIView {
                 anim.toValue = 1
                 dotLayer.add(anim, forKey: "opacity")
             }
-            
         }
         dotsDataStore.append(dotLayers)
     }
@@ -460,11 +465,13 @@ open class Graphic: UIView {
         var x1: CGFloat
         let y1: CGFloat = self.bounds.height - y.axis.inset
         let y2: CGFloat = y.axis.inset
-        let (start, stop, step) = self.x.ticks
-        for i in stride(from: start, through: stop, by: step){
-            x1 = self.x.scale(i) + x.axis.inset
-            path.move(to: CGPoint(x: x1, y: y1))
-            path.addLine(to: CGPoint(x: x1, y: y2))
+        if self.x.ticks != nil {
+            let (start, stop, step) = self.x.ticks
+            for i in stride(from: start, through: stop, by: step){
+                x1 = self.x.scale(i) + x.axis.inset
+                path.move(to: CGPoint(x: x1, y: y1))
+                path.addLine(to: CGPoint(x: x1, y: y2))
+            }
         }
         path.stroke()
     }
@@ -505,7 +512,9 @@ open class Graphic: UIView {
      * Draw x labels.
      */
     fileprivate func drawXLabels() {
-//        self.dataStore.append([3, 4, -2, 11, 13, 15])
+        if Graphic.dataStore.isEmpty {
+            return
+        }
         let xAxisData = Graphic.dataStore[0]
         let y = self.bounds.height - x.axis.inset
         let (_, _, step) = x.linear.ticks(xAxisData.count)
@@ -514,16 +523,21 @@ open class Graphic: UIView {
         var text: String
         for (index, _) in xAxisData.enumerated() {
             let xValue = self.x.scale(CGFloat(index)) + x.axis.inset - (width / 2)
-            let label = UILabel(frame: CGRect(x: xValue, y: y, width: width, height: x.axis.inset))
+            let label = UILabel(frame: CGRect(x: xValue, y: y, width: width, height: x.axis.inset)) //heigh of x label
             label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
             label.textAlignment = .center
             if (x.labels.values.count != 0) {
                 text = x.labels.values[index]
             } else {
-                text = String(index)
+                text = String(Double(index) * 0.1)
             }
             label.text = text
-            self.addSubview(label)
+//            if Double(text) == 2 {
+//                break
+//            }
+            if Double(text) != nil && Double(text) == Double(Int(Double(text)!)) {
+                self.addSubview(label)
+            }
         }
     }
     
@@ -533,6 +547,9 @@ open class Graphic: UIView {
      * Draw y labels.
      */
     fileprivate func drawYLabels() {
+        if Graphic.dataStore.isEmpty {
+            return
+        }
         var yValue: CGFloat
         let (start, stop, step) = self.y.ticks
         for i in stride(from: start, through: stop, by: step){
@@ -541,6 +558,9 @@ open class Graphic: UIView {
             label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
             label.textAlignment = .center
             label.text = String(Int(round(i)))
+//            if Double(label.text!) == 10 {
+//                break
+//            }
             self.addSubview(label)
         }
     }

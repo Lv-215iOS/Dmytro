@@ -62,8 +62,6 @@ class InputController: UIInputViewController {
     @IBOutlet weak var btnGraphEqual: UIButton!
     @IBOutlet weak var btnX: UIButton!
     @IBOutlet weak var btnY: UIButton!
-    @IBOutlet weak var btnMore: UIButton!
-    @IBOutlet weak var btnLess: UIButton!
     
     var viewController: ViewController? = nil
     var graphicController: GraphicController? = nil
@@ -136,8 +134,10 @@ class InputController: UIInputViewController {
             btnGraphEqual.isHidden = btnMMinus.isHidden ? false : true
             btnX.isHidden = btnMClean.isHidden ? false : true
             btnY.isHidden = btnMRead.isHidden ? false : true
-            btnMore.isHidden = btnMPlus.isHidden ? false : true
-            btnLess.isHidden = btnMMinus.isHidden ? false : true
+            if !UIDevice.current.orientation.isLandscape {
+                btnLeftBracket.isHidden = btnMPlus.isHidden ? false : true
+                btnRightBracket.isHidden = btnMMinus.isHidden ? false : true
+            }
             sender.transform = isGraphic ? CGAffineTransform(scaleX: 0.9, y: 0.9) : CGAffineTransform(scaleX: 1, y: 1)
             return
         }
@@ -153,10 +153,10 @@ class InputController: UIInputViewController {
 //        } else {
 //            graphicController?.buttonGraphic(symbols: sender.currentTitle!)
 //        }
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.1, animations: {
                         sender.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
                         sender.setTitleColor(UIColor.blue, for: .normal)
-                        }, completion: { _ in UIView.animate(withDuration: 0.3) {
+                        }, completion: { _ in UIView.animate(withDuration: 0.1) {
                             sender.transform = CGAffineTransform.identity
                             sender.setTitleColor(UIColor.black, for: .normal)
                         }
@@ -171,6 +171,8 @@ class InputController: UIInputViewController {
         if screenWidth > screenHeight && screenWidth != 768 {
             xySize = sqrt(screenWidth * screenWidth + screenHeight * screenHeight)/12.7
             verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
+            
+
         } else {
             xySize = sqrt(screenWidth * screenWidth + screenHeight * screenHeight)/9.5
             horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
@@ -183,8 +185,14 @@ class InputController: UIInputViewController {
         switch UIDevice.current.orientation.isLandscape {
         case true:
             verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
+            btnLeftBracket.isHidden = false
+            btnRightBracket.isHidden = false
         case false:
             horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
+            if !isGraphic {
+                btnLeftBracket.isHidden = true
+                btnRightBracket.isHidden = true
+            }
         }
     }
     
@@ -277,16 +285,14 @@ class InputController: UIInputViewController {
         btnGraphEqual.frame.origin = CGPoint(x:-1000, y:-100)
         btnX.frame.origin = CGPoint(x:-1000, y:-100)
         btnY.frame.origin = CGPoint(x:-1000, y:-100)
-        btnMore.frame.origin = CGPoint(x:-1000, y:-100)
-        btnLess.frame.origin = CGPoint(x:-1000, y:-100)
         
         btn = btnX
         setUpLayer(border: false)
         btn = btnY
         setUpLayer(border: false)
-        btn = btnMore
+        btn = btnRightBracket
         setUpLayer(border: false)
-        btn = btnLess
+        btn = btnLeftBracket
         setUpLayer(border: false)
         btn = btnGraphEqual
         setUpLayer(border: false)
@@ -349,8 +355,8 @@ class InputController: UIInputViewController {
         
         setButton(x: 0.23 * screenWidth, y: 0.85 * screenHeight, btn: btnX)
         setButton(x: 0.25 * screenWidth, y: 0.68 * screenHeight, btn: btnY)
-        setButton(x: 0.36 * screenWidth, y: 0.51 * screenHeight, btn: btnMore)
-        setButton(x: 0.58 * screenWidth, y: 0.4 * screenHeight, btn: btnLess)
+        setButton(x: 0.36 * screenWidth, y: 0.51 * screenHeight, btn: btnRightBracket)
+        setButton(x: 0.58 * screenWidth, y: 0.4 * screenHeight, btn: btnLeftBracket)
         
         setButton(x: 0.81 * screenWidth, y: 0.85 * screenHeight, btn: btnGraphEqual)
         
@@ -458,16 +464,14 @@ class InputController: UIInputViewController {
         btnGraphEqual.frame.origin = CGPoint(x:-100, y:-100)
         btnX.frame.origin = CGPoint(x:-1000, y:-100)
         btnY.frame.origin = CGPoint(x:-1000, y:-100)
-        btnMore.frame.origin = CGPoint(x:-1000, y:-100)
-        btnLess.frame.origin = CGPoint(x:-1000, y:-100)
         
         btn = btnX
         setUpLayer()
         btn = btnY
         setUpLayer()
-        btn = btnMore
+        btn = btnRightBracket
         setUpLayer()
-        btn = btnLess
+        btn = btnLeftBracket
         setUpLayer()
         btn = btnGraphEqual
         setUpLayer(border: false)
@@ -558,10 +562,10 @@ class InputController: UIInputViewController {
         btn = btnTgh
         setUpLayer()
         
-        setButton(x: 0.32 * screenWidth, y: 0.79 * screenHeight, btn: btnX)
-        setButton(x: 0.41 * screenWidth, y: 0.79 * screenHeight, btn: btnY)
-        setButton(x: 0.51 * screenWidth, y: 0.79 * screenHeight, btn: btnMore)
-        setButton(x: 0.6 * screenWidth, y: 0.79 * screenHeight, btn: btnLess)
+        setButton(x: 0.41 * screenWidth, y: 0.79 * screenHeight, btn: btnX)
+        setButton(x: 0.51 * screenWidth, y: 0.79 * screenHeight, btn: btnY)
+        //setButton(x: 0.51 * screenWidth, y: 0.79 * screenHeight, btn: btnRightBracket)
+        //setButton(x: 0.6 * screenWidth, y: 0.79 * screenHeight, btn: btnLeftBracket)
         
         setButton(x: 0.01 * screenWidth, y: 0.53 * screenHeight, btn: btnGraphEqual)
         

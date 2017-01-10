@@ -67,7 +67,7 @@ class CalculatorBrain:  CalcBrainInterface
     var inputController: InputController? = nil
     var result: ((Double?, Error?) -> ())?
     var isFirstEnter = true
-    let constTrigo = M_PI/180
+//    let constTrigo = M_PI/180
     var contentX = [Bool]()
     var data: [[CGFloat]] = []
     
@@ -92,7 +92,7 @@ class CalculatorBrain:  CalcBrainInterface
         return false
     }
     
-    func changeValueFromX(into: Int) {
+    func changeValueFromX(into: Double) {
         for i in 0..<stack.count {
             if contentX[i] {
                 stack[i] = String(into)
@@ -194,42 +194,42 @@ class CalculatorBrain:  CalcBrainInterface
                     outputController?.setWarning(name: "Error")
                     return
                 }
-                stack[CalculatorBrain.index] = String(sin(constTrigo * Double(String(stack[CalculatorBrain.index+1]))!))
+                stack[CalculatorBrain.index] = String(sin(Double(String(stack[CalculatorBrain.index+1]))!))
                 stack.remove(at: CalculatorBrain.index+1)
                 CalculatorBrain.counter -= 1
                 res = Double(stack[CalculatorBrain.index])!
             case .Cos:
-                stack[CalculatorBrain.index] = String(cos(constTrigo * Double(String(stack[CalculatorBrain.index+1]))!))
+                stack[CalculatorBrain.index] = String(cos(Double(String(stack[CalculatorBrain.index+1]))!))
                 stack.remove(at: CalculatorBrain.index+1)
                 CalculatorBrain.counter -= 1
                 res = Double(stack[CalculatorBrain.index])!
             case .Tg:
-                stack[CalculatorBrain.index] = String(tan(constTrigo * Double(String(stack[CalculatorBrain.index+1]))!))
+                stack[CalculatorBrain.index] = String(tan(Double(String(stack[CalculatorBrain.index+1]))!))
                 stack.remove(at: CalculatorBrain.index+1)
                 CalculatorBrain.counter -= 1
                 res = Double(stack[CalculatorBrain.index])!
             case .Ctg:
-                stack[CalculatorBrain.index] = String(1/tan(constTrigo * Double(String(stack[CalculatorBrain.index+1]))!))
+                stack[CalculatorBrain.index] = String(1/tan(Double(String(stack[CalculatorBrain.index+1]))!))
                 stack.remove(at: CalculatorBrain.index+1)
                 CalculatorBrain.counter -= 1
                 res = Double(stack[CalculatorBrain.index])!
             case .Sinh:
-                stack[CalculatorBrain.index] = String(sinh(constTrigo * Double(String(stack[CalculatorBrain.index+1]))!))
+                stack[CalculatorBrain.index] = String(sinh(Double(String(stack[CalculatorBrain.index+1]))!))
                 stack.remove(at: CalculatorBrain.index+1)
                 CalculatorBrain.counter -= 1
                 res = Double(stack[CalculatorBrain.index])!
             case .Cosh:
-                stack[CalculatorBrain.index] = String(cosh(constTrigo * Double(String(stack[CalculatorBrain.index+1]))!))
+                stack[CalculatorBrain.index] = String(cosh(Double(String(stack[CalculatorBrain.index+1]))!))
                 stack.remove(at: CalculatorBrain.index)
                 CalculatorBrain.counter -= 1
                 res = Double(stack[CalculatorBrain.index])!
             case .Tgh:
-                stack[CalculatorBrain.index] = String(tanh(constTrigo * Double(String(stack[CalculatorBrain.index+1]))!))
+                stack[CalculatorBrain.index] = String(tanh(Double(String(stack[CalculatorBrain.index+1]))!))
                 stack.remove(at: CalculatorBrain.index+1)
                 CalculatorBrain.counter -= 1
                 res = Double(stack[CalculatorBrain.index])!
             case .Ctgh:
-                stack[CalculatorBrain.index] = String(1/tanh(constTrigo * Double(String(stack[CalculatorBrain.index+1]))!))
+                stack[CalculatorBrain.index] = String(1/tanh(Double(String(stack[CalculatorBrain.index+1]))!))
                 stack.remove(at: CalculatorBrain.index+1)
                 CalculatorBrain.counter -= 1
                 res = Double(stack[CalculatorBrain.index])!
@@ -254,11 +254,12 @@ class CalculatorBrain:  CalcBrainInterface
             let counter = CalculatorBrain.counter
             contentX = Array(repeating: false, count: stack.count)
             let stackCopy = stack
-            if isContainX() || valueInMemory == -1 {
-                for i in 0..<7 {
+            //|| valueInMemory == -1 // if y = 2
+            if isContainX() {
+                for i in 0..<71 {
                     stack = stackCopy
                     CalculatorBrain.counter = counter
-                    changeValueFromX(into: i)
+                    changeValueFromX(into: Double(i) * 0.1)
                     if i == 0 {
                         data.append([CGFloat(DoCalc())])
                     } else {
@@ -347,231 +348,222 @@ class CalculatorBrain:  CalcBrainInterface
     }
     
     func DoCalc(number: Int = 0) -> Double {
-        do {
-            if stack.count == 1 && Double(stack[0]) != nil {
-                res = Double(stack[0])!
+        if stack.count == 1 && Double(stack[0]) != nil {
+            res = Double(stack[0])!
+            return res
+        }
+        
+        if stack.count > 1 && CalculatorBrain.counter >= 1 && !CalculatorBrain.brackets && stack != [] && !(stack[1] == "√" || stack[1] == "sin" || stack[1] == "cos" || stack[1] == "tg" || stack[1] == "ctg" || stack[1] == "ln" || stack[1] == "log" || stack[1] == "sinh" || stack[1] == "cosh" || stack[1] == "tgh" || stack[1] == "ctgh" || stack[1] == "!") {
+            if isFirstEnter {
+                CalculatorBrain.index = 0
+                isFirstEnter = false
+            }
+            if CalculatorBrain.index >= CalculatorBrain.counter {
+                outputController?.clearScreen()
+                stack = []
+                CalculatorBrain.counter = 0
+                res = 0
+                isFirstEnter = true
+                outputController?.setWarning(name: "Error")
+                return 0
+            } else if var _: Double = Double(stack[CalculatorBrain.index]) {
+                if Double(stack[CalculatorBrain.index]) != res {
+                    res += Double(String(stack[CalculatorBrain.index]))!
+                }
+            }
+        } else if CalculatorBrain.counter == 0 {
+            if Double(String(stack[0])) == nil {
+                outputController?.clearScreen()
+                stack = []
+                CalculatorBrain.counter = 0
+                res = 0
+                isFirstEnter = true
+                outputController?.setWarning(name: "Error")
+                return 0
+            }
+            res += Double(String(stack[0]))!
+        }
+        
+        print(CalculatorBrain.counter)
+        while CalculatorBrain.index < CalculatorBrain.counter || (CalculatorBrain.index+1 <=  stack.count && stack[CalculatorBrain.index] == "%") {
+            if CalculatorBrain.index+1 > stack.count {
+                if stack.count == 1 {
+                    CalculatorBrain.counter = 0
+                }
                 return res
             }
-            
-            if stack.count > 1 && CalculatorBrain.counter >= 1 && !CalculatorBrain.brackets && stack != [] && !(stack[1] == "√" || stack[1] == "sin" || stack[1] == "cos" || stack[1] == "tg" || stack[1] == "ctg" || stack[1] == "ln" || stack[1] == "log" || stack[1] == "sinh" || stack[1] == "cosh" || stack[1] == "tgh" || stack[1] == "ctgh" || stack[1] == "!") {
-                if isFirstEnter {
-                    CalculatorBrain.index = 0
-                    isFirstEnter = false
-                }
-                if CalculatorBrain.index >= CalculatorBrain.counter {
-                    outputController?.clearScreen()
-                    stack = []
-                    CalculatorBrain.counter = 0
-                    res = 0
-                    isFirstEnter = true
-                    outputController?.setWarning(name: "Error")
-                    return 0
-                } else if var _: Double = Double(stack[CalculatorBrain.index]) {
-                    if Double(stack[CalculatorBrain.index]) != res {
-                        res += Double(String(stack[CalculatorBrain.index]))!
+            if stack[CalculatorBrain.index] != "%" {
+                if CalculatorBrain.index+2 < stack.count && Double(stack[CalculatorBrain.index+2]) != nil && (stack[CalculatorBrain.index+1] == "√" || stack[CalculatorBrain.index+1] == "sin" || stack[CalculatorBrain.index+1] == "cos" || stack[CalculatorBrain.index+1] == "tg" || stack[CalculatorBrain.index+1] == "ctg" || stack[CalculatorBrain.index+1] == "ln" || stack[CalculatorBrain.index+1] == "log" || stack[CalculatorBrain.index+1] == "sinh" || stack[CalculatorBrain.index+1] == "cosh" || stack[CalculatorBrain.index+1] == "tgh" || stack[CalculatorBrain.index+1] == "ctgh" || stack[CalculatorBrain.index+1] == "!") {
+                    switch stack[CalculatorBrain.index+1] {
+                    case "√":
+                        stack[CalculatorBrain.index+1] = String(sqrt(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "sin":
+                        stack[CalculatorBrain.index+1] = String(sin(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "cos":
+                        stack[CalculatorBrain.index+1] = String(cos(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "tg":
+                        stack[CalculatorBrain.index+1] = String(tan(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "ctg":
+                        stack[CalculatorBrain.index+1] = String(1/tan(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "ln":
+                        stack[CalculatorBrain.index+1] = String(log(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "log":
+                        stack[CalculatorBrain.index+1] = String(log10(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "sinh":
+                        stack[CalculatorBrain.index+1] = String(sinh(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "cosh":
+                        stack[CalculatorBrain.index+1] = String(cosh(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "tgh":
+                        stack[CalculatorBrain.index+1] = String(tanh(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "ctgh":
+                        stack[CalculatorBrain.index+1] = String(1/tanh(Double(stack[CalculatorBrain.index+2])!))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    case "!":
+                        stack[CalculatorBrain.index+1] = String(Factorial(n: Int(Double(stack[CalculatorBrain.index+2])!)))
+                        stack.remove(at: CalculatorBrain.index+2)
+                        CalculatorBrain.counter -= 1
+                    default:
+                        break
                     }
                 }
-            } else if CalculatorBrain.counter == 0 {
-                if Double(String(stack[0])) == nil {
-                    outputController?.clearScreen()
-                    stack = []
-                    CalculatorBrain.counter = 0
-                    res = 0
-                    isFirstEnter = true
-                    outputController?.setWarning(name: "Error")
-                    return 0
-                }
-                res += Double(String(stack[0]))!
             }
             
-            print(CalculatorBrain.counter)
-            while CalculatorBrain.index < CalculatorBrain.counter || (CalculatorBrain.index+1 <=  stack.count && stack[CalculatorBrain.index] == "%") {
-                if CalculatorBrain.index+1 > stack.count {
-                    if stack.count == 1 {
-                        CalculatorBrain.counter = 0
-                    }
-                    return res
+            if let temp_index: Int = isBracket(from: CalculatorBrain.index) {
+                let cur_index = CalculatorBrain.index
+                CalculatorBrain.index = temp_index+1
+                let temp_res = res
+                res = 0
+                let _ = DoCalc()
+                if temp_index >= stack.count || stack == [] {
+                    outputController?.clearScreen()
+                    stack = []
+                    CalculatorBrain.counter = 0
+                    res = 0
+                    isFirstEnter = true
+                    outputController?.setWarning(name: "Error")
+                    break
                 }
-                if stack[CalculatorBrain.index] != "%" {
-                    if CalculatorBrain.index+2 < stack.count && Double(stack[CalculatorBrain.index+2]) != nil && (stack[CalculatorBrain.index+1] == "√" || stack[CalculatorBrain.index+1] == "sin" || stack[CalculatorBrain.index+1] == "cos" || stack[CalculatorBrain.index+1] == "tg" || stack[CalculatorBrain.index+1] == "ctg" || stack[CalculatorBrain.index+1] == "ln" || stack[CalculatorBrain.index+1] == "log" || stack[CalculatorBrain.index+1] == "sinh" || stack[CalculatorBrain.index+1] == "cosh" || stack[CalculatorBrain.index+1] == "tgh" || stack[CalculatorBrain.index+1] == "ctgh" || stack[CalculatorBrain.index+1] == "!") {
-                        switch stack[CalculatorBrain.index+1] {
-                        case "√":
-                            stack[CalculatorBrain.index+1] = String(sqrt(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "sin":
-                            stack[CalculatorBrain.index+1] = String(sin(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "cos":
-                            stack[CalculatorBrain.index+1] = String(cos(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "tg":
-                            stack[CalculatorBrain.index+1] = String(tan(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "ctg":
-                            stack[CalculatorBrain.index+1] = String(1/tan(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "ln":
-                            stack[CalculatorBrain.index+1] = String(log(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "log":
-                            stack[CalculatorBrain.index+1] = String(log10(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "sinh":
-                            stack[CalculatorBrain.index+1] = String(sinh(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "cosh":
-                            stack[CalculatorBrain.index+1] = String(cosh(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "tgh":
-                            stack[CalculatorBrain.index+1] = String(tanh(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "ctgh":
-                            stack[CalculatorBrain.index+1] = String(1/tanh(Double(stack[CalculatorBrain.index+2])!))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        case "!":
-                            stack[CalculatorBrain.index+1] = String(Factorial(n: Int(Double(stack[CalculatorBrain.index+2])!)))
-                            stack.remove(at: CalculatorBrain.index+2)
-                            CalculatorBrain.counter -= 1
-                        default:
-                            break
-                        }
-                    }
-                }
+                stack[temp_index] = String(res)
+                stack.remove(at: CalculatorBrain.index-1)
+                CalculatorBrain.index = cur_index
                 
-                if let temp_index: Int = isBracket(from: CalculatorBrain.index) {
-                    let cur_index = CalculatorBrain.index
-                    CalculatorBrain.index = temp_index+1
+                
+                if stack.count != 1 {
+                    res = temp_res
+                }
+                continue
+            }
+            
+            if stack[CalculatorBrain.index] == ")" {
+                stack.remove(at: CalculatorBrain.index)
+                return res
+            }
+            print("Index = \(CalculatorBrain.index)")
+            switch stack[CalculatorBrain.index] {
+            case "+":
+                if isHigherPriority(numn: CalculatorBrain.index+1) {
+                    let temp_index = CalculatorBrain.index
+                    CalculatorBrain.index += 1
                     let temp_res = res
                     res = 0
                     let _ = DoCalc()
-                    if temp_index >= stack.count || stack == [] {
-                        outputController?.clearScreen()
-                        stack = []
-                        CalculatorBrain.counter = 0
-                        res = 0
-                        isFirstEnter = true
-                        outputController?.setWarning(name: "Error")
-                        break
-                    }
-                    stack[temp_index] = String(res)
-                    stack.remove(at: CalculatorBrain.index-1)
-                    CalculatorBrain.index = cur_index
-                    
-                    
-                    if stack.count != 1 {
-                        res = temp_res
-                    }
-                    continue
+                    CalculatorBrain.index = temp_index
+                    res = temp_res
                 }
-                
-                if stack[CalculatorBrain.index] == ")" {
+                binary(operation: .Plus)
+            case "-":
+                if isHigherPriority(numn: CalculatorBrain.index+1) {
+                    let temp_index = CalculatorBrain.index
+                    CalculatorBrain.index += 1
+                    let temp_res = res
+                    res = 0
+                    let _ = DoCalc()
+                    CalculatorBrain.index = temp_index
+                    res = temp_res
+                }
+                binary(operation: .Minus)
+            case "✕":
+                binary(operation: .Mul)
+            case "÷":
+                binary(operation: .Div)
+            case "^":
+                binary(operation: .Pow)
+            case "%":
+                if CalculatorBrain.index+1 == stack.count || (CalculatorBrain.index+1 <= stack.count && Double(stack[CalculatorBrain.index+1]) == nil) {
+                    stack[CalculatorBrain.index-1] = String(describing: Double(stack[CalculatorBrain.index-1])! * 0.01)
+                    res = Double(stack[CalculatorBrain.index-1])!
                     stack.remove(at: CalculatorBrain.index)
-                    return res
-                }
-                print("Index = \(CalculatorBrain.index)")
-                switch stack[CalculatorBrain.index] {
-                case "+":
-                    if isHigherPriority(numn: CalculatorBrain.index+1) {
-                        let temp_index = CalculatorBrain.index
-                        CalculatorBrain.index += 1
-                        let temp_res = res
-                        res = 0
-                        let _ = DoCalc()
-                        CalculatorBrain.index = temp_index
-                        res = temp_res
-                    }
-                    binary(operation: .Plus)
-                case "-":
-                    if isHigherPriority(numn: CalculatorBrain.index+1) {
-                        let temp_index = CalculatorBrain.index
-                        CalculatorBrain.index += 1
-                        let temp_res = res
-                        res = 0
-                        let _ = DoCalc()
-                        CalculatorBrain.index = temp_index
-                        res = temp_res
-                    }
-                    binary(operation: .Minus)
-                case "✕":
-                    binary(operation: .Mul)
-                case "÷":
-                    binary(operation: .Div)
-                case "^":
-                    binary(operation: .Pow)
-                case "%":
-                    if CalculatorBrain.index+1 == stack.count || (CalculatorBrain.index+1 <= stack.count && Double(stack[CalculatorBrain.index+1]) == nil) {
-                        stack[CalculatorBrain.index-1] = String(describing: Double(stack[CalculatorBrain.index-1])! * 0.01)
-                        res = Double(stack[CalculatorBrain.index-1])!
-                        stack.remove(at: CalculatorBrain.index)
-                        break
-                    }
-                    binary(operation: .Mod)
-                case "√":
-                    unary(operation: .Sqrt)
-                case "!":
-                    unary(operation: .Fact)
-                case "sin":
-                    unary(operation: .Sin)
-                case "cos":
-                    unary(operation: .Cos)
-                case "tg":
-                    unary(operation: .Tg)
-                case "ctg":
-                    unary(operation: .Ctg)
-                case "sinh":
-                    unary(operation: .Sinh)
-                case "cosh":
-                    unary(operation: .Cosh)
-                case "tgh":
-                    unary(operation: .Tgh)
-                case "ctgh":
-                    unary(operation: .Ctgh)
-                case "ln":
-                    unary(operation: .Ln)
-                case "log":
-                    unary(operation: .Log)
-                case "ctg":
-                    unary(operation: .Ctg)
-                    //case for x & u & > & <
-                default:
-                    digit()
                     break
                 }
+                binary(operation: .Mod)
+            case "√":
+                unary(operation: .Sqrt)
+            case "!":
+                unary(operation: .Fact)
+            case "sin":
+                unary(operation: .Sin)
+            case "cos":
+                unary(operation: .Cos)
+            case "tg":
+                unary(operation: .Tg)
+            case "ctg":
+                unary(operation: .Ctg)
+            case "sinh":
+                unary(operation: .Sinh)
+            case "cosh":
+                unary(operation: .Cosh)
+            case "tgh":
+                unary(operation: .Tgh)
+            case "ctgh":
+                unary(operation: .Ctgh)
+            case "ln":
+                unary(operation: .Ln)
+            case "log":
+                unary(operation: .Log)
+            case "ctg":
+                unary(operation: .Ctg)
+            //case for x & u & > & <
+            default:
+                digit()
+                break
             }
-            if !CalculatorBrain.brackets && stack != [] {
-                if !data.isEmpty {
-                    //do something
+        }
+        if !CalculatorBrain.brackets && stack != [] {
+            if !data.isEmpty {
+                //do something
+            } else {
+                stack = []
+                CalculatorBrain.counter = 0
+                if !res.isInfinite {
+                    stack.append(String(res == Double(Int(res)) ? String(Int(res)) : String(Double(Int(res)))))
                 } else {
-                    stack = []
-                    CalculatorBrain.counter = 0
-                    if !res.isInfinite {
-                        stack.append(String(res == Double(Int(res)) ? String(Int(res)) : String(Double(Int(res)))))
-                    } else {
-                        stack.append("0")
-                        res = 0
-                    }
+                    stack.append("0")
+                    res = 0
                 }
             }
-            return res
-        } catch {
-            outputController?.clearScreen()
-            stack = []
-            CalculatorBrain.counter = 0
-            res = 0
-            isFirstEnter = true
-            outputController?.setWarning(name: "Error")
         }
+        return res
     }
     
     func Factorial(n: Int) -> Int {
