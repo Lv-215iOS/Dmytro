@@ -67,9 +67,9 @@ class CalculatorBrain:  CalcBrainInterface
     var inputController: InputController? = nil
     var result: ((Double?, Error?) -> ())?
     var isFirstEnter = true
-//    let constTrigo = M_PI/180
     var contentX = [Bool]()
     var data: [[CGFloat]] = []
+    var isConstGraph = false
     
     func digit() {
         if CalculatorBrain.brackets && res == 0 {
@@ -254,8 +254,7 @@ class CalculatorBrain:  CalcBrainInterface
             let counter = CalculatorBrain.counter
             contentX = Array(repeating: false, count: stack.count)
             let stackCopy = stack
-            //|| valueInMemory == -1 // if y = 2
-            if isContainX() {
+            if isContainX() || isConstGraph {
                 for i in 0..<71 {
                     stack = stackCopy
                     CalculatorBrain.counter = counter
@@ -270,6 +269,7 @@ class CalculatorBrain:  CalcBrainInterface
                     CalculatorBrain.index = 0
                     isFirstEnter = true
                 }
+                isConstGraph = false
             } else {
                 let temp = DoCalc()
                 result?(temp,nil)
@@ -384,7 +384,6 @@ class CalculatorBrain:  CalcBrainInterface
             res += Double(String(stack[0]))!
         }
         
-        print(CalculatorBrain.counter)
         while CalculatorBrain.index < CalculatorBrain.counter || (CalculatorBrain.index+1 <=  stack.count && stack[CalculatorBrain.index] == "%") {
             if CalculatorBrain.index+1 > stack.count {
                 if stack.count == 1 {
@@ -479,7 +478,6 @@ class CalculatorBrain:  CalcBrainInterface
                 stack.remove(at: CalculatorBrain.index)
                 return res
             }
-            print("Index = \(CalculatorBrain.index)")
             switch stack[CalculatorBrain.index] {
             case "+":
                 if isHigherPriority(numn: CalculatorBrain.index+1) {
@@ -543,7 +541,6 @@ class CalculatorBrain:  CalcBrainInterface
                 unary(operation: .Log)
             case "ctg":
                 unary(operation: .Ctg)
-            //case for x & u & > & <
             default:
                 digit()
                 break
@@ -551,7 +548,6 @@ class CalculatorBrain:  CalcBrainInterface
         }
         if !CalculatorBrain.brackets && stack != [] {
             if !data.isEmpty {
-                //do something
             } else {
                 stack = []
                 CalculatorBrain.counter = 0

@@ -9,9 +9,19 @@
 import UIKit
 
 enum ErrorType {
-//    case SomeError
-//    case AnotherError
     case M_minus_error
+    case M_plus_error
+    case Trigonometry
+    case NaN
+    case Infinity
+    case Sqrt
+    case NegativeRoot
+    case Factorial
+    case NoEnter
+    case NothingInMemory
+    case Brackets
+    case Error
+    case Counter
 }
 
 struct MyError: Error {
@@ -19,10 +29,45 @@ struct MyError: Error {
     
     func description() -> String {
         switch self.type {
-        case .M_minus_error:
-            return "M_minus_error"
+        case .Trigonometry:
+            return "Problem with trigonometry"
+        case .NaN:
+            return "NaN"
+        case .Infinity:
+            return "Infinity(∞)"
+        case .Sqrt:
+            return "Error with √"
+        case .NegativeRoot:
+            return "Root can't take negative value"
+        case .Factorial:
+            return "Factorial can take Integer value and value >= 0 only"
+        case .Brackets:
+            return "Fail with brackets"
         default:
-            return "some error"
+            return "Error"
+        }
+    }
+}
+
+struct AnotherError: Error {
+    var type: ErrorType
+    
+    func description() -> String {
+        switch self.type {
+        case .M_minus_error:
+            return "M- error"
+        case .M_plus_error:
+            return "M+ error"
+        case .NoEnter:
+            return "Write the number or press '='"
+        case .NothingInMemory:
+            return "Memory is empty"
+        case .Counter:
+            let tempCounter = CalculatorBrain.counter
+            CalculatorBrain.counter = 0
+            return "Infinity: \(tempCounter*(-1))÷0"
+        default:
+            return "Error"
         }
     }
 }
@@ -35,7 +80,7 @@ class ViewController: UIViewController {
     var isEqual = false
     var invert = false
     var prevSymbol: String = ""
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -108,36 +153,34 @@ class ViewController: UIViewController {
         do {
             try process(symbols: symbols)
         } catch let error as MyError {
-            print("Error \(error)")
             outputController?.clearScreen()
             brain.stack = []
             CalculatorBrain.counter = 0
             brain.res = 0
             brain.isFirstEnter = true
-            outputController?.setWarning(name: "Error")
+            outputController?.setWarning(name: String(describing: error.description()))
+            return
+        } catch let error as AnotherError {
+            outputController?.setWarning(name: String(describing: error.description()))
             return
         } catch let error {
-            print(error)
+            outputController?.clearScreen()
+            brain.stack = []
+            CalculatorBrain.counter = 0
+            brain.res = 0
+            brain.isFirstEnter = true
+            outputController?.setWarning(name: error as! String)
+            return
         }
     }
     
     func checkEqual() {
-//        if brain.stack == [] {
-//            outputController?.clearScreen()
-//            brain.stack = []
-//            CalculatorBrain.counter = 0
-//            brain.res = 0
-//            brain.isFirstEnter = true
-//            outputController?.setWarning(name: "Error")
-//            return
-//        }
         if outputController?.getLastSymbol() == "=" {
             if Double(Int.max) >= Double(brain.res) {
                 outputController?.appendSymbol(symbol: Double(brain.res) == Double(String(Int(Double(brain.res)))) ? String(Int(Double(brain.res))) : String(brain.res))
             } else {
                 outputController?.appendSymbol(symbol: String(brain.res))
             }
-            
             if Double(brain.stack[CalculatorBrain.counter]) != Double(String(brain.res)) {
                 if Double(brain.stack[CalculatorBrain.counter]) == 0 {
                     brain.stack[CalculatorBrain.counter] = String(brain.res)
@@ -163,7 +206,7 @@ class ViewController: UIViewController {
         CalculatorBrain.counter += 1
     }
     
-    func Trigonometry(symb: String) -> Bool {
+    func Trigonometry(symb: String) throws -> Bool {
         if brain.stack != [] && (outputController?.getLastSymbol())! >= Character(String(0)) && (outputController?.getLastSymbol())! <= Character(String(9)) {
             let temp = Double(brain.stack[CalculatorBrain.counter])!
             if Double(brain.stack[CalculatorBrain.counter]) != nil {
@@ -196,13 +239,7 @@ class ViewController: UIViewController {
                 }
                 prevSymbol = brain.stack[CalculatorBrain.counter]
             } else {
-                outputController?.clearScreen()
-                brain.stack = []
-                CalculatorBrain.counter = 0
-                brain.res = 0
-                brain.isFirstEnter = true
-                outputController?.setWarning(name: "Problem with trigonometry")
-                return false
+                throw MyError(type: .Trigonometry)
             }
             outputController?.clearLastNumber(symbol: String(describing: temp))
             if Double(Int.max) >= Double(brain.stack[CalculatorBrain.counter])! {
@@ -212,16 +249,14 @@ class ViewController: UIViewController {
                     CalculatorBrain.counter = 0
                     brain.res = 0
                     brain.isFirstEnter = true
-                    outputController?.setWarning(name: "NaN")
-                    return false
+                    throw MyError(type: .NaN)
                 } else if (Double(brain.stack[CalculatorBrain.counter])?.isInfinite)! {
                     outputController?.clearScreen()
                     brain.stack = []
                     CalculatorBrain.counter = 0
                     brain.res = 0
                     brain.isFirstEnter = true
-                    outputController?.setWarning(name: "Infinity(∞)")
-                    return false
+                    throw MyError(type: .Infinity)
                 }
                 outputController?.appendSymbol(symbol: Double(brain.stack[CalculatorBrain.counter]) == Double(String(Int(Double(brain.stack[CalculatorBrain.counter])!))) ? String(Int(Double(brain.stack[CalculatorBrain.counter])!)) : String(brain.stack[CalculatorBrain.counter]))
             } else {
@@ -235,7 +270,6 @@ class ViewController: UIViewController {
     }
     
     func process(symbols: String) throws {
-        print("Here counter: \(CalculatorBrain.counter)")
         var symbol: String = symbols
         if symbol != "=" {
             isEqual = false
@@ -249,10 +283,16 @@ class ViewController: UIViewController {
         switch symbol {
         case "+", "-":
             if outputController?.display.text == "" {
-//                outputController?.appendSymbol(symbol: symbol)
                 if symbol == "-" {
                     outputController?.appendSymbol(symbol: symbol)
                 }
+                invert = (symbol == "+" ? false : true)
+                break
+            }
+            if outputController?.getLastSymbol() != nil && brain.stack != [] && outputController?.getLastSymbol() == "-" || outputController?.getLastSymbol() == "+" {
+                outputController?.clearLastSymbol()
+                outputController?.appendSymbol(symbol: symbol)
+                brain.stack[CalculatorBrain.counter] = symbol
                 invert = (symbol == "+" ? false : true)
                 break
             }
@@ -281,8 +321,7 @@ class ViewController: UIViewController {
                 CalculatorBrain.counter = 0
                 brain.res = 0
                 brain.isFirstEnter = true
-                outputController?.setWarning(name: "Error")
-                return
+                throw MyError(type: .Sqrt)
             }
             if (brain.stack != [] && Double(brain.stack[CalculatorBrain.counter]) != nil && Double(brain.stack[CalculatorBrain.counter])! < 0) {
                 outputController?.clearScreen()
@@ -290,8 +329,7 @@ class ViewController: UIViewController {
                 CalculatorBrain.counter = 0
                 brain.res = 0
                 brain.isFirstEnter = true
-                outputController?.setWarning(name: "Root can't take negative value")
-                return
+                throw MyError(type: .NegativeRoot)
             }
             if brain.stack != [] && (outputController?.getLastSymbol())! >= Character(String(0)) && (outputController?.getLastSymbol())! <= Character(String(9)) && (Double(brain.stack[CalculatorBrain.counter]) != nil) {
                 let temp = Double(brain.stack[CalculatorBrain.counter])!
@@ -329,8 +367,7 @@ class ViewController: UIViewController {
                         CalculatorBrain.counter = 0
                         brain.res = 0
                         brain.isFirstEnter = true
-                        outputController?.setWarning(name: "Factorial can take Integer value and value >= 0 only")
-                        return
+                        throw MyError(type: .Factorial)
                     }
                 } else {
                     if Double(brain.stack[CalculatorBrain.counter])! >= 0 {
@@ -341,8 +378,7 @@ class ViewController: UIViewController {
                         CalculatorBrain.counter = 0
                         brain.res = 0
                         brain.isFirstEnter = true
-                        outputController?.setWarning(name: "Factorial can take Integer value and value >= 0 only")
-                        return
+                        throw MyError(type: .Factorial)
                     }
                 }
                 
@@ -365,7 +401,8 @@ class ViewController: UIViewController {
                 prevSymbol = symbol
                 break
             }
-            if !Trigonometry(symb: symbol) {
+            let isCorrect = try Trigonometry(symb: symbol)
+            if !isCorrect {
                 break
             }
             append(symbol: symbol)
@@ -386,7 +423,6 @@ class ViewController: UIViewController {
             outputController?.clearLastNumber(symbol: brain.stack[CalculatorBrain.counter])
             brain.stack[CalculatorBrain.counter] = String(Double(brain.stack[CalculatorBrain.counter])!*(-1))
             if Double(Int.max) >= Double(brain.stack[CalculatorBrain.counter])! {
-                //fix int.min
                 outputController?.appendSymbol(symbol: Double(brain.stack[CalculatorBrain.counter]) == Double(String(Int(Double(brain.stack[CalculatorBrain.counter])!))) ? String(Int(Double(brain.stack[CalculatorBrain.counter])!)) : String(brain.stack[CalculatorBrain.counter]))
             } else {
                 outputController?.appendSymbol(symbol: String(brain.stack[CalculatorBrain.counter]))
@@ -408,7 +444,6 @@ class ViewController: UIViewController {
                 append(symbol: String(brain.Rand()))
             } else {
                 if isOperand(symbol: prevSymbol) {
-//                    outputController?.appendSymbol(symbol: symbol)
                 } else {
                     outputController?.appendSymbol(symbol: symbol == "e" ? String(M_E) : String(M_PI))
                 }
@@ -461,26 +496,10 @@ class ViewController: UIViewController {
                     if Double(brain.stack[CalculatorBrain.counter])! >= 0 {
                         brain.stack[CalculatorBrain.counter] = String(sqrt(Double(brain.stack[CalculatorBrain.counter])!))
                     } else {
-                        outputController?.clearScreen()
-                        brain.stack = []
-                        CalculatorBrain.counter = 0
-                        brain.isFirstEnter = true
-                        brain.res = 0
-                        outputController?.setWarning(name: "Error")
-                        return
+                        throw MyError(type: .Sqrt)
                     }
                 case "!":
-//                    if Double(Int(Double(brain.stack[CalculatorBrain.counter])!)) == Double(brain.stack[CalculatorBrain.counter])! {
-//                        brain.stack[CalculatorBrain.counter] = String(brain.Factorial(n: Int(Double(brain.stack[CalculatorBrain.counter])!)))
-//                    } else {
-                        outputController?.clearScreen()
-                        brain.stack = []
-                        CalculatorBrain.counter = 0
-                        brain.isFirstEnter = true
-                        brain.res = 0
-                        outputController?.setWarning(name: "Error")
-                        return
-//                    }
+                    throw MyError(type: .Factorial)
                 default:
                     break
                 }
@@ -523,7 +542,6 @@ class ViewController: UIViewController {
                     CalculatorBrain.counter = 0
                     brain.stack.append(String(0))
                 }
-//                && (Int(brain.stack[CalculatorBrain.counter]) != nil) && Double(brain.stack[CalculatorBrain.counter]) == Double(Int(brain.stack[CalculatorBrain.counter])!)) || isConstSymbol(symbol: prevSymbol)
                 if (CalculatorBrain.counter >= 0 && (Double(brain.stack[CalculatorBrain.counter]) != nil)) || isConstSymbol(symbol: prevSymbol) {
                     if dot >= 1 {
                         if outputController?.display.text == "" {
@@ -548,29 +566,29 @@ class ViewController: UIViewController {
             brain.isFirstEnter = true
         case "M+":
             if !brain.utility(operation: .MPlus) {
-                outputController?.setWarning(name: String("Write the number or press '='"))
+                throw AnotherError(type: .NoEnter)
             } else {
                 if let value = Double(brain.stack[0]) {
                     brain.valueInMemory += value
                 } else {
                     prevSymbol = symbol
-                    throw MyError(type: .M_minus_error)
+                    throw AnotherError(type: .M_plus_error)
                 }
             }
         case "M-":
             if !brain.utility(operation: .MMinus) {
-                outputController?.setWarning(name: String("Write the number or press '='"))
+                throw AnotherError(type: .NoEnter)
             } else {
                 if let value = Double(brain.stack[0]) {
                     brain.valueInMemory -= value
                 } else {
                     prevSymbol = symbol
-                    throw MyError(type: .M_minus_error)
+                    throw AnotherError(type: .M_minus_error)
                 }
             }
         case "MC":
             if !brain.utility(operation: .MClear) {
-                outputController?.setWarning(name: String("Memory is empty"))
+                throw AnotherError(type: .NothingInMemory)
             } else {
                 brain.valueInMemory = 0
             }
@@ -603,26 +621,14 @@ class ViewController: UIViewController {
             }
             
             if !brain.isBracketEqual() {
-                outputController?.clearScreen()
-                brain.stack = []
-                CalculatorBrain.counter = 0
-                brain.res = 0
-                brain.isFirstEnter = true
-                outputController?.setWarning(name: "Fail with brackets")
-                return
+                throw MyError(type: .Brackets)
             }
             
             if isOperandAction(symbol: String(describing: outputController!.getLastSymbol())) {
                 outputController?.clearLastSymbol()
             }
             if outputController?.getLastSymbol() == "." {
-                outputController?.clearScreen()
-                brain.stack = []
-                CalculatorBrain.counter = 0
-                brain.isFirstEnter = true
-                brain.res = 0
-                outputController?.setWarning(name: "Error")
-                return
+                throw MyError(type: .Error)
             }
             if (inputController?.isGraphic)! {
                 inputController?.graphicController?.function = ""
@@ -642,23 +648,15 @@ class ViewController: UIViewController {
                         outputController?.appendSymbol(symbol: symbol)
                         var _ = brain.utility(operation: .Equal)
                         if brain.stack == [] {
-                            outputController?.clearScreen()
-                            brain.stack = []
-                            CalculatorBrain.counter = 0
-                            brain.res = 0
-                            brain.isFirstEnter = true
-                            outputController?.setWarning(name: "Error")
-                            return
+                            throw MyError(type: .Error)
                         }
                     }
                 }
             }
             
             if CalculatorBrain.counter < 0 {
-                outputController?.setWarning(name: "Infinity: \(CalculatorBrain.counter*(-1))÷0")
-                CalculatorBrain.counter = 0
                 outputController?.clearScreen()
-                return
+                throw AnotherError(type: .Counter)
             }
         case "(":
             outputController?.appendSymbol(symbol: symbol)
@@ -683,7 +681,7 @@ class ViewController: UIViewController {
             outputController?.appendSymbol(symbol: symbol)
             brain.stack.append(symbol)
             CalculatorBrain.counter += 1
-        case "Clear":
+        case "Clear":            
             inputController?.graphicController?.data.removeAll()
             brain.data.removeAll()
         case "MR":
@@ -696,7 +694,7 @@ class ViewController: UIViewController {
             }
             prevSymbol = symbol
             if !brain.utility(operation: .MRead) || brain.valueInMemory == 0 {
-                outputController?.setWarning(name: String("There is nothing in memory"))
+                throw AnotherError(type: .NothingInMemory)
             } else {
                 outputController?.setResult(symbol: String(brain.valueInMemory))
                 if Double(Int.max) >= Double(brain.valueInMemory) {
@@ -709,7 +707,6 @@ class ViewController: UIViewController {
                 CalculatorBrain.counter += 1
                 brain.res = brain.valueInMemory
                 brain.stack.append(String(brain.res))
-//                fallthrough
             }
         default:
             if (outputController?.getLastSymbol())! >= Character(String(0)) && (outputController?.getLastSymbol())! <= Character(String(9)) && prevSymbol == "MR" {
@@ -730,9 +727,6 @@ class ViewController: UIViewController {
                 brain.isFirstEnter = true
             }
             if (outputController?.getLastSymbol())! >= Character(String(0)) && (outputController?.getLastSymbol())! <= Character(String(9)) || outputController?.getLastSymbol() == "=" {
-//                if symbols == "MR" {
-//                    break
-//                }
                 if outputController?.getLastSymbol() == "=" || isConstSymbol(symbol: String(describing: outputController?.getLastSymbol())) {
                     outputController?.clearScreen()
                     brain.stack = []
@@ -742,30 +736,25 @@ class ViewController: UIViewController {
                 }
             }
             outputController?.appendSymbol(symbol: symbol)
-//            if Double(prevSymbol) == nil {
-//                CalculatorBrain.counter = -1
-//            }
             prevSymbol = symbol
             if CalculatorBrain.counter >= -1 {
                 if CalculatorBrain.counter == -1 {
                     CalculatorBrain.counter += 1
                 } else {
-//                    if CalculatorBrain.counter >= brain.stack.count {
-//                        outputController?.clearScreen()
-//                        brain.stack = []
-//                        CalculatorBrain.counter = 0
-//                        brain.res = 0
-//                        brain.isFirstEnter = true
-//                        outputController?.setWarning(name: "Error")
-//                        return
-//                    }
-                    let smth: Double? = Double(brain.stack[CalculatorBrain.counter])
-                    if smth == nil {
-                        CalculatorBrain.counter += 1
+                    if brain.stack.count <= CalculatorBrain.counter && (inputController?.isGraphic)! {
+                        CalculatorBrain.counter = -1
+                    } else {
+                        let smth: Double? = Double(brain.stack[CalculatorBrain.counter])
+                        if smth == nil {
+                            CalculatorBrain.counter += 1
+                        }
                     }
                 }
             }
             if brain.stack.count == CalculatorBrain.counter {
+                if (inputController?.isGraphic)! {
+                    brain.isConstGraph = true
+                }
                 brain.stack.append(symbol)
                 dot = 1
             } else if brain.stack.count == 0 {
@@ -779,13 +768,7 @@ class ViewController: UIViewController {
                     outputController?.appendSymbol(symbol: symbols)
                 }
                 if Double(brain.stack[CalculatorBrain.counter]) == nil {
-                    outputController?.clearScreen()
-                    brain.stack = []
-                    CalculatorBrain.counter = 0
-                    brain.res = 0
-                    brain.isFirstEnter = true
-                    outputController?.setWarning(name: "Error")
-                    return
+                    throw MyError(type: .Error)
                 }
                 brain.stack[CalculatorBrain.counter] = String(Double(brain.stack[CalculatorBrain.counter])! * 10 + (Double(symbol))!)
             } else if dot < 1 {

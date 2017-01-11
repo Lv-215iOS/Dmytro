@@ -76,13 +76,13 @@ class InputController: UIInputViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GraphicControllerSegue" {
-                    graphicController = segue.destination as? GraphicController
-                    graphicController?.inputController = self
+            graphicController = segue.destination as? GraphicController
+            graphicController?.inputController = self
             graphicController?.function = "Here gonna be some text!"
             graphicController?.data.append([4, 6, 10, 13, 15, 17, 20, 21])
             
             
-                }
+        }
     }
     
     override func viewDidLoad() {
@@ -94,7 +94,7 @@ class InputController: UIInputViewController {
             try AVAudioSession.sharedInstance().setActive(true)
         }
         catch{
-            //catch error with sound
+            
         }
     }
     
@@ -116,7 +116,15 @@ class InputController: UIInputViewController {
             }
         }
         if sender.currentTitle == "📈" {
+            viewController?.outputController?.clearScreen()
+            viewController?.brain.stack = []
+            CalculatorBrain.index = 0
+            viewController?.brain.res = 0
+            viewController?.prevSymbol = ""
+            viewController?.brain.isFirstEnter = true
             isGraphic = isGraphic ? false : true
+            viewController?.brain.isConstGraph = isGraphic ? true : false
+            CalculatorBrain.counter = isGraphic ? 1 : -1
             viewController?.outputController?.display.text = ""
             if isGraphic {
                 viewController?.brain.valueInMemory = viewController?.brain.valueInMemory == 0 ? -1 : 0
@@ -148,18 +156,13 @@ class InputController: UIInputViewController {
             graphicController?.data = (viewController?.brain.data)!
         }
         
-//        if !isGraphic {
-//            
-//        } else {
-//            graphicController?.buttonGraphic(symbols: sender.currentTitle!)
-//        }
-        UIView.animate(withDuration: 0.1, animations: {
-                        sender.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
-                        sender.setTitleColor(UIColor.blue, for: .normal)
-                        }, completion: { _ in UIView.animate(withDuration: 0.1) {
-                            sender.transform = CGAffineTransform.identity
-                            sender.setTitleColor(UIColor.black, for: .normal)
-                        }
+        UIView.animate(withDuration: 0.05, animations: {
+            sender.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+            sender.setTitleColor(UIColor.blue, for: .normal)
+        }, completion: { _ in UIView.animate(withDuration: 0.05) {
+            sender.transform = CGAffineTransform.identity
+            sender.setTitleColor(UIColor.black, for: .normal)
+            }
         })
     }
     
@@ -172,7 +175,7 @@ class InputController: UIInputViewController {
             xySize = sqrt(screenWidth * screenWidth + screenHeight * screenHeight)/12.7
             verticalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
             
-
+            
         } else {
             xySize = sqrt(screenWidth * screenWidth + screenHeight * screenHeight)/9.5
             horizontalPosition(screenWidth: screenWidth, screenHeight: screenHeight, radius: xySize)
@@ -564,8 +567,6 @@ class InputController: UIInputViewController {
         
         setButton(x: 0.41 * screenWidth, y: 0.79 * screenHeight, btn: btnX)
         setButton(x: 0.51 * screenWidth, y: 0.79 * screenHeight, btn: btnY)
-        //setButton(x: 0.51 * screenWidth, y: 0.79 * screenHeight, btn: btnRightBracket)
-        //setButton(x: 0.6 * screenWidth, y: 0.79 * screenHeight, btn: btnLeftBracket)
         
         setButton(x: 0.01 * screenWidth, y: 0.53 * screenHeight, btn: btnGraphEqual)
         

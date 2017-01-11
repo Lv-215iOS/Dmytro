@@ -88,9 +88,6 @@ class Curve: UIView {
         setCurve()
     }
     
-    override func setNeedsLayout() {
-    }
-    
     override func draw(_ rect: CGRect) {
         if frame.width > frame.height && frame.width != 768 {
         } else {

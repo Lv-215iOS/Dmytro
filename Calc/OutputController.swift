@@ -95,7 +95,6 @@ class OutputController: UIViewController{
     }
     
     func setResult(symbol: String) {
-        //grap
         if Double(symbol) != nil && Double(Int.max) >= Double(symbol)!  && Double(symbol) == Double(Int(Double(symbol)!)) {
             displayResult.text = String(Int(Double(symbol)!))
             
