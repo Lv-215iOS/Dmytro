@@ -9,10 +9,6 @@
 import UIKit
 import AVFoundation
 
-protocol InputProtocol {
-    var buttonTouched: ((String) -> ())? {get set}
-}
-
 class InputController: UIInputViewController {
     @IBOutlet weak var btnPow: UIButton!
     @IBOutlet weak var btnFact: UIButton!

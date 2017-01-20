@@ -8,15 +8,6 @@
 
 import UIKit
 
-protocol OutputProtocol {
-    func setWarning(name: String)
-    func appendSymbol(symbol: String)
-    func clearScreen()
-    func clearLastSymbol()
-    func clearLastNumber(symbol: String)
-    func setResult(symbol: String)
-}
-
 class OutputController: UIViewController{
     @IBOutlet weak var labelError: UILabel!
     @IBOutlet weak var display: UILabel!

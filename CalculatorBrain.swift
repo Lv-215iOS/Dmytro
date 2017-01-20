@@ -9,51 +9,6 @@
 import Foundation
 import UIKit
 
-enum BinaryOperation : String{
-    case Plus = "+"
-    case Minus = "-"
-    case Mul = "✕"
-    case Div = "÷"
-    case Pow = "^"
-    case Mod = "%"
-}
-
-enum UnaryOperation : String{
-    case Sin = "sin"
-    case Cos = "cos"
-    case Tg = "tg"
-    case Ctg = "ctg"
-    case Sqrt = "√"
-    case Ln = "ln"
-    case Log = "log"
-    case Sinh = "sinh"
-    case Cosh = "cosh"
-    case Tgh = "tgh"
-    case Ctgh = "ctgh"
-    case Fact = "!"
-}
-
-enum UtilityOperation : String{
-    case RightBracket = ")"
-    case LeftBracket = "("
-    case Dot = "."
-    case Equal = "="
-    case Clean = "C"
-    case CleanLast = "⌫"
-    case MPlus = "M+"
-    case MMinus = "M-"
-    case MClear = "MC"
-    case MRead = "MR"
-}
-
-protocol CalcBrainInterface {
-    func digit()
-    func binary(operation: BinaryOperation)
-    func unary(operation: UnaryOperation)
-    func utility(operation: UtilityOperation) -> Bool
-    var result: ((Double?, Error?)->())? {get set}
-}
-
 class CalculatorBrain:  CalcBrainInterface
 {
     var stack: [String] = []
@@ -71,9 +26,9 @@ class CalculatorBrain:  CalcBrainInterface
     var data: [[CGFloat]] = []
     var isConstGraph = false
     
-    func digit() {
+    func digit(value: Double) {
         if CalculatorBrain.brackets && res == 0 {
-            res += Double(stack[CalculatorBrain.index])!
+            res += value
         }
         CalculatorBrain.index += 1
     }
@@ -137,7 +92,7 @@ class CalculatorBrain:  CalcBrainInterface
                 if Double(String(stack[CalculatorBrain.index+1]))! == 0 {
                     CalculatorBrain.counter = -1 * Int(Double(stack[0])!)
                     stack = []
-                    res = 0
+                    res = isConstGraph ? Double(Int.max) : 0
                     isFirstEnter = true
                     break
                 } else {
@@ -542,7 +497,7 @@ class CalculatorBrain:  CalcBrainInterface
             case "ctg":
                 unary(operation: .Ctg)
             default:
-                digit()
+                digit(value: Double(stack[CalculatorBrain.index])!)
                 break
             }
         }
@@ -554,7 +509,7 @@ class CalculatorBrain:  CalcBrainInterface
                 if !res.isInfinite {
                     stack.append(String(res == Double(Int(res)) ? String(Int(res)) : String(Double(Int(res)))))
                 } else {
-                    stack.append("0")
+                    stack.append(String(Int.max))
                     res = 0
                 }
             }

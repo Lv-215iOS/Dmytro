@@ -8,70 +8,6 @@
 
 import UIKit
 
-enum ErrorType {
-    case M_minus_error
-    case M_plus_error
-    case Trigonometry
-    case NaN
-    case Infinity
-    case Sqrt
-    case NegativeRoot
-    case Factorial
-    case NoEnter
-    case NothingInMemory
-    case Brackets
-    case Error
-    case Counter
-}
-
-struct MyError: Error {
-    var type: ErrorType
-    
-    func description() -> String {
-        switch self.type {
-        case .Trigonometry:
-            return "Problem with trigonometry"
-        case .NaN:
-            return "NaN"
-        case .Infinity:
-            return "Infinity(∞)"
-        case .Sqrt:
-            return "Error with √"
-        case .NegativeRoot:
-            return "Root can't take negative value"
-        case .Factorial:
-            return "Factorial can take Integer value and value >= 0 only"
-        case .Brackets:
-            return "Fail with brackets"
-        default:
-            return "Error"
-        }
-    }
-}
-
-struct AnotherError: Error {
-    var type: ErrorType
-    
-    func description() -> String {
-        switch self.type {
-        case .M_minus_error:
-            return "M- error"
-        case .M_plus_error:
-            return "M+ error"
-        case .NoEnter:
-            return "Write the number or press '='"
-        case .NothingInMemory:
-            return "Memory is empty"
-        case .Counter:
-            let tempCounter = CalculatorBrain.counter
-            CalculatorBrain.counter = 0
-            return "Infinity: \(tempCounter*(-1))÷0"
-        default:
-            return "Error"
-        }
-    }
-}
-
 class ViewController: UIViewController {
     var outputController: OutputController? = nil
     var inputController: InputController? = nil
@@ -128,52 +64,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func isOperand(symbol: String) -> Bool {
-        if symbol == "√" || symbol == "sin" || symbol == "cos" || symbol == "tg" || symbol == "ctg" || symbol == "ln" || symbol == "log" || symbol == "sinh" || symbol == "cosh" || symbol == "tgh" || symbol == "ctgh" || symbol == "!" {
-            return true
-        }
-        return false
-    }
-    
-    func isOperandAction(symbol: String) -> Bool {
-        if symbol == "+" || symbol == "-" || symbol == "✕" || symbol == "÷" || symbol == "^" || symbol == "ln" {
-            return true
-        }
-        return false
-    }
-    
-    func isConstSymbol(symbol: String) -> Bool {
-        if symbol == "e" || symbol == "π" || symbol == "rand" {
-            return true
-        }
-        return false
-    }
-    
-    func touchButton(symbols: String) {
-        do {
-            try process(symbols: symbols)
-        } catch let error as MyError {
-            outputController?.clearScreen()
-            brain.stack = []
-            CalculatorBrain.counter = 0
-            brain.res = 0
-            brain.isFirstEnter = true
-            outputController?.setWarning(name: String(describing: error.description()))
-            return
-        } catch let error as AnotherError {
-            outputController?.setWarning(name: String(describing: error.description()))
-            return
-        } catch let error {
-            outputController?.clearScreen()
-            brain.stack = []
-            CalculatorBrain.counter = 0
-            brain.res = 0
-            brain.isFirstEnter = true
-            outputController?.setWarning(name: error as! String)
-            return
-        }
-    }
-    
     func checkEqual() {
         if outputController?.getLastSymbol() == "=" {
             if Double(Int.max) >= Double(brain.res) {
@@ -204,6 +94,31 @@ class ViewController: UIViewController {
         }
         brain.stack.append(symbol)
         CalculatorBrain.counter += 1
+    }
+    
+    func touchButton(symbols: String) {
+        do {
+            try process(symbols: symbols)
+        } catch let error as MyError {
+            outputController?.clearScreen()
+            brain.stack = []
+            CalculatorBrain.counter = 0
+            brain.res = 0
+            brain.isFirstEnter = true
+            outputController?.setWarning(name: String(describing: error.description()))
+            return
+        } catch let error as AnotherError {
+            outputController?.setWarning(name: String(describing: error.description()))
+            return
+        } catch let error {
+            outputController?.clearScreen()
+            brain.stack = []
+            CalculatorBrain.counter = 0
+            brain.res = 0
+            brain.isFirstEnter = true
+            outputController?.setWarning(name: error as! String)
+            return
+        }
     }
     
     func Trigonometry(symb: String) throws -> Bool {

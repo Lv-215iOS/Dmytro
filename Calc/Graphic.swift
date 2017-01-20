@@ -9,18 +9,9 @@
 import UIKit
 import QuartzCore
 
-public protocol LineChartDelegate {
-    func didSelectDataPoint(_ x: CGFloat, yValues: [CGFloat])
-}
-
 open class Graphic: UIView {
-    /**
-     * Helpers class
-     */
+    
     fileprivate class Helpers {
-        /**
-         * Convert hex color to UIColor
-         */
         fileprivate class func UIColorFromHex(_ hex: Int) -> UIColor {
             let red = CGFloat((hex & 0xFF0000) >> 16) / 255.0
             let green = CGFloat((hex & 0xFF00) >> 8) / 255.0
@@ -28,9 +19,6 @@ open class Graphic: UIView {
             return UIColor(red: red, green: green, blue: blue, alpha: 1)
         }
         
-        /**
-         * Lighten color.
-         */
         fileprivate class func lightenUIColor(_ color: UIColor) -> UIColor {
             var h: CGFloat = 0
             var s: CGFloat = 0
